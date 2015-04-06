@@ -12,6 +12,33 @@
         </value>
       </option>
     </inspection_tool>
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="18">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="color-border" />
+            <item index="7" class="java.lang.String" itemvalue="color-label" />
+            <item index="8" class="java.lang.String" itemvalue="font-default" />
+            <item index="9" class="java.lang.String" itemvalue="font-bold" />
+            <item index="10" class="java.lang.String" itemvalue="helveticaneue-light" />
+            <item index="11" class="java.lang.String" itemvalue="helveticaneue-medium" />
+            <item index="12" class="java.lang.String" itemvalue="helvetica" />
+            <item index="13" class="java.lang.String" itemvalue="neue" />
+            <item index="14" class="java.lang.String" itemvalue="light" />
+            <item index="15" class="java.lang.String" itemvalue="medium" />
+            <item index="16" class="java.lang.String" itemvalue="sans-serif" />
+            <item index="17" class="java.lang.String" itemvalue="arial" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
     <inspection_tool class="LoggerInitializedWithForeignClass" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="loggerClassName" value="org.apache.log4j.Logger,org.slf4j.LoggerFactory,org.apache.commons.logging.LogFactory,java.util.logging.Logger" />
       <option name="loggerFactoryMethodName" value="getLogger,getLogger,getLog,getLogger" />

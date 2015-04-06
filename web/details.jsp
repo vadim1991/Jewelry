@@ -103,7 +103,7 @@
                         <p>Цена изделия: $ ${product.price}</p>
                     </div>
                     <div class="price-details-right">
-                        <input type="button" value="Добавить в корзину"/>
+                        <a class="b-home" href="cart?id=${product.id}">Add to cart</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>

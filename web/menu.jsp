@@ -44,7 +44,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <li><a href="login.jsp">Войти</a></li>
                 <li><a href="#">Помощь</a></li>
                 <li><a href="#">Магазин</a></li>
-                <li class="cartinfo"><a href="#"><span> </span>Корзина (0)</a></li>
+                <li class="cartinfo"><a href="cart"><span> </span>Корзина</a></li>
                 <div class="clearfix"></div>
             </ul>
         </div>
