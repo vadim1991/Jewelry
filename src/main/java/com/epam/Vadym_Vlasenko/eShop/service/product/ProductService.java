@@ -60,8 +60,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> getProductsByCategory(Category category) {
-        return null;
+    public List<Product> getProductsByCategory(final int idCategory) {
+        return tm.transaction(new TransactionOperation<List<Product>>() {
+            @Override
+            public List<Product> execute() throws SQLException {
+                return productDAO.getProductsByCategory(idCategory);
+            }
+        });
     }
 
     @Override

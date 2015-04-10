@@ -40,9 +40,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <!-- cart-info -->
         <div class="cart-info">
             <ul>
-                <li><a href="login.jsp">Войти</a></li>
-                <li><a href="#">Помощь</a></li>
-                <li><a href="#">Магазин</a></li>
+                <li><a id="login">${sessionScope.login}</a></li>
+                <li><a id="loginLink" href="login">Войти</a></li>
+                <li><a href="#">Язык</a></li>
                 <li class="cartinfo"><a href="cart"><span> </span>Корзина</a></li>
                 <div class="clearfix"></div>
             </ul>
@@ -58,13 +58,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="top-nav">
             <span class="menu"> </span>
             <ul>
-                <li class="active"><a href="index.jsp">Главная</a></li>
-                <li><a href="404.jsp">Серьги</a></li>
-                <li><a href="404.jsp">Браслеты</a></li>
-                <li><a href="rings">Кольца</a></li>
-                <li><a href="404.jsp">Цепочки</a></li>
-                <li><a href="404.jsp">Подвески</a></li>
-                <li><a href="">Контакты</a></li>
+                <li><a id="main" href="index.jsp">Главная</a></li>
+                <li><a id="earrings" href="earrings">Серьги</a></li>
+                <li><a id="bracelets" href="404.jsp">Браслеты</a></li>
+                <li><a id="rings" href="rings">Кольца</a></li>
+                <li><a id="chain" href="404.jsp">Цепочки</a></li>
+                <li><a id="suspension" href="404.jsp">Подвески</a></li>
+                <li><a id="contacts" href="">Контакты</a></li>
                 <div class="clearfix"></div>
             </ul>
         </div>
@@ -93,5 +93,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- /sub-header -->
 
 </body>
+<script>
+    var login = $("#login");
+    var loginLink = $("#loginLink");
+    if (login.text().length > 2) {
+        loginLink.attr("href", "logout");
+        loginLink.text("Выйти");
+    }
+</script>
 </html>
 

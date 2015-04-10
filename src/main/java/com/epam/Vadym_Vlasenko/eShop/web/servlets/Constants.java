@@ -8,6 +8,11 @@ public class Constants {
     public static final String CART_SERVICE = "cart_service";
     public static final String USER_SERVICE = "user_service";
 
+    public static final int EARRINGS_CATEGORY = 2;
+    public static final int RINGS_CATEGORY = 1;
+
     public static final String REGISTRATION_PAGE = "registration.jsp";
     public static final String LOGIN_PAGE = "login.jsp";
+    public static final String EARRINGS_PAGE = "earrings.jsp";
+    public static final String RING_PAGE = "collections.jsp";
 }

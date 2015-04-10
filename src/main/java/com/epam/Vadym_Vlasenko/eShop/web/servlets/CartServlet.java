@@ -22,7 +22,6 @@ import java.util.List;
 public class CartServlet extends HttpServlet {
 
     private IProductService productService;
-    private CartService cartService;
 
     private static final int DEFAULT_AMOUNT = 1;
     private static final String CART_ATTRIBUTE = "cart";
@@ -36,17 +35,15 @@ public class CartServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         ServletContext context = config.getServletContext();
         productService = (IProductService) context.getAttribute(Constants.PRODUCT_SERVICE);
-        //cartService = (CartService) context.getAttribute(Constants.CART_SERVICE);
-        cartService = new CartService(new Cart());
     }
-
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CartService cartService = (CartService) req.getSession().getAttribute(Constants.CART_SERVICE);
         String remove = req.getParameter(REMOVE_PARAMETER);
         String idRemove = req.getParameter(ID_REMOVE_PARAMETER);
-        if (remove != null) {
+        if (remove != null && cartService != null) {
             Product product = productService.getProductByID(Integer.parseInt(idRemove));
             cartService.delete(product);
             resp.getWriter().write(CART_ATTRIBUTE);
@@ -56,6 +53,11 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CartService cartService = (CartService) req.getSession().getAttribute(Constants.CART_SERVICE);
+        if (cartService == null) {
+            cartService = new CartService(new Cart());
+            req.getSession().setAttribute(Constants.CART_SERVICE, cartService);
+        }
         String id = req.getParameter(ID_PARAMETER);
         if (id != null) {
             Product product = productService.getProductByID(Integer.parseInt(id));

@@ -17,9 +17,11 @@
     <div class="text-left">
         <h1>Добро пожаловать</h1>
 
-        <form>
+        <form action="login" method="post">
             <div>
                 <label class="error-label">${success}</label>
+                <label class="error-label">${error}</label>
+                <input type="hidden" name="previous" value="${previous}">
             </div>
             <div>
                 <input type="text" class="form-field" id="login" name="login" placeholder="логин" onblur="validLogin()">

@@ -88,6 +88,13 @@ span.menu {
     margin-right: 1em;
 }
 
+.cart-info ul li a #login {
+    width: 34px;
+    height: 34px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 1em;
+}
 .cart-info ul li a:hover {
     color: #fff;
 }
@@ -646,7 +653,24 @@ ul.social-icons li a:hover {
     padding: 0;
 }
 
+.collections-head-left h2 {
+    margin: 2.8em 0 0 3em;
+    padding: 0;
+}
+
 .collections-head-right h2 span {
+    font-family: 'Good', serif;
+    display: block;
+    text-transform: uppercase;
+    background: #505e68;
+    color: #FFF;
+    font-weight: 700;
+    display: inline-block;
+    margin: 0 0 0.3em 0;
+    font-size: 1.1em;
+    padding: 0.2em 0.8em 0.2em 0.2em;
+}
+.collections-head-left h2 span {
     font-family: 'Good', serif;
     display: block;
     text-transform: uppercase;

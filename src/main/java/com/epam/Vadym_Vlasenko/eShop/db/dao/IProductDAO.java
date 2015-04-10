@@ -17,15 +17,13 @@ public interface IProductDAO {
 
     public List<Product> getProducts() throws SQLException;
 
-    public List<Product> getProductsByCategory(Category category);
+    public List<Product> getProductsByCategory(int idCategory);
 
     public List<Product> getProductByName(String name);
 
     public List<Product> getProductsByRange(int minPrice, int maxPrice);
 
     public List<Product> getAllByMaterial(int id_material);
-
-    public List<Product> getAllByCategory(int id_category);
 
     public List<Product> getAllByCategoryAndInsert(int id_category, int id_insert);
 

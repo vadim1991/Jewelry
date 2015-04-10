@@ -80,8 +80,20 @@ public class ProductDaoMySQL implements IProductDAO {
     }
 
     @Override
-    public List<Product> getProductsByCategory(Category category) {
-        return null;
+    public List<Product> getProductsByCategory(int idCategory) {
+        List<Product> products = new ArrayList<>();
+        try (Connection connection = DBConnection.getConnectionHolder().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCTS_BY_CATEGORY)) {
+            int index = 1;
+            preparedStatement.setInt(index, idCategory);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                products.add(extractProduct(resultSet));
+            }
+        } catch (SQLException e) {
+
+        }
+        return products;
     }
 
     @Override
@@ -97,23 +109,6 @@ public class ProductDaoMySQL implements IProductDAO {
     @Override
     public List<Product> getAllByMaterial(int id_material) {
         return null;
-    }
-
-    @Override
-    public List<Product> getAllByCategory(int id_category) {
-        List<Product> products = new ArrayList<>();
-        try (Connection connection = DBConnection.getConnectionHolder().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCTS_BY_CATEGORY)) {
-            int index = 1;
-            preparedStatement.setInt(index, id_category);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                products.add(extractProduct(resultSet));
-            }
-        } catch (SQLException e) {
-
-        }
-        return products;
     }
 
     @Override

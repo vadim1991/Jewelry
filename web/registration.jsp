@@ -50,7 +50,8 @@
                 <label class="error-label" id="passwordError">${errors.get("passwordError")}</label>
             </div>
             <div>
-                <input type="password" class="form-field" name="confirm" id="passwordConfirm" placeholder="подтвердите пароль"
+                <input type="password" class="form-field" name="confirm" id="passwordConfirm"
+                       placeholder="подтвердите пароль"
                        onblur="confirmPassword()">
                 <label class="error-label" id="passwordConfError">${errors.get("confirmError")}</label>
             </div>
@@ -126,7 +127,8 @@
     function validName() {
         var name = document.getElementById("name");
         var label = document.getElementById("nameError");
-        if (name.value.length < 1) {
+        var pattern = /^[\p{L} .'-]+$/;
+        if (!pattern.test(name.value)) {
             label.innerHTML = "Введите, пожалуйста корректное имя";
             name.className = "error";
             return false;
@@ -139,7 +141,8 @@
     function validSurname() {
         var surname = document.getElementById("surname");
         var label = document.getElementById("surnameError");
-        if (surname.value.length < 2) {
+        var pattern = /^[\p{L} .'-]+$/;
+        if (!pattern.test(surname.value)) {
             label.innerHTML = "Введите, пожалуйста корректную фамилию";
             surname.className = "error";
             return false;
@@ -152,7 +155,8 @@
     function validAge() {
         var age = document.getElementById("age");
         var label = document.getElementById("ageError");
-        if (age.value < 12 || age.value > 100) {
+        var pattern = /^\d{1,3}$/
+        if (!pattern.test(age.value) || age.value < 14 || age.value > 80) {
             label.innerHTML = "Введите, пожалуйста корректный возраст";
             age.className = "error";
             return false;
@@ -179,8 +183,9 @@
     function validLogin() {
         var login = document.getElementById("login");
         var label = document.getElementById("loginError");
-        if (login.value.length < 4 || login.value.length > 15) {
-            label.innerHTML = "Пожалуйста, введите лругой логин";
+        var pattern = /^[\p{L} .'-]+$/;
+        if (!pattern.test(login.value)) {
+            label.innerHTML = "Пожалуйста, введите другой логин";
             login.className = "error";
             return false;
         } else {
@@ -192,7 +197,8 @@
     function validPassword() {
         var password = document.getElementById("password");
         var label = document.getElementById("passwordError");
-        if (password.value.length < 4) {
+        var pattern = /((?=.*\d)(?=.*[a-z]).{4,20})/
+        if (!pattern.test(password.value)) {
             label.innerHTML = "Пожалуйста, введите другой пароль"
             password.className = "error";
             return false;

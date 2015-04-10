@@ -1,33 +1,33 @@
 <%--
   Created by IntelliJ IDEA.
   User: swift-seeker-89717
-  Date: 04.04.2015
-  Time: 11:34
+  Date: 10.04.2015
+  Time: 12:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Кольца</title>
+    <title>Серьги</title>
 </head>
 <body>
 <!-- container -->
 <jsp:include page="menu.jsp"></jsp:include>
-<!-- content -->
 <script>
-    $(document).ready(function() {
-        $("#rings").parent().addClass("active")
+    $(document).ready(function () {
+        $("#earrings").parent().addClass("active")
     });
 </script>
+<!-- content -->
 <div class="collections">
     <div class="collections-head">
         <div class="container">
-            <div class="collections-head-left">
-                <img src="images/iteam.png" alt="slide"/>
-            </div>
             <div class="collections-head-right">
-                <h2><span>Итальянское</span></br><span>серебро</span></h2>
+                <img height="300px" src="images/slideEarrings.png" alt="slide"/>
+            </div>
+            <div class="collections-head-left">
+                <h2><span>Французский</span></br><span>дизайн</span></h2>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -69,14 +69,15 @@
         <div class="container">
             <c:forEach items="${products}" var="p">
                 <div class="col-md-3">
-                    <input type="hidden" class="id" name="id" value="${p.id}"/>
-                    <div class="iteam-grid text-center">
+                    <input type="hidden" name="id" value="${p.id}"/>
+
+                    <div onclick="location.href='details?id=${p.id}';" class="iteam-grid text-center">
                         <img height="150 px" src=${p.image.url} title=${p.title}>
                         <span>${p.title}</span>
                         <label>Цена $ ${p.price}</label>
                         <ul>
-                            <li><a class="cart">В корзину</a></li>
-                            <li><a class="more" href="details?id=${p.id}">Инфо</a></li>
+                            <li><a class="cart" href="#">В корзину</a></li>
+                            <li><a class="more" href="#">Инфо</a></li>
                             <div class="clearfix"></div>
                         </ul>
                     </div>
@@ -93,19 +94,4 @@
     <jsp:include page="footer.jsp"></jsp:include>
 </div>
 </body>
-<script>
-    $(".cart").click(function() {
-        var id = $(this).parent().parent().parent().parent().find(".id").val();
-        $.ajax({
-            url:"cart",
-            method : "get",
-            data : {
-                "id" : id
-            },
-            success:function() {
-                alert("ok")
-            }
-        })
-    })
-</script>
 </html>

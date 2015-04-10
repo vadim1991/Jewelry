@@ -20,7 +20,7 @@ public class Registration extends HttpServlet {
 
     private static final String USER_ATTRIBUTE = "user";
     private static final String SUCCESS_ATTRIBUTE = "success";
-    private static final String SUCCESS_MESSAGE = "???????????? ????????";
+    private static final String SUCCESS_MESSAGE = "Пользователь добавлен";
 
     private UserService userService;
 

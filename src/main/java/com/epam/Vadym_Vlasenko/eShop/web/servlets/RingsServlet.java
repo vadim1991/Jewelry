@@ -20,18 +20,19 @@ import java.util.List;
 public class RingsServlet extends HttpServlet {
 
     private static final String PRODUCT_SERVICE = "product_service";
+    private static final String RINGS_ATTRIBUTE = "products";
 
     private IProductService service;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        service = (ProductService)config.getServletContext().getAttribute(PRODUCT_SERVICE);
+        service = (ProductService) config.getServletContext().getAttribute(PRODUCT_SERVICE);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Product> products = service.getProducts();
-        req.setAttribute("products",products);
-        req.getRequestDispatcher("collections.jsp").forward(req,resp);
+        List<Product> products = service.getProductsByCategory(Constants.RINGS_CATEGORY);
+        req.setAttribute(RINGS_ATTRIBUTE, products);
+        req.getRequestDispatcher(Constants.RING_PAGE).forward(req, resp);
     }
 }

@@ -108,7 +108,7 @@
                 <!-- //requried-jsfiles-for owl -->
                 <!-- start content_slider -->
                 <div id="owl-demo" class="owl-carousel text-center">
-                    <div onclick="location.href='details.html';" class="item">
+                    <div onclick="location.href='404.jsp';" class="item">
                         <div class="product-grid">
                             <div class="product-pic">
                                 <a href="#"><img src="images/pic2.jpg" title="name"/></a>
@@ -118,7 +118,7 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="location.href='details.html';" class="item">
+                    <div onclick="location.href='404.jsp';" class="item">
                         <div class="product-grid">
                             <div class="product-pic">
                                 <a href="#"><img src="images/pic3.png" title="name"/></a>
@@ -128,7 +128,7 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="location.href='details.html';" class="item">
+                    <div onclick="location.href='404.jsp';" class="item">
                         <div class="product-grid">
                             <div class="product-pic">
                                 <a href="#"><img src="images/pic4.png" title="name"/></a>
@@ -138,7 +138,7 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="location.href='details.html';" class="item">
+                    <div onclick="location.href='404.jsp';" class="item">
                         <div class="product-grid">
                             <div class="product-pic">
                                 <a href="#"><img src="images/pic5.png" title="name"/></a>
@@ -148,7 +148,7 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="location.href='details.html';" class="item">
+                    <div onclick="location.href='404.jsp';" class="item">
                         <div class="product-grid">
                             <div class="product-pic">
                                 <a href="#"><img src="images/pic6.png" title="name"/></a>
@@ -158,7 +158,7 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="location.href='details.html';" class="item">
+                    <div onclick="location.href='404.jsp';" class="item">
                         <div class="product-grid">
                             <div class="product-pic">
                                 <a href="#"><img src="images/pic3.png" title="name"/></a>
@@ -168,7 +168,7 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="location.href='details.html';" class="item">
+                    <div onclick="location.href='404.jsp';" class="item">
                         <div class="product-grid">
                             <div class="product-pic">
                                 <a href="#"><img src="images/pic4.png" title="name"/></a>
@@ -178,7 +178,7 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="location.href='details.html';" class="item">
+                    <div onclick="location.href='404.jsp';" class="item">
                         <div class="product-grid">
                             <div class="product-pic">
                                 <a href="#"><img src="images/pic5.png" title="name"/></a>
@@ -188,7 +188,7 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="location.href='details.html';" class="item">
+                    <div onclick="location.href='404.jsp';" class="item">
                         <div class="product-grid">
                             <div class="product-pic">
                                 <a href="#"><img src="images/pic3.png" title="name"/></a>
@@ -209,4 +209,7 @@
         <jsp:include page="footer.jsp"></jsp:include>
     </div>
 </body>
+<script>
+    $("#main").parent().addClass("active");
+</script>
 </html>

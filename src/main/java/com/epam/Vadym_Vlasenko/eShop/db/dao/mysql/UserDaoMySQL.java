@@ -19,7 +19,7 @@ public class UserDaoMySQL implements IUserDAO {
     private static final String SURNAME = "surname";
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
-    private static final String ROLE_ID = "id_role";
+    private static final String ROLE_ID = "role";
     private static final String ROLE_NAME = "role_name";
     private static final String AGE = "age";
     private static final String EMAIL = "email";
@@ -96,7 +96,7 @@ public class UserDaoMySQL implements IUserDAO {
                 user = extractUser(resultSet);
             }
         } catch (SQLException e) {
-
+            System.err.println(e);
         }
         return user;
     }
@@ -125,7 +125,7 @@ public class UserDaoMySQL implements IUserDAO {
         user.setEmail(resultSet.getString(EMAIL));
         user.setLogin(resultSet.getString(LOGIN));
         user.setPassword(resultSet.getString(PASSWORD));
-        user.setRole(new Role(resultSet.getInt(ROLE_ID), resultSet.getString(ROLE_NAME)));
+        user.setRole(new Role(resultSet.getInt(ROLE_ID), "client"));
         return user;
     }
 }
