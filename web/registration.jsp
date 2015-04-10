@@ -18,33 +18,50 @@
     <div class="text-left">
         <h1>Регистрация</h1>
 
-        <form>
+        <form action="registration" method="post">
+            <div>
+                <label class="error-label">${loginError}</label>
+            </div>
             <div>
                 <input type="text" class="form-field" id="name" name="name" placeholder="Имя" onblur="validName()">
-                <label class="error-label" id="nameError"></label>
+                <label class="error-label" id="nameError">${errors.get("nameError")}</label>
             </div>
             <div>
                 <input type="text" class="form-field" id="surname" name="surname" placeholder="Фамилия"
                        onblur="validSurname()">
-                <label class="error-label" id="surnameError"></label>
+                <label class="error-label" id="surnameError">${errors.get("surnameError")}</label>
+            </div>
+            <div>
+                <input type="text" class="form-field" id="age" name="age" placeholder="Возраст"
+                       onblur="validAge()">
+                <label class="error-label" id="ageError">${errors.get("ageError")}</label>
             </div>
             <div>
                 <input type="text" class="form-field" id="email" name="email" placeholder="Email" onblur="validEmail()">
-                <label class="error-label" id="emailError"></label>
+                <label class="error-label" id="emailError">${errors.get("emailError")}</label>
             </div>
             <div>
                 <input type="text" class="form-field" id="login" name="login" placeholder="Логин" onblur="validLogin()">
-                <label class="error-label" id="loginError"></label>
+                <label class="error-label" id="loginError">${errors.get("loginError")}</label>
             </div>
             <div>
                 <input type="password" class="form-field" id="password" name="password" placeholder="пароль"
                        onblur="validPassword()">
-                <label class="error-label" id="passwordError"></label>
+                <label class="error-label" id="passwordError">${errors.get("passwordError")}</label>
             </div>
             <div>
-                <input type="password" class="form-field" id="passwordConfirm" placeholder="подтвердите пароль"
+                <input type="password" class="form-field" name="confirm" id="passwordConfirm" placeholder="подтвердите пароль"
                        onblur="confirmPassword()">
-                <label class="error-label" id="passwordConfError"></label>
+                <label class="error-label" id="passwordConfError">${errors.get("confirmError")}</label>
+            </div>
+            <div>
+                <img src="/captcha" alt="captcha">
+
+                <p>${simpleCaptcha}</p>
+            </div>
+            <div>
+                <input type="text" class="form-field" id="captcha" placeholder="введите текст с картинки">
+                <label class="error-label" id="captchaError"></label>
             </div>
             <div>
                 <input id="button" type="submit" name="button" onclick="return isValid()" value="Регистрация">
@@ -132,6 +149,19 @@
             return true;
         }
     }
+    function validAge() {
+        var age = document.getElementById("age");
+        var label = document.getElementById("ageError");
+        if (age.value < 12 || age.value > 100) {
+            label.innerHTML = "Введите, пожалуйста корректный возраст";
+            age.className = "error";
+            return false;
+        } else {
+            label.innerHTML = null;
+            age.className = classForm;
+            return true;
+        }
+    }
     function validEmail() {
         var email = document.getElementById("email");
         var label = document.getElementById("emailError");
@@ -176,7 +206,7 @@
         var password = document.getElementById("password");
         var passwordConfirm = document.getElementById("passwordConfirm");
         var label = document.getElementById("passwordConfError");
-        if (!(password.value == passwordConfirm.value)) {
+        if ((!(password.value == passwordConfirm.value) || passwordConfirm.value.length < 4)) {
             label.innerHTML = "Подтвердите пароль!!!";
             passwordConfirm.className = "error";
             return false;
@@ -187,7 +217,7 @@
         }
     }
     function isValid() {
-        return validName() && validEmail() && validLogin() && validPassword() && validSurname() && confirmPassword();
+        return validName() && validEmail() && validLogin() && validPassword() && validSurname() && confirmPassword() && validAge();
     }
 
 </script>

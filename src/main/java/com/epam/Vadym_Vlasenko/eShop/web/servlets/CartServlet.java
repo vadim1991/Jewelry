@@ -1,6 +1,8 @@
 package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
+import com.epam.Vadym_Vlasenko.eShop.entity.cart.Cart;
+import com.epam.Vadym_Vlasenko.eShop.service.cart.CartService;
 import com.epam.Vadym_Vlasenko.eShop.service.product.IProductService;
 
 import javax.servlet.ServletConfig;
@@ -11,10 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by swift-seeker-89717 on 06.04.2015.
@@ -22,85 +21,52 @@ import java.util.Map;
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
 
-    private IProductService service;
-    private Map<Product, Integer> cart;
-    private static final String PRODUCT_SERVICE = "product_service";
+    private IProductService productService;
+    private CartService cartService;
+
+    private static final int DEFAULT_AMOUNT = 1;
+    private static final String CART_ATTRIBUTE = "cart";
+    private static final String TOTAL_PRICE_ATTRIBUTE = "total";
+    private static final String REMOVE_PARAMETER = "remove";
+    private static final String ID_REMOVE_PARAMETER = "idRemove";
+    private static final String ID_PARAMETER = "id";
+    private static final String CART_JSP = "cart.jsp";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         ServletContext context = config.getServletContext();
-        service = (IProductService) context.getAttribute(PRODUCT_SERVICE);
-        cart = new HashMap<>();
+        productService = (IProductService) context.getAttribute(Constants.PRODUCT_SERVICE);
+        //cartService = (CartService) context.getAttribute(Constants.CART_SERVICE);
+        cartService = new CartService(new Cart());
     }
+
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String remove = req.getParameter("remove");
-        String idRemove = req.getParameter("idRemove");
+        String remove = req.getParameter(REMOVE_PARAMETER);
+        String idRemove = req.getParameter(ID_REMOVE_PARAMETER);
         if (remove != null) {
-            cart.remove(service.getProductByID(Integer.parseInt(idRemove)));
-            resp.getWriter().write("ok");
+            Product product = productService.getProductByID(Integer.parseInt(idRemove));
+            cartService.delete(product);
+            resp.getWriter().write(CART_ATTRIBUTE);
             return;
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String remove = req.getParameter("remove");
-        String idRemove = req.getParameter("idRemove");
-        if (remove != null) {
-            cart.remove(service.getProductByID(Integer.parseInt(idRemove)));
-            resp.getWriter().write("ok");
-            return;
+        String id = req.getParameter(ID_PARAMETER);
+        if (id != null) {
+            Product product = productService.getProductByID(Integer.parseInt(id));
+            cartService.addProduct(product, DEFAULT_AMOUNT);
         }
-        String id = req.getParameter("id");
-        addProduct(id);
-        double totalCost = totalCost();
-        //  List<Product> products = getProductFromCart();
-        // List<Integer> countList = getCountList();
-        // req.setAttribute("counts", countList);
-        req.setAttribute("cart", cart);
-        //  req.setAttribute("products", products);
-        req.setAttribute("total", totalCost);
-        req.getRequestDispatcher("cart.jsp").forward(req, resp);
+        double totalPrice = cartService.totalPrice();
+        List<Integer> singlePrice = cartService.getSinglePrice();
+        req.setAttribute("prices", singlePrice);
+        req.setAttribute(CART_ATTRIBUTE, cartService.getContent());
+        req.setAttribute(TOTAL_PRICE_ATTRIBUTE, totalPrice);
+        req.getRequestDispatcher(CART_JSP).forward(req, resp);
     }
 
-    private void addProduct(String idParam) {
-        if (idParam != null) {
-            int id = Integer.parseInt(idParam);
-            Product product = service.getProductByID(id);
-            if (cart.containsKey(product)) {
-                int value = cart.get(product);
-                cart.put(product, value + 1);
-            } else {
-                cart.put(product, 1);
-            }
-        }
-
-    }
-
-    private List<Integer> getCountList() {
-        List<Integer> countList = new ArrayList<>();
-        for (Map.Entry entry : cart.entrySet()) {
-            countList.add((Integer) entry.getValue());
-        }
-        return countList;
-    }
-
-    private List<Product> getProductFromCart() {
-        List<Product> products = new ArrayList<>();
-        for (Map.Entry entry : cart.entrySet()) {
-            products.add(service.getProductByID((Integer) entry.getKey()));
-        }
-        return products;
-    }
-
-    private double totalCost() {
-        int result = 0;
-        for (Map.Entry entry : cart.entrySet()) {
-            Product product = (Product) entry.getKey();
-            result += (product.getPrice() * (Integer) entry.getValue());
-        }
-        return result;
-    }
 }

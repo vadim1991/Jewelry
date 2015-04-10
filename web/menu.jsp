@@ -35,7 +35,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <!-- logo -->
         <div class="logo">
             <a href="index.jsp"><img height="120 px" src="images/logo.png" title="jewelry"/></a>
-            <a href="index.jsp"><img height="120 px" src="images/logoGif.gif" title="jewelry"/></a>
         </div>
         <!-- logo -->
         <!-- cart-info -->

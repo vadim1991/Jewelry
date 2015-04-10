@@ -14,11 +14,14 @@
 <jsp:include page="menu.jsp"></jsp:include>
 <!-- content -->
 <div class="container">
-    <div class="text-center">
+    <div class="text-left">
         <h1>Добро пожаловать</h1>
 
         <form>
-            <div align="center">
+            <div>
+                <label class="error-label">${success}</label>
+            </div>
+            <div>
                 <input type="text" class="form-field" id="login" name="login" placeholder="логин" onblur="validLogin()">
                 <label class="error-label" id="loginError"></label>
             </div>
@@ -29,7 +32,7 @@
             </div>
             <div>
                 <input id="button" type="submit" onclick="return isValid()" name="button" value="Вход">
-                <a class="b-home" href="registration.jsp">Регистрация</a>
+                <a class="b-home" href="registration">Регистрация</a>
             </div>
         </form>
     </div>
@@ -91,7 +94,7 @@
         var login = document.getElementById("login");
         var label = document.getElementById("loginError");
         if (login.value.length < '2' || login.value.length > '15') {
-            label.innerHTML = "Please enter another login"
+            label.innerHTML = "Пожалуйста, введите корректный логин"
             return false;
         } else {
             label.innerHTML = ""
@@ -102,7 +105,7 @@
         var login = document.getElementById("password");
         var label = document.getElementById("passwordError");
         if (login.value.length < '2' || login.value.length > '20') {
-            label.innerHTML = "Please enter another password"
+            label.innerHTML = "Пожалуйста, введите корректный пароль"
             return false;
         } else {
             label.innerHTML = ""
