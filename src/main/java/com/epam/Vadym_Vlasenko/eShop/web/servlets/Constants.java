@@ -15,4 +15,6 @@ public class Constants {
     public static final String LOGIN_PAGE = "login.jsp";
     public static final String EARRINGS_PAGE = "earrings.jsp";
     public static final String RING_PAGE = "collections.jsp";
+    public static final String BED_REQUEST_PAGE = "400.jsp";
+    public static final String NOT_FOUND_PAGE = "404.jsp";
 }

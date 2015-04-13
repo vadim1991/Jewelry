@@ -103,7 +103,8 @@
                         <p>Цена изделия: $ ${product.price}</p>
                     </div>
                     <div class="price-details-right">
-                        <a class="b-home" href="cart?id=${product.id}">Add to cart</a>
+                        <input type="hidden" id="id" value="${product.id}">
+                        <a class="b-home" href="#cartInfo">Добавить в корзину</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -203,4 +204,20 @@
 <!-- copy-right -->
 <!-- container -->
 </body>
+<script>
+    $(".b-home").click(function () {
+        var id = $(this).parent().find("#id").val();
+        $.ajax({
+            url: "cart",
+            method: "get",
+            dataType: "text",
+            data: {
+                "id": id
+            },
+            success: function (data) {
+                $("#amount").html(data);
+            }
+        })
+    })
+</script>
 </html>

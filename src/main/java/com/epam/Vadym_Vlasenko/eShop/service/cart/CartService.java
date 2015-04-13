@@ -49,4 +49,14 @@ public class CartService {
         }
         return list;
     }
+
+    public int productAmount() {
+        int result = 0;
+        if (cart != null) {
+            for (Map.Entry entry : cart.getCart().entrySet()) {
+                result += (Integer) entry.getValue();
+            }
+        }
+        return result;
+    }
 }

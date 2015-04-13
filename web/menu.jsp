@@ -34,7 +34,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="container">
         <!-- logo -->
         <div class="logo">
-            <a href="index.jsp"><img height="120 px" src="images/logo.png" title="jewelry"/></a>
+            <a href="index.jsp"><img height="100 %" src="images/logo.png" title="jewelry"/></a>
         </div>
         <!-- logo -->
         <!-- cart-info -->
@@ -43,7 +43,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <li><a id="login">${sessionScope.login}</a></li>
                 <li><a id="loginLink" href="login">Войти</a></li>
                 <li><a href="#">Язык</a></li>
-                <li class="cartinfo"><a href="cart"><span> </span>Корзина</a></li>
+                <li class="cartinfo"><a name="cartInfo" href="cart"><span> </span>Корзина <b
+                        id="amount">${sessionScope.amount}</b></a></li>
                 <div class="clearfix"></div>
             </ul>
         </div>

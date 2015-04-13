@@ -44,11 +44,12 @@
             </div>
             <div class="categories-right">
                 <ul>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li class="view"><a href="#">View All</a></li>
+                    <c:if test="${currentPage!=1}">
+                        <li><a href="earrings?page=${currentPage-1}">Предыдущая</a></li>
+                    </c:if>
+                    <c:if test="${currentPage lt noOfPages}">
+                        <li><a href="earrings?page=${currentPage+1}">Следущая</a></li>
+                    </c:if>
                     <li class="options">
                         <select>
                             <option>Sorted by</option>
@@ -69,15 +70,15 @@
         <div class="container">
             <c:forEach items="${products}" var="p">
                 <div class="col-md-3">
-                    <input type="hidden" name="id" value="${p.id}"/>
+                    <input type="hidden" class="id" name="id" value="${p.id}"/>
 
-                    <div onclick="location.href='details?id=${p.id}';" class="iteam-grid text-center">
+                    <div class="iteam-grid text-center">
                         <img height="150 px" src=${p.image.url} title=${p.title}>
                         <span>${p.title}</span>
                         <label>Цена $ ${p.price}</label>
                         <ul>
-                            <li><a class="cart" href="#">В корзину</a></li>
-                            <li><a class="more" href="#">Инфо</a></li>
+                            <li><a class="cart" href="#cartInfo">В корзину</a></li>
+                            <li><a class="more" href="details?id=${p.id}">Инфо</a></li>
                             <div class="clearfix"></div>
                         </ul>
                     </div>
@@ -94,4 +95,20 @@
     <jsp:include page="footer.jsp"></jsp:include>
 </div>
 </body>
+<script>
+    $(".cart").click(function () {
+        var id = $(this).parent().parent().parent().parent().find(".id").val();
+        $.ajax({
+            url: "cart",
+            method: "get",
+            dataType: "text",
+            data: {
+                "id": id
+            },
+            success: function (data) {
+                $("#amount").html(data);
+            }
+        })
+    })
+</script>
 </html>

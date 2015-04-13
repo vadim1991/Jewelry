@@ -1,6 +1,7 @@
 package com.epam.Vadym_Vlasenko.eShop.service.product;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.Category;
+import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
 
 import java.util.List;
@@ -18,7 +19,13 @@ public interface IProductService {
 
     public List<Product> getProducts();
 
+    public int getCountOfProduct(int idCategory);
+
+    public List<Product> getProducts(int idCategory, int offset, int records);
+
     public List<Product> getProductsByCategory(int idCategory);
+
+    public List<Product> getProductsByCriteria(Criteria criteria);
 
     public List<Product> getProductByName(String name);
 

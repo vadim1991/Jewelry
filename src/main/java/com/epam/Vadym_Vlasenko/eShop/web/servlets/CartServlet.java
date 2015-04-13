@@ -25,8 +25,10 @@ public class CartServlet extends HttpServlet {
 
     private static final int DEFAULT_AMOUNT = 1;
     private static final String CART_ATTRIBUTE = "cart";
+    private static final String PRICES_ATTRIBUTE = "prices";
     private static final String TOTAL_PRICE_ATTRIBUTE = "total";
     private static final String REMOVE_PARAMETER = "remove";
+    private static final String AMOUNT_PARAMETER = "amount";
     private static final String ID_REMOVE_PARAMETER = "idRemove";
     private static final String ID_PARAMETER = "id";
     private static final String CART_JSP = "cart.jsp";
@@ -46,7 +48,9 @@ public class CartServlet extends HttpServlet {
         if (remove != null && cartService != null) {
             Product product = productService.getProductByID(Integer.parseInt(idRemove));
             cartService.delete(product);
-            resp.getWriter().write(CART_ATTRIBUTE);
+            int productAmount = cartService.productAmount();
+            req.getSession().setAttribute(AMOUNT_PARAMETER, productAmount);
+            resp.getWriter().write(String.valueOf(productAmount));
             return;
         }
     }
@@ -62,10 +66,19 @@ public class CartServlet extends HttpServlet {
         if (id != null) {
             Product product = productService.getProductByID(Integer.parseInt(id));
             cartService.addProduct(product, DEFAULT_AMOUNT);
+            int productAmount = cartService.productAmount();
+            req.getSession().setAttribute(AMOUNT_PARAMETER, productAmount);
+            resp.getWriter().write(String.valueOf(productAmount));
+            return;
+        }
+        if (req.getParameter(AMOUNT_PARAMETER) != null) {
+            int productAmount = cartService.productAmount();
+            resp.getWriter().write(String.valueOf(productAmount));
+            return;
         }
         double totalPrice = cartService.totalPrice();
         List<Integer> singlePrice = cartService.getSinglePrice();
-        req.setAttribute("prices", singlePrice);
+        req.setAttribute(PRICES_ATTRIBUTE, singlePrice);
         req.setAttribute(CART_ATTRIBUTE, cartService.getContent());
         req.setAttribute(TOTAL_PRICE_ATTRIBUTE, totalPrice);
         req.getRequestDispatcher(CART_JSP).forward(req, resp);

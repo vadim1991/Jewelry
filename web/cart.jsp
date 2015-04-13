@@ -64,9 +64,7 @@
                     <div class="totals-value" id="cart-total">${total}</div>
                 </div>
             </div>
-
             <button class="checkout">Заказать</button>
-
         </div>
     </div>
     <!-- /error-page -->
@@ -79,4 +77,10 @@
 </body>
 
 <script src="js/cart.js"></script>
+<script>
+    var total = $("#cart-total").html();
+    if (total == 0) {
+        $(".checkout").hide();
+    }
+</script>
 </html>

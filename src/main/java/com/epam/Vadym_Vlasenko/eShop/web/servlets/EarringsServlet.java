@@ -1,5 +1,6 @@
 package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 
+import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
 import com.epam.Vadym_Vlasenko.eShop.service.product.IProductService;
 
@@ -22,6 +23,16 @@ public class EarringsServlet extends HttpServlet {
     private IProductService productService;
 
     private static final String EARRINGS_ATTRIBUTE = "products";
+    private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
+    private static final String PAGE_PARAMETER = "page";
+    private static final String MIN_PRICE_PARAMETER = "minPrice";
+    private static final String MAX_PRICE_PARAMETER = "maxPrice";
+    private static final String MIN_WEIGHT_PARAMETER = "minWeight";
+    private static final String MAX_WEIGHT_PARAMETER = "maxWeight";
+    private static final String INSERT_PARAMETER = "insert";
+    private static final String MATERIAL_PARAMETER = "material";
+    private static final String PRODUCT_ON_PAGE_PARAMETER = "productOnPage";
+    private static final String SORT_TYPE_PARAMETER = "sortType";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -36,8 +47,38 @@ public class EarringsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Product> products = productService.getProductsByCategory(Constants.EARRINGS_CATEGORY);
+        int page = 1;
+        int records = 5;
+        String pageValue = req.getParameter(PAGE_PARAMETER);
+        if (pageValue != null) {
+            page = Integer.parseInt(pageValue);
+        }
+        int countProduct = productService.getCountOfProduct(Constants.EARRINGS_CATEGORY);
+        int noOfPages = (int) Math.ceil(countProduct * 1.0 / records);
+        Criteria criteria = getCriteria(req, resp);
+        criteria.setPositionFrom((page - 1) * records);
+        criteria.setProductOnPage(records);
+        List<Product> products = productService.getProductsByCriteria(criteria);
+        if (products == null) {
+            req.getRequestDispatcher(Constants.BED_REQUEST_PAGE).forward(req, resp);
+            return;
+        }
         req.setAttribute(EARRINGS_ATTRIBUTE, products);
+        req.setAttribute("noOfPages", noOfPages);
+        req.setAttribute(CURRENT_PAGE_ATTRIBUTE, page);
         req.getRequestDispatcher(Constants.EARRINGS_PAGE).forward(req, resp);
+    }
+
+    private Criteria getCriteria(HttpServletRequest request, HttpServletResponse response) {
+        Criteria criteria = new Criteria();
+        criteria.setIdCategory(Constants.EARRINGS_CATEGORY);
+        criteria.setMaxPrice(request.getParameter(MAX_PRICE_PARAMETER));
+        criteria.setMinPrice(request.getParameter(MIN_PRICE_PARAMETER));
+        criteria.setMinWeight(request.getParameter(MIN_WEIGHT_PARAMETER));
+        criteria.setMaxWeight(request.getParameter(MAX_WEIGHT_PARAMETER));
+        criteria.setInsertId(request.getParameter(INSERT_PARAMETER));
+        criteria.setMaterialId(request.getParameter(MATERIAL_PARAMETER));
+        criteria.setSortType(request.getParameter(SORT_TYPE_PARAMETER));
+        return criteria;
     }
 }

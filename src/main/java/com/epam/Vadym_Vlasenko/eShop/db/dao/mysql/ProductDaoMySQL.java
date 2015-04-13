@@ -2,6 +2,7 @@ package com.epam.Vadym_Vlasenko.eShop.db.dao.mysql;
 
 import com.epam.Vadym_Vlasenko.eShop.db.DBConnection;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IProductDAO;
+import com.epam.Vadym_Vlasenko.eShop.db.query_builder.QueryCreator;
 import com.epam.Vadym_Vlasenko.eShop.entity.*;
 
 import java.sql.*;
@@ -15,9 +16,12 @@ import static com.epam.Vadym_Vlasenko.eShop.db.util.DBUtil.*;
  */
 public class ProductDaoMySQL implements IProductDAO {
 
+    private static final String PRODUCT_TABLE = "products";
     private static final String ADD_PRODUCT = "INSERT INTO products VALUES (DEFAULT ,?,?,?,?,?,?,?,?,?)";
+    private static final String GET_COUNT_OF_PRODUCT = "SELECT COUNT(*) FROM products WHERE category=?";
     private static final String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE id=?";
     private static final String GET_ALL = "SELECT * FROM products";
+    private static final String GET_ALL_PAGE = "SELECT * FROM products WHERE category=? LIMIT ?,?";
     private static final String GET_CATEGORY_BY_ID = "SELECT * FROM category WHERE id=?";
     private static final String GET_MATERIAL_BY_ID = "SELECT * FROM materials WHERE id=?";
     private static final String GET_INSERT_BY_ID = "SELECT * FROM inserts WHERE id=?";
@@ -80,6 +84,26 @@ public class ProductDaoMySQL implements IProductDAO {
     }
 
     @Override
+    public List<Product> getProducts(int idCategory, int offset, int records) throws SQLException {
+        List<Product> products = new ArrayList<>();
+        Connection connection = DBConnection.getConnectionHolder().getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_PAGE)) {
+            int index = 1;
+            preparedStatement.setInt(index++, idCategory);
+            preparedStatement.setInt(index++, offset);
+            preparedStatement.setInt(index++, records);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    products.add(extractProduct(resultSet));
+                }
+            }
+        } finally {
+            closeConnection(connection);
+        }
+        return products;
+    }
+
+    @Override
     public List<Product> getProductsByCategory(int idCategory) {
         List<Product> products = new ArrayList<>();
         try (Connection connection = DBConnection.getConnectionHolder().getConnection();
@@ -94,6 +118,38 @@ public class ProductDaoMySQL implements IProductDAO {
 
         }
         return products;
+    }
+
+    @Override
+    public List<Product> getProductsByCriteria(Criteria criteria) {
+        List<Product> products = new ArrayList<>();
+        String query = new QueryCreator().buildCriteria(criteria, PRODUCT_TABLE);
+        try (Connection connection = DBConnection.getConnectionHolder().getConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                products.add(extractProduct(resultSet));
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+            return null;
+        }
+        return products;
+    }
+
+    @Override
+    public int getCountOfProduct(int idCategory) throws SQLException {
+        int count = 0;
+        try (Connection connection = DBConnection.getConnectionHolder().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_COUNT_OF_PRODUCT)) {
+            int index = 1;
+            preparedStatement.setInt(index, idCategory);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        }
+        return count;
     }
 
     @Override

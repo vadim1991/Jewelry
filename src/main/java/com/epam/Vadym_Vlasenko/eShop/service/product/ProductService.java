@@ -3,6 +3,7 @@ package com.epam.Vadym_Vlasenko.eShop.service.product;
 import com.epam.Vadym_Vlasenko.eShop.db.DBConnection;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IProductDAO;
 import com.epam.Vadym_Vlasenko.eShop.entity.Category;
+import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
 import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionManager;
 import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionOperation;
@@ -60,11 +61,41 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public int getCountOfProduct(final int idCategory) {
+        return tm.transaction(new TransactionOperation<Integer>() {
+            @Override
+            public Integer execute() throws SQLException {
+                return productDAO.getCountOfProduct(idCategory);
+            }
+        });
+    }
+
+    @Override
+    public List<Product> getProducts(final int idCategory, final int offset, final int records) {
+        return tm.transaction(new TransactionOperation<List<Product>>() {
+            @Override
+            public List<Product> execute() throws SQLException {
+                return productDAO.getProducts(idCategory, offset, records);
+            }
+        });
+    }
+
+    @Override
     public List<Product> getProductsByCategory(final int idCategory) {
         return tm.transaction(new TransactionOperation<List<Product>>() {
             @Override
             public List<Product> execute() throws SQLException {
                 return productDAO.getProductsByCategory(idCategory);
+            }
+        });
+    }
+
+    @Override
+    public List<Product> getProductsByCriteria(final Criteria criteria) {
+        return tm.transaction(new TransactionOperation<List<Product>>() {
+            @Override
+            public List<Product> execute() throws SQLException {
+                return productDAO.getProductsByCriteria(criteria);
             }
         });
     }
