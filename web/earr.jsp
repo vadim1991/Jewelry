@@ -92,8 +92,8 @@
 
                     <div class="filter-div" id='selectMaterial'>
                     </div>
-                    <input type="hidden" name="material" id="material" value="1">
-                    <input type="hidden" name="insert" id="insert" value="1">
+                    <input type="hidden" name="material" id="material">
+                    <input type="hidden" name="insert" id="insert">
                     <input type="hidden" name="sortType" id="sortType" value="1">
                     <span style="font-style: italic;">Вставка</span>
 
@@ -132,12 +132,8 @@
                 </div>
                 <div class="categories-right">
                     <ul>
-                        <c:if test="${currentPage!=1}">
-                            <li><a href="earrings?page=${currentPage-1}">Предыдущая</a></li>
-                        </c:if>
-                        <c:if test="${currentPage lt noOfPages}">
-                            <li><a href="earrings?page=${currentPage+1}">Следущая</a></li>
-                        </c:if>
+                        <li><a href="earrings?page=">Предыдущая</a></li>
+                        <li><a href="earrings?page=">Следущая</a></li>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
@@ -274,7 +270,6 @@
         });
         selectSortType.bind('select', function (event) {
             var args = event.args;
-            var item = selectInsert.jqxComboBox('getItem', args.index);
             $("#sortType").val(args.index + 1);
         });
     });
@@ -285,16 +280,14 @@
         url: "rings",
         method: "post",
         dataType: "json",
-        success: function (data) {
-            for (var i = 0; i < data.length; i++) {
-                var d = data[i];
-                container.append(new ProductObject(d.id, d.image.url, d.title, d.price).build())
-            }
+        success:function (data) {
+            parseData(data, container)
         }
-    })
+    });
     $("#search").click(function () {
         var container = $(".container-right");
         container.empty();
+        container.hide();
         var startPrice = $("#startPrice").val();
         var endPrice = $("#endPrice").val();
         var startWeight = $("#startWeigh").val();
@@ -316,14 +309,18 @@
                 "sortType": sortType
             },
             success: function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    var d = data[i];
-                    var product = new ProductObject(d.id, d.image.url, d.title, d.price);
-                    container.append(product.build());
-                }
+                parseData(data, container)
             }
         })
-    })
+    });
+    function parseData(data, container) {
+        for (var i = 0; i < data.products.length; i++) {
+            var d = data.products[i];
+            var product = new ProductObject(d.id, d.image.url, d.title, d.price).build();
+            container.append(product);
+            container.show("slow");
+        }
+    }
 </script>
 
 </html>

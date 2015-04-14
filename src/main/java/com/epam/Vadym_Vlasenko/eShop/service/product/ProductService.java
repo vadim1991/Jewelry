@@ -114,4 +114,9 @@ public class ProductService implements IProductService {
     public List<Product> getAllByMaterial(int id_material) {
         return null;
     }
+
+    @Override
+    public int getNoOfPages() {
+        return productDAO.getNoOfPages();
+    }
 }

@@ -12,8 +12,10 @@ public enum SortType {
         switch (sortType) {
             case "1":
                 result = "price ASC";
+                break;
             case "2":
                 result = "price DESC";
+                break;
         }
         return result;
     }

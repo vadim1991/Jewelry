@@ -16,8 +16,11 @@ import static com.epam.Vadym_Vlasenko.eShop.db.util.DBUtil.*;
  */
 public class ProductDaoMySQL implements IProductDAO {
 
+    private int noOfPages;
+
     private static final String PRODUCT_TABLE = "products";
     private static final String ADD_PRODUCT = "INSERT INTO products VALUES (DEFAULT ,?,?,?,?,?,?,?,?,?)";
+    private static final String SELECT_FOUND_ROWS = "SELECT FOUND_ROWS()";
     private static final String GET_COUNT_OF_PRODUCT = "SELECT COUNT(*) FROM products WHERE category=?";
     private static final String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE id=?";
     private static final String GET_ALL = "SELECT * FROM products";
@@ -129,6 +132,12 @@ public class ProductDaoMySQL implements IProductDAO {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 products.add(extractProduct(resultSet));
+            }
+            resultSet.close();
+            resultSet = statement.executeQuery(SELECT_FOUND_ROWS);
+            if (resultSet.next()) {
+                this.noOfPages = resultSet.getInt(1);
+                System.out.println(noOfPages);
             }
         } catch (SQLException e) {
             System.err.println(e);
@@ -272,5 +281,9 @@ public class ProductDaoMySQL implements IProductDAO {
         product.setCategory(getCategoryByID(rs.getInt("category")));
         product.setSize(rs.getDouble("size"));
         return product;
+    }
+
+    public int getNoOfPages() {
+        return noOfPages;
     }
 }

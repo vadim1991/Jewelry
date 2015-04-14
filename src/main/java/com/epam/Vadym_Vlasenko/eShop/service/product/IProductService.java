@@ -33,4 +33,6 @@ public interface IProductService {
 
     public List<Product> getAllByMaterial(int id_material);
 
+    public int getNoOfPages();
+
 }

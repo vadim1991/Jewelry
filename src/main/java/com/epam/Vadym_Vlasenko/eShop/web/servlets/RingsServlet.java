@@ -5,6 +5,7 @@ import com.epam.Vadym_Vlasenko.eShop.entity.Product;
 import com.epam.Vadym_Vlasenko.eShop.service.product.IProductService;
 import com.epam.Vadym_Vlasenko.eShop.service.product.ProductService;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,34 +47,32 @@ public class RingsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        List<Product> products = service.getProductsByCategory(Constants.RINGS_CATEGORY);
-////        req.setAttribute(RINGS_ATTRIBUTE, products);
-////        req.getRequestDispatcher(Constants.RING_PAGE).forward(req, resp);
+        req.setCharacterEncoding("utf-8");
+        resp.setCharacterEncoding("utf-8");
         Gson gson = new Gson();
-//        System.out.println(products);
-//        System.out.println(gson.toJson(products));
-//        resp.getWriter().write(gson.toJson(products));
         int page = 1;
-        int records = 12;
+        int records = 6;
         String pageValue = req.getParameter(PAGE_PARAMETER);
         if (pageValue != null) {
             page = Integer.parseInt(pageValue);
         }
-        int countProduct = productService.getCountOfProduct(Constants.EARRINGS_CATEGORY);
-        int noOfPages = (int) Math.ceil(countProduct * 1.0 / records);
         Criteria criteria = getCriteria(req, resp);
         criteria.setPositionFrom((page - 1) * records);
         criteria.setProductOnPage(records);
         List<Product> products = productService.getProductsByCriteria(criteria);
+        int countProduct = productService.getNoOfPages();
+        System.out.println(countProduct);
+        int noOfPages = (int) Math.ceil(countProduct * 1.0 / records);
+        System.out.println(noOfPages);
         if (products == null) {
             req.getRequestDispatcher(Constants.BED_REQUEST_PAGE).forward(req, resp);
             return;
         }
-        req.setAttribute(EARRINGS_ATTRIBUTE, products);
-        req.setAttribute(PRODUCT_ON_PAGE_PARAMETER, noOfPages);
-        req.setAttribute(CURRENT_PAGE_ATTRIBUTE, page);
-        System.out.println(products);
-        resp.getWriter().write(gson.toJson(products));
+        JsonObject object = new JsonObject();
+        object.addProperty(PRODUCT_ON_PAGE_PARAMETER, noOfPages);
+        object.addProperty(CURRENT_PAGE_ATTRIBUTE, page);
+        object.add(EARRINGS_ATTRIBUTE, gson.toJsonTree(products));
+        resp.getWriter().write(gson.toJson(object));
     }
 
     private Criteria getCriteria(HttpServletRequest request, HttpServletResponse response) {

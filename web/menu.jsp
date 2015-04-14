@@ -16,6 +16,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href='http://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link href="css/design.css" rel="stylesheet">
+    <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/widgets/demos.js"></script>
     <script type="text/javascript" src="js/widgets/jqxcore.js"></script>

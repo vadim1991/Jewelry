@@ -36,4 +36,6 @@ public interface IProductDAO {
 
     public boolean removeProduct(int id);
 
+    public int getNoOfPages();
+
 }

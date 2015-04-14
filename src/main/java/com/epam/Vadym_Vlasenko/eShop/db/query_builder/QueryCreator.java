@@ -38,15 +38,20 @@ public class QueryCreator {
             queryBuilder.and().between(WEIGHT_FIELD, minWeight, maxWeight);
         }
         if (criteria.getInsertId() != null) {
-            queryBuilder.and().whereParameter(INSERT_FIELD, criteria.getInsertId());
+            if (!criteria.getInsertId().isEmpty()) {
+                queryBuilder.and().whereParameter(INSERT_FIELD, criteria.getInsertId());
+            }
         }
         if (criteria.getMaterialId() != null) {
-            queryBuilder.and().whereParameter(MATERIAL_FIELD, criteria.getMaterialId());
+            if (!criteria.getMaterialId().isEmpty()) {
+                queryBuilder.and().whereParameter(MATERIAL_FIELD, criteria.getMaterialId());
+            }
         }
-        if (criteria.getSortType()!=null) {
-
+        if (criteria.getSortType() != null) {
+            queryBuilder.orderBy(criteria.getSortType());
         }
         queryBuilder.limit(criteria.getPositionFrom(), criteria.getProductOnPage()).end();
+        System.out.println(queryBuilder.toString());
         return queryBuilder.toString();
     }
 

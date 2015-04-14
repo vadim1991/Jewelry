@@ -2,34 +2,50 @@ package com.epam.Vadym_Vlasenko.eShop.web.filters;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
 /**
  * Created by swift-seeker-89717 on 14.04.2015.
  */
-@WebFilter(urlPatterns = "/")
+@WebFilter(urlPatterns = {"/*"}, initParams = {@WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")})
 public class EncodingFilter implements Filter {
+    private String code;
 
-    private String encoding = "utf-8";
+    /**
+     * (non-Javadoc)
+     * Override init
+     *
+     * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
+     */
+    @Override
+    public void init(FilterConfig fConfig) throws ServletException {
+        code = fConfig.getInitParameter("encoding");
+    }
 
+    /**
+     * (non-Javadoc)
+     * Override doFilter
+     *
+     * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
+     */
     public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain filterChain) throws IOException, ServletException {
-        request.setCharacterEncoding(encoding);
-        response.setCharacterEncoding(encoding);
-        filterChain.doFilter(request, response);
-    }
-
-    public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println("Encoding filter starts");
-        String encodingParam = filterConfig.getInitParameter("encoding");
-        if (encodingParam != null) {
-            encoding = encodingParam;
+                         FilterChain chain) throws IOException, ServletException {
+        String codeRequest = request.getCharacterEncoding();
+        if (code != null && !code.equalsIgnoreCase(codeRequest)) {
+            request.setCharacterEncoding(code);
+            response.setCharacterEncoding(code);
         }
-        System.out.println("Encoding filter finished");
-
+        chain.doFilter(request, response);
     }
 
+    /**
+     * (non-Javadoc)
+     * Override destroy
+     *
+     * @see javax.servlet.Filter#destroy()
+     */
     public void destroy() {
-        // nothing todo
+        code = null;
     }
 }

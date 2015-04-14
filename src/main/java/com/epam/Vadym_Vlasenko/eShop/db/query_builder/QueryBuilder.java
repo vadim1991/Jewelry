@@ -1,5 +1,7 @@
 package com.epam.Vadym_Vlasenko.eShop.db.query_builder;
 
+import com.epam.Vadym_Vlasenko.eShop.db.SortType;
+
 /**
  * Created by swift-seeker-89717 on 13.04.2015.
  */
@@ -10,7 +12,7 @@ public class QueryBuilder {
     private static final String WHERE = "WHERE";
     private static final String LIKE = "LIKE";
     private static final String FROM = "FROM";
-    private static final String SELECT = "SELECT";
+    private static final String SELECT = "SELECT SQL_CALC_FOUND_ROWS";
     private static final String LIMIT = "LIMIT";
     private static final String ALL = "*";
     private static final String SPACE = " ";
@@ -32,8 +34,8 @@ public class QueryBuilder {
         return this;
     }
 
-    public QueryBuilder orderBy(String columnName, String sortType) {
-        baseQuery.append(ORDER).append(SPACE).append(columnName).append(SPACE);
+    public QueryBuilder orderBy(String sortType) {
+        baseQuery.append(ORDER).append(SPACE).append(SortType.choose(sortType)).append(SPACE);
         return this;
     }
 
