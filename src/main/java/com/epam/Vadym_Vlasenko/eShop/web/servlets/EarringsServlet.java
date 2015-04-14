@@ -31,7 +31,7 @@ public class EarringsServlet extends HttpServlet {
     private static final String MAX_WEIGHT_PARAMETER = "maxWeight";
     private static final String INSERT_PARAMETER = "insert";
     private static final String MATERIAL_PARAMETER = "material";
-    private static final String PRODUCT_ON_PAGE_PARAMETER = "productOnPage";
+    private static final String PRODUCT_ON_PAGE_PARAMETER = "noOfPages";
     private static final String SORT_TYPE_PARAMETER = "sortType";
 
     @Override
@@ -48,7 +48,7 @@ public class EarringsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int page = 1;
-        int records = 5;
+        int records = 12;
         String pageValue = req.getParameter(PAGE_PARAMETER);
         if (pageValue != null) {
             page = Integer.parseInt(pageValue);
@@ -64,7 +64,7 @@ public class EarringsServlet extends HttpServlet {
             return;
         }
         req.setAttribute(EARRINGS_ATTRIBUTE, products);
-        req.setAttribute("noOfPages", noOfPages);
+        req.setAttribute(PRODUCT_ON_PAGE_PARAMETER, noOfPages);
         req.setAttribute(CURRENT_PAGE_ATTRIBUTE, page);
         req.getRequestDispatcher(Constants.EARRINGS_PAGE).forward(req, resp);
     }

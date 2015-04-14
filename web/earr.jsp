@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Серьги</title>
+    <script src="js/product.js"></script>
 </head>
 <body>
 <!-- container -->
@@ -63,72 +64,52 @@
         <!-- iteam-grids -->
         <div class="iteam-grids">
             <div class="container-left">
-                <form action="earrings">
-                    <div class="filter-form">
+                <div class="filter-form">
 
-                        <div class="filter-div">
-                            <h3>
-                                Фильтр
-                            </h3>
-                        </div>
-                        <span style="font-style: italic;">Цена изделия</span>
+                    <div class="filter-div">
+                        <h3>
+                            Фильтр
+                        </h3>
+                    </div>
+                    <span style="font-style: italic;">Цена изделия</span>
 
-                        <div id='redLevel'>
-                        </div>
-                        <div>
-                            <input class="search-field" type="text" name="minPrice" id="startPrice" value="0">
-                            <input class="search-field" type="text" name="maxPrice" id="endPrice" value="20000">
-                        </div>
-                        <span style="font-style: italic;">Вес изделия</span>
+                    <div id='redLevel'>
+                    </div>
+                    <div>
+                        <input class="search-field" type="text" name="minPrice" id="startPrice" value="0">
+                        <input class="search-field" type="text" name="maxPrice" id="endPrice" value="20000">
+                    </div>
+                    <span style="font-style: italic;">Вес изделия</span>
 
-                        <div id='greenLevel'>
-                        </div>
-                        <div>
-                            <input class="search-field" type="text" name="minWeight" id="startWeigh" value="0">
-                            <input class="search-field" type="text" name="maxWeight" id="endWeight"
-                                   value="10.0">
-                        </div>
-                        <span style="font-style: italic;">Материал</span>
+                    <div id='greenLevel'>
+                    </div>
+                    <div>
+                        <input class="search-field" type="text" name="minWeight" id="startWeigh" value="0">
+                        <input class="search-field" type="text" name="maxWeight" id="endWeight"
+                               value="10.0">
+                    </div>
+                    <span style="font-style: italic;">Материал</span>
 
-                        <div class="filter-div" id='selectMaterial'>
-                        </div>
-                        <input type="hidden" name="material" id="material" value="1">
-                        <input type="hidden" name="insert" id="insert" value="1">
-                        <input type="hidden" name="sortType" id="sortType" value="1">
-                        <span style="font-style: italic;">Вставка</span>
+                    <div class="filter-div" id='selectMaterial'>
+                    </div>
+                    <input type="hidden" name="material" id="material" value="1">
+                    <input type="hidden" name="insert" id="insert" value="1">
+                    <input type="hidden" name="sortType" id="sortType" value="1">
+                    <span style="font-style: italic;">Вставка</span>
 
-                        <div class="filter-div" id='selectInsert'>
-                        </div>
-                        <span style="font-style: italic;">Сортировать </span>
+                    <div class="filter-div" id='selectInsert'>
+                    </div>
+                    <span style="font-style: italic;">Сортировать </span>
 
-                        <div class="filter-div" id='selectSortType'>
-                        </div>
-
-                        <div>
-                            <input type="submit" class="b-home" value="Поиск">
-                        </div>
+                    <div class="filter-div" id='selectSortType'>
                     </div>
 
-
-                </form>
+                    <div>
+                        <button id="search" class="b-home">Поиск</button>
+                    </div>
+                </div>
             </div>
             <div class="container-right">
-                <c:forEach items="${products}" var="p">
-                    <div class="col-md-4">
-                        <input type="hidden" class="id" name="id" value="${p.id}"/>
-
-                        <div class="iteam-grid text-center">
-                            <img height="150 px" src=${p.image.url} title=${p.title}>
-                            <span>${p.title}</span>
-                            <label>Цена $ ${p.price}</label>
-                            <ul>
-                                <li><a class="cart" href="#cartInfo">В корзину</a></li>
-                                <li><a class="more" href="details?id=${p.id}">Инфо</a></li>
-                                <div class="clearfix"></div>
-                            </ul>
-                        </div>
-                    </div>
-                </c:forEach>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -166,23 +147,21 @@
         <jsp:include page="footer.jsp"></jsp:include>
     </div>
 </div>
+<div id="product-stub" class="col-md-4 stub">
+
+    <div class="iteam-grid text-center">
+        <img height="150 px" class="image" src="" title="">
+        <span class="title"></span>
+        <label class="price"></label>
+        <ul>
+            <input type="hidden" class="id" name="id"/>
+            <li><a class="cart" href="#cartInfo">В корзину</a></li>
+            <li><a class="more" href="">Инфо</a></li>
+            <div class="clearfix"></div>
+        </ul>
+    </div>
+</div>
 </body>
-<script>
-    $(".cart").click(function () {
-        var id = $(this).parent().parent().parent().parent().find(".id").val();
-        $.ajax({
-            url: "cart",
-            method: "get",
-            dataType: "text",
-            data: {
-                "id": id
-            },
-            success: function (data) {
-                $("#amount").html(data);
-            }
-        })
-    })
-</script>
 <script type="text/javascript">
     $(document).ready(function () {
         var start = $("#startPrice");
@@ -300,4 +279,51 @@
         });
     });
 </script>
+<script>
+    var container = $(".container-right");
+    $.ajax({
+        url: "rings",
+        method: "post",
+        dataType: "json",
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var d = data[i];
+                container.append(new ProductObject(d.id, d.image.url, d.title, d.price).build())
+            }
+        }
+    })
+    $("#search").click(function () {
+        var container = $(".container-right");
+        container.empty();
+        var startPrice = $("#startPrice").val();
+        var endPrice = $("#endPrice").val();
+        var startWeight = $("#startWeigh").val();
+        var endWeight = $("#endWeight").val();
+        var material = $("#material").val();
+        var insert = $("#insert").val();
+        var sortType = $("#sortType").val();
+        $.ajax({
+            url: "rings",
+            method: "post",
+            dataType: "json",
+            data: {
+                "minPrice": startPrice,
+                "maxPrice": endPrice,
+                "minWeight": startWeight,
+                "maxWeight": endWeight,
+                "insert": insert,
+                "material": material,
+                "sortType": sortType
+            },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var d = data[i];
+                    var product = new ProductObject(d.id, d.image.url, d.title, d.price);
+                    container.append(product.build());
+                }
+            }
+        })
+    })
+</script>
+
 </html>

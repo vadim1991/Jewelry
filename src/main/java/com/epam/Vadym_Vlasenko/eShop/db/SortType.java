@@ -5,6 +5,17 @@ package com.epam.Vadym_Vlasenko.eShop.db;
  */
 public enum SortType {
 
-    PRICE_ASC, PRICE_DESC
+    PRICE_ASC, PRICE_DESC;
+
+    public static String choose(String sortType) {
+        String result = null;
+        switch (sortType) {
+            case "1":
+                result = "price ASC";
+            case "2":
+                result = "price DESC";
+        }
+        return result;
+    }
 
 }

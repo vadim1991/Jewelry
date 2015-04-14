@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="css/widget/jqx.black.css"/>
     <link rel="stylesheet" href="css/widget/jqx.shinyblack.css"/>
     <link rel="stylesheet" href="css/design.css"/>
-    <link rel="stylesheet" href="css/justified-nav.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <script type="text/javascript" src="js/widgets/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="js/widgets/demos.js"></script>
@@ -86,68 +85,17 @@
             $("#jqxComboBox").jqxComboBox({
                 source: source,
                 selectedIndex: 0,
-                width: '200px',
+                width: '160px',
                 height: '25px',
                 theme: 'black'
             });
             $('#jqxComboBox').bind('select', function (event) {
                 var args = event.args;
                 var item = $('#jqxComboBox').jqxComboBox('getItem', args.index);
-                $("#material").val(item.label);
+                $("#material").val(args.index);
             });
         });
     </script>
-    <style type="text/css">
-        .colorBlock {
-            border: 1px solid #aaa;
-            width: 200px;
-            height: 200px;
-            float: right;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border-radius: 5px;
-        }
-
-        .colorLabel {
-            padding: 6px;
-        }
-    </style>
 </head>
-<body class='default'>
-<form>
-    <div style="width: 550px">
-        <div style="height: 180px;">
-            <div style="float: left">
-                <span style="font-style: italic;">Цена изделия</span>
 
-                <div id='redLevel'>
-                </div>
-                <div>
-                    <input class="form-field" type="text" id="startPrice" value="0">
-                    <input class="form-field" type="text" id="endPrice" value="4000">
-                </div>
-                <span style="font-style: italic;">Вес изделия</span>
-
-                <div id='greenLevel'>
-                </div>
-                <div>
-                    <input class="form-field" type="text" id="startWeigh" value="0">
-                    <input class="form-field" type="text" id="endWeight" value="10.0">
-                </div>
-                <span style="font-style: italic;">Материал</span>
-
-                <div id='jqxComboBox'>
-                </div>
-                <div>
-                    <input class="form-field" type="hidden" id="material">
-                </div>
-                <div>
-                    <input type="submit" class="b-home" value="Поиск">
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-</form>
-</body>
 </html>

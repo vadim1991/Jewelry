@@ -13,6 +13,7 @@ public class QueryCreator {
     private static final String INSERT_FIELD = "insert_id";
     private static final String MATERIAL_FIELD = "material";
     private static final String WEIGHT_FIELD = "weight";
+    private static final String SORT_FIELD = "sortType";
 
     public String where(String tableName, String nameColumn, String parameter) {
         QueryBuilder queryBuilder = new QueryBuilder();
@@ -41,6 +42,9 @@ public class QueryCreator {
         }
         if (criteria.getMaterialId() != null) {
             queryBuilder.and().whereParameter(MATERIAL_FIELD, criteria.getMaterialId());
+        }
+        if (criteria.getSortType()!=null) {
+
         }
         queryBuilder.limit(criteria.getPositionFrom(), criteria.getProductOnPage()).end();
         return queryBuilder.toString();

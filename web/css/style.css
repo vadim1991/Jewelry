@@ -441,6 +441,7 @@ span.menu {
 
 /*-- footer --*/
 .footer {
+    clear: both;
     background: #252c30;
     padding: 3em 0 0 0;
 }
@@ -770,13 +771,12 @@ ul.social-icons li a:hover {
 
 /*-- iteam-grids --*/
 .iteam-grids {
-    margin: 1em 0 4em;
+    margin: 1em 1em 1em 4em;
 }
 
 .iteam-grid {
     border: 1px solid #dedede;
     padding: 1em 0 0 0;
-    border-bottom: 0;
     margin: 1em 0;
 }
 

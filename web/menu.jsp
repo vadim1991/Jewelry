@@ -8,17 +8,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 <head>
     <title>Baku Website Template | Home :: w3layouts</title>
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="css/widget/jqx.base.css"/>
+    <link rel="stylesheet" href="css/widget/jqx.black.css"/>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700,800,400,600' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-    <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
     <link href="css/design.css" rel="stylesheet">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.min.js"></script>
-    <!-- Custom Theme files -->
+    <script type="text/javascript" src="js/widgets/demos.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxcore.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxslider.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxcombobox.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxscrollbar.js"></script>
     <link href="css/style.css" rel='stylesheet' type='text/css'/>
-    <!-- Custom Theme files -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="application/x-javascript"> addEventListener("load", function () {
         setTimeout(hideURLbar, 0);

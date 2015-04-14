@@ -16,7 +16,7 @@ public class QueryBuilder {
     private static final String SPACE = " ";
     private static final String COMMA = ",";
     private static final String AND = "AND";
-    private static final String ORDER = "ORDER";
+    private static final String ORDER = "ORDER BY";
     private static final String BETWEEN = "BETWEEN";
     private static final String SEMICOLON = ";";
     private static final String LEFT_DRACKET = ")";
@@ -30,7 +30,11 @@ public class QueryBuilder {
     public QueryBuilder select() {
         baseQuery.append(SELECT).append(SPACE);
         return this;
+    }
 
+    public QueryBuilder orderBy(String columnName, String sortType) {
+        baseQuery.append(ORDER).append(SPACE).append(columnName).append(SPACE);
+        return this;
     }
 
     public QueryBuilder all() {

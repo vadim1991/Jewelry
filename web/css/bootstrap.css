@@ -739,6 +739,23 @@ pre code {
   margin-right: auto;
   margin-left: auto;
 }
+.container-left {
+  border: thick;
+  float: left;
+  width: 25%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.container-right {
+  float: right;
+  width: 75%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
 @media (min-width: 768px) {
   .container {
     width: 750px;
