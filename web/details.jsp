@@ -29,9 +29,7 @@
     <div class="details-cate">
         <div class="container">
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Arizume</a></li>
-                <li><a href="#">Fern Clamper Bracelet</a></li>
+                <li><a href="index.jsp">Главная</a></li>
             </ul>
         </div>
     </div>

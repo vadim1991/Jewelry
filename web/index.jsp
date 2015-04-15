@@ -9,11 +9,11 @@
 <html>
 <head>
     <title>Ювелирный интернет магазин | Главная</title>
-</head>
-<!----webfonts--->
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700,800,400,600' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
-<!---//webfonts--->
+    <!----webfonts--->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700,800,400,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <!---//webfonts--->
+    <script src="js/productIndex.js"></script>
 </head>
 <body>
 <!-- container -->
@@ -93,111 +93,9 @@
                 <!-- requried-jsfiles-for owl -->
                 <link href="css/owl.carousel.css" rel="stylesheet">
                 <script src="js/owl.carousel.js"></script>
-                <script>
-                    $(document).ready(function () {
-                        $("#owl-demo").owlCarousel({
-                            items: 5,
-                            lazyLoad: true,
-                            autoPlay: true,
-                            navigation: true,
-                            navigationText: false,
-                            pagination: false
-                        });
-                    });
-                </script>
                 <!-- //requried-jsfiles-for owl -->
                 <!-- start content_slider -->
                 <div id="owl-demo" class="owl-carousel text-center">
-                    <div onclick="location.href='404.jsp';" class="item">
-                        <div class="product-grid">
-                            <div class="product-pic">
-                                <a href="#"><img src="images/pic2.jpg" title="name"/></a>
-                            </div>
-                            <div class="product-pic-info">
-                                <p>Astley Aquamarine</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="location.href='404.jsp';" class="item">
-                        <div class="product-grid">
-                            <div class="product-pic">
-                                <a href="#"><img src="images/pic3.png" title="name"/></a>
-                            </div>
-                            <div class="product-pic-info">
-                                <p>Astley Aquamarine</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="location.href='404.jsp';" class="item">
-                        <div class="product-grid">
-                            <div class="product-pic">
-                                <a href="#"><img src="images/pic4.png" title="name"/></a>
-                            </div>
-                            <div class="product-pic-info">
-                                <p>Astley Aquamarine</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="location.href='404.jsp';" class="item">
-                        <div class="product-grid">
-                            <div class="product-pic">
-                                <a href="#"><img src="images/pic5.png" title="name"/></a>
-                            </div>
-                            <div class="product-pic-info">
-                                <p>Astley Aquamarine</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="location.href='404.jsp';" class="item">
-                        <div class="product-grid">
-                            <div class="product-pic">
-                                <a href="#"><img src="images/pic6.png" title="name"/></a>
-                            </div>
-                            <div class="product-pic-info">
-                                <p>Astley Aquamarine</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="location.href='404.jsp';" class="item">
-                        <div class="product-grid">
-                            <div class="product-pic">
-                                <a href="#"><img src="images/pic3.png" title="name"/></a>
-                            </div>
-                            <div class="product-pic-info">
-                                <p>Astley Aquamarine</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="location.href='404.jsp';" class="item">
-                        <div class="product-grid">
-                            <div class="product-pic">
-                                <a href="#"><img src="images/pic4.png" title="name"/></a>
-                            </div>
-                            <div class="product-pic-info">
-                                <p>Astley Aquamarine</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="location.href='404.jsp';" class="item">
-                        <div class="product-grid">
-                            <div class="product-pic">
-                                <a href="#"><img src="images/pic5.png" title="name"/></a>
-                            </div>
-                            <div class="product-pic-info">
-                                <p>Astley Aquamarine</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="location.href='404.jsp';" class="item">
-                        <div class="product-grid">
-                            <div class="product-pic">
-                                <a href="#"><img src="images/pic3.png" title="name"/></a>
-                            </div>
-                            <div class="product-pic-info">
-                                <p>Astley Aquamarine</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -208,8 +106,48 @@
     <div class="footer">
         <jsp:include page="footer.jsp"></jsp:include>
     </div>
+    <div id="item" class="item stub">
+        <div class="product-grid">
+            <div class="product-pic">
+                <input type="hidden" class="id">
+                <a class="link" href="#"><img class="img" src=""/></a>
+            </div>
+            <div class="product-pic-info">
+                <p class="title"></p>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
     $("#main").parent().addClass("active");
+</script>
+<script>
+    var item = $("#owl-demo");
+    $.ajax({
+        url: "products",
+        method: "post",
+        dataType: "json",
+        success: function (data) {
+            alert(data[2].id)
+            for (var i = 0; i < data.length; i++) {
+                var d = data[i];
+                var product = new Product(d.id, d.title, d.image.url);
+                item.append(product.build());
+                item.show("slow");
+            }
+        }
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        $("#owl-demo").owlCarousel({
+            items: 5,
+            lazyLoad: true,
+            autoPlay: true,
+            navigation: true,
+            navigationText: false,
+            pagination: false
+        });
+    });
 </script>
 </html>

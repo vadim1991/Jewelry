@@ -46,12 +46,12 @@ public class RegistrationBean {
     /**
      * Pattern for firstName validation
      */
-    private static final String FIRST_NAME_PATTERN = "^[\\p{L} .'-]+$";
+    private static final String FIRST_NAME_PATTERN = "^[a-zа-я]{3,15}";
 
     /**
      * Pattern for lastName validation
      */
-    private static final String LAST_NAME_PATTERN = "^[\\p{L} .'-]+$";
+    private static final String LAST_NAME_PATTERN = "^[a-zа-я]{3,15}";
 
     /**
      * Maximum age for user

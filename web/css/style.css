@@ -750,8 +750,27 @@ ul.social-icons li a:hover {
     display: block;
     font-size: 0.875em;
 }
+.categories-right ul li label {
+    color: #7b8286;
+    background: #f4f4f4;
+    padding: 0.5em 0.85em;
+    display: block;
+    font-size: 0.875em;
+}
+.categories-right ul li button {
+    color: #7b8286;
+    background: #f4f4f4;
+    padding: 0.5em 0.85em;
+    display: block;
+    font-size: 0.875em;
+}
 
 .categories-right ul li a:hover, .categories-right ul li.active a {
+    background: #7b8286;
+    color: #FFF;
+    text-decoration: none;
+}
+.categories-right ul li button:hover, .categories-right ul li.active button {
     background: #7b8286;
     color: #FFF;
     text-decoration: none;
@@ -850,7 +869,6 @@ ul.social-icons li a:hover {
     padding: 0 1em;
     margin: 1em 0;
     display: block;
-    border-right: 1px solid #EEE;
     text-decoration: none;
 }
 

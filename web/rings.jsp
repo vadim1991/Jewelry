@@ -17,7 +17,7 @@
 <jsp:include page="menu.jsp"></jsp:include>
 <script>
     $(document).ready(function () {
-        $("#earrings").parent().addClass("active")
+        $("#rings").parent().addClass("active")
     });
 </script>
 <!-- content -->
@@ -26,7 +26,7 @@
         <div class="collections-head">
             <div class="container">
                 <div class="collections-head-right">
-                    <img height="300px" src="images/slideEarrings.png" alt="slide"/>
+                    <img height="300px" src="images/iteam.png" alt="slide"/>
                 </div>
                 <div class="collections-head-left">
                     <h2><span>Французский</span></br><span>дизайн</span></h2>
@@ -39,21 +39,24 @@
             <div class="container">
                 <div class="categories-left">
                     <ul>
-                        <li><a href="earrings?insert=1">С бриллиантом</a></li>
-                        <li><a href="earrings?insert=2">С изумрудом</a></li>
-                        <li><a href="earrings?insert=3">С рубином</a></li>
-                        <li><a href="earrings?insert=4">С фианитом</a></li>
-                        <li><a href="earrings?insert=7">Без вставки</a></li>
+                        <li><a name="insert" class="diamonds" href="#insert">С бриллиантом</a></li>
+                        <li><a class="emerald" href="#insert">С изумрудом</a></li>
+                        <li><a class="ruby" href="#insert">С рубином</a></li>
+                        <li><a class="fianit" href="#insert">С фианитом</a></li>
+                        <li><a class="none" href="#insert">Без вставки</a></li>
                     </ul>
                 </div>
                 <div class="categories-right">
                     <ul>
-                        <c:if test="${currentPage!=1}">
-                            <li><a href="earrings?page=${currentPage-1}">Предыдущая</a></li>
-                        </c:if>
-                        <c:if test="${currentPage lt noOfPages}">
-                            <li><a href="earrings?page=${currentPage+1}">Следущая</a></li>
-                        </c:if>
+                        <li>
+                            <button class="previous">Предыдущая</button>
+                        </li>
+                        <li>
+                            <label id="pageNumber">1</label>
+                        </li>
+                        <li>
+                            <button class="next">Следущая</button>
+                        </li>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
@@ -123,17 +126,21 @@
             <div class="container">
                 <div class="categories-left">
                     <ul>
-                        <li><a href="earrings?insert=1">С бриллиантом</a></li>
-                        <li><a href="earrings?insert=2">С изумрудом</a></li>
-                        <li><a href="earrings?insert=3">С рубином</a></li>
-                        <li><a href="earrings?insert=4">С фианитом</a></li>
-                        <li><a href="earrings?insert=7">Без вставки</a></li>
+                        <li><a class="diamonds" href="#insert">С бриллиантом</a></li>
+                        <li><a class="emerald" href="#insert">С изумрудом</a></li>
+                        <li><a class="ruby" href="#insert">С рубином</a></li>
+                        <li><a class="fianit" href="#insert">С фианитом</a></li>
+                        <li><a class="none" href="#insert">Без вставки</a></li>
                     </ul>
                 </div>
                 <div class="categories-right">
                     <ul>
-                        <li><a href="earrings?page=">Предыдущая</a></li>
-                        <li><a href="earrings?page=">Следущая</a></li>
+                        <li>
+                            <button class="previous">Предыдущая</button>
+                        </li>
+                        <li>
+                            <button class="next">Следущая</button>
+                        </li>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
@@ -275,16 +282,45 @@
     });
 </script>
 <script>
+    var currentPage = 1;
+    var pages;
+    var next = $(".next");
+    var previous = $(".previous");
     var container = $(".container-right");
     $.ajax({
         url: "rings",
         method: "post",
         dataType: "json",
-        success:function (data) {
+        success: function (data) {
             parseData(data, container)
         }
     });
     $("#search").click(function () {
+        rewriteProduct(currentPage);
+    });
+    function parseData(data, container) {
+        currentPage = data.currentPage;
+        pages = data.noOfPages;
+        $("#pageNumber").text(currentPage);
+        for (var i = 0; i < data.products.length; i++) {
+            var d = data.products[i];
+            var product = new ProductObject(d.id, d.image.url, d.title, d.price).build();
+            container.append(product);
+            container.show("slow");
+        }
+        if (currentPage == 1) {
+            previous.attr("disabled", true)
+        }
+        else {
+            previous.removeAttr("disabled")
+        }
+        if (currentPage == pages) {
+            next.attr("disabled", true)
+        } else {
+            next.removeAttr("disabled")
+        }
+    }
+    function rewriteProduct(currentPage) {
         var container = $(".container-right");
         container.empty();
         container.hide();
@@ -306,21 +342,54 @@
                 "maxWeight": endWeight,
                 "insert": insert,
                 "material": material,
-                "sortType": sortType
+                "sortType": sortType,
+                "page": currentPage
             },
             success: function (data) {
                 parseData(data, container)
             }
         })
-    });
-    function parseData(data, container) {
-        for (var i = 0; i < data.products.length; i++) {
-            var d = data.products[i];
-            var product = new ProductObject(d.id, d.image.url, d.title, d.price).build();
-            container.append(product);
-            container.show("slow");
-        }
     }
+    next.click(function () {
+        rewriteProduct(currentPage + 1)
+    });
+    previous.click(function () {
+        rewriteProduct(currentPage - 1)
+    });
+    function chooseInsert(insertId) {
+        var container = $(".container-right");
+        $("#insert").val(insertId);
+        container.empty();
+        container.hide();
+        var sortType = $("#sortType").val();
+        $.ajax({
+            url: "rings",
+            method: "post",
+            dataType: "json",
+            data: {
+                "sortType": sortType,
+                "insert": insertId
+            },
+            success: function (data) {
+                parseData(data, container)
+            }
+        })
+    }
+    $(".diamonds").click(function () {
+        chooseInsert(1);
+    });
+    $(".emerald").click(function () {
+        chooseInsert(2);
+    });
+    $(".fianit").click(function () {
+        chooseInsert(4);
+    });
+    $(".ruby").click(function () {
+        chooseInsert(3);
+    });
+    $(".none").click(function () {
+        chooseInsert(7);
+    });
 </script>
 
 </html>

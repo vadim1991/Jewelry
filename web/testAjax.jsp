@@ -288,9 +288,9 @@
 
 <script>
     for (var i = 0; i < 2; i++) {
-        $("#thumbs").append(new ProductObject(1, "100 $", "100 $", "http://img1.wildberries.ru/big/new/640000/646567-1.jpg", "http://img1.wildberries.ru/big/new/640000/646567-1.jpg", "http://vk.com", "wedding").build());
-        $("#thumbs").append(new ProductObject(0, "100 $", "100 $", "http://salon-defile.com/upload/iblock/264/26434d552ffcccae327c77d3e9ce9590.jpg", "http://salon-defile.com/upload/iblock/264/26434d552ffcccae327c77d3e9ce9590.jpg", "http://vk.com", "evening").build());
-        $("#thumbs").append(new ProductObject(3, "100 $", "100 $", "http://www.lorange.ua/images/children-dresses-collection/2013/big/w-36-37.jpg", "http://www.lorange.ua/images/children-dresses-collection/2013/big/w-36-37.jpg", "http://vk.com", "children").build());
+        $("#thumbs").append(new Product(1, "100 $", "100 $", "http://img1.wildberries.ru/big/new/640000/646567-1.jpg", "http://img1.wildberries.ru/big/new/640000/646567-1.jpg", "http://vk.com", "wedding").build());
+        $("#thumbs").append(new Product(0, "100 $", "100 $", "http://salon-defile.com/upload/iblock/264/26434d552ffcccae327c77d3e9ce9590.jpg", "http://salon-defile.com/upload/iblock/264/26434d552ffcccae327c77d3e9ce9590.jpg", "http://vk.com", "evening").build());
+        $("#thumbs").append(new Product(3, "100 $", "100 $", "http://www.lorange.ua/images/children-dresses-collection/2013/big/w-36-37.jpg", "http://www.lorange.ua/images/children-dresses-collection/2013/big/w-36-37.jpg", "http://vk.com", "children").build());
     }
 </script>
 

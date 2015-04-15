@@ -23,25 +23,29 @@
                 <label class="error-label">${loginError}</label>
             </div>
             <div>
-                <input type="text" class="form-field" id="name" name="name" placeholder="Имя" onblur="validName()">
+                <input type="text" class="form-field" id="name" name="name" value="${form.name}" placeholder="Имя"
+                       onblur="validName()">
                 <label class="error-label" id="nameError">${errors.get("nameError")}</label>
             </div>
             <div>
-                <input type="text" class="form-field" id="surname" name="surname" placeholder="Фамилия"
+                <input type="text" class="form-field" id="surname" name="surname" value="${form.surname}"
+                       placeholder="Фамилия"
                        onblur="validSurname()">
                 <label class="error-label" id="surnameError">${errors.get("surnameError")}</label>
             </div>
             <div>
-                <input type="text" class="form-field" id="age" name="age" placeholder="Возраст"
+                <input type="text" class="form-field" id="age" name="age" value="${form.age}" placeholder="Возраст"
                        onblur="validAge()">
                 <label class="error-label" id="ageError">${errors.get("ageError")}</label>
             </div>
             <div>
-                <input type="text" class="form-field" id="email" name="email" placeholder="Email" onblur="validEmail()">
+                <input type="text" class="form-field" id="email" name="email" value="${form.email}" placeholder="Email"
+                       onblur="validEmail()">
                 <label class="error-label" id="emailError">${errors.get("emailError")}</label>
             </div>
             <div>
-                <input type="text" class="form-field" id="login" name="login" placeholder="Логин" onblur="validLogin()">
+                <input type="text" class="form-field" id="login" name="login" value="${form.login}" placeholder="Логин"
+                       onblur="validLogin()">
                 <label class="error-label" id="loginError">${errors.get("loginError")}</label>
             </div>
             <div>
@@ -122,109 +126,6 @@
 </div>
 <!-- container -->
 </body>
-<script>
-    var classForm = "form-field";
-    function validName() {
-        var name = document.getElementById("name");
-        var label = document.getElementById("nameError");
-        var pattern = /^[\p{L} .'-]+$/;
-        if (!pattern.test(name.value)) {
-            label.innerHTML = "Введите, пожалуйста корректное имя";
-            name.className = "error";
-            return false;
-        } else {
-            label.innerHTML = null;
-            name.className = classForm;
-            return true;
-        }
-    }
-    function validSurname() {
-        var surname = document.getElementById("surname");
-        var label = document.getElementById("surnameError");
-        var pattern = /^[\p{L} .'-]+$/;
-        if (!pattern.test(surname.value)) {
-            label.innerHTML = "Введите, пожалуйста корректную фамилию";
-            surname.className = "error";
-            return false;
-        } else {
-            label.innerHTML = null;
-            surname.className = classForm;
-            return true;
-        }
-    }
-    function validAge() {
-        var age = document.getElementById("age");
-        var label = document.getElementById("ageError");
-        var pattern = /^\d{1,3}$/
-        if (!pattern.test(age.value) || age.value < 14 || age.value > 80) {
-            label.innerHTML = "Введите, пожалуйста корректный возраст";
-            age.className = "error";
-            return false;
-        } else {
-            label.innerHTML = null;
-            age.className = classForm;
-            return true;
-        }
-    }
-    function validEmail() {
-        var email = document.getElementById("email");
-        var label = document.getElementById("emailError");
-        var pattern = /^.+@.+[.].{2,}$/i;
-        if (!(pattern.test(email.value))) {
-            label.innerHTML = "Пожалуйста, введите корректный email";
-            email.className = "error";
-            return false;
-        } else {
-            label.innerHTML = null;
-            email.className = classForm;
-            return true;
-        }
-    }
-    function validLogin() {
-        var login = document.getElementById("login");
-        var label = document.getElementById("loginError");
-        var pattern = /^[\p{L} .'-]+$/;
-        if (!pattern.test(login.value)) {
-            label.innerHTML = "Пожалуйста, введите другой логин";
-            login.className = "error";
-            return false;
-        } else {
-            label.innerHTML = null;
-            login.className = classForm;
-            return true;
-        }
-    }
-    function validPassword() {
-        var password = document.getElementById("password");
-        var label = document.getElementById("passwordError");
-        var pattern = /((?=.*\d)(?=.*[a-z]).{4,20})/
-        if (!pattern.test(password.value)) {
-            label.innerHTML = "Пожалуйста, введите другой пароль"
-            password.className = "error";
-            return false;
-        } else {
-            label.innerHTML = null;
-            password.className = classForm;
-            return true;
-        }
-    }
-    function confirmPassword() {
-        var password = document.getElementById("password");
-        var passwordConfirm = document.getElementById("passwordConfirm");
-        var label = document.getElementById("passwordConfError");
-        if ((!(password.value == passwordConfirm.value) || passwordConfirm.value.length < 4)) {
-            label.innerHTML = "Подтвердите пароль!!!";
-            passwordConfirm.className = "error";
-            return false;
-        } else {
-            label.innerHTML = null;
-            passwordConfirm.className = classForm;
-            return true;
-        }
-    }
-    function isValid() {
-        return validName() && validEmail() && validLogin() && validPassword() && validSurname() && confirmPassword() && validAge();
-    }
-
+<script src="js/validate.js">
 </script>
 </html>

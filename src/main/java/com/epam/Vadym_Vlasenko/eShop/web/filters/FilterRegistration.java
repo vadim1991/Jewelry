@@ -19,6 +19,8 @@ public class FilterRegistration implements Filter {
     private static final String LOGIN_EXISTS_ATTRIBUTE = "loginError";
     private static final String LOGIN_EXISTS_MESSAGE = "Пользователь с таким логином уже существует";
     private static final String USER_ATTRIBUTE = "user";
+    private static final String FORM_ATTRIBUTE = "form";
+    private static final String POST_REQUEST = "post";
 
     private UserService userService;
 
@@ -32,15 +34,15 @@ public class FilterRegistration implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         RegistrationBean registrationBean = getRegistrationBean(request);
-        if (request.getMethod().equalsIgnoreCase("post")) {
+        if (request.getMethod().equalsIgnoreCase(POST_REQUEST)) {
             if (!registrationBean.isValid()) {
                 request.setAttribute(MAP_ATTRIBUTE, registrationBean.getErrors());
-                System.out.println(registrationBean.getErrors());
                 request.getRequestDispatcher(Constants.REGISTRATION_PAGE).forward(request, servletResponse);
                 return;
             }
             if (userService.getUserByLogin(registrationBean.getLogin()) != null) {
                 request.setAttribute(LOGIN_EXISTS_ATTRIBUTE, LOGIN_EXISTS_MESSAGE);
+                request.setAttribute(FORM_ATTRIBUTE, registrationBean);
                 request.getRequestDispatcher(Constants.REGISTRATION_PAGE).forward(request, servletResponse);
                 return;
             }

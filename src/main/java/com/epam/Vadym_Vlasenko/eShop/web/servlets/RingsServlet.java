@@ -26,6 +26,8 @@ public class RingsServlet extends HttpServlet {
     private static final String PRODUCT_SERVICE = "product_service";
     private static final String RINGS_ATTRIBUTE = "products";
 
+    private static final String ENCODING_TYPE = "utf-8";
+
     private static final String EARRINGS_ATTRIBUTE = "products";
     private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
     private static final String PAGE_PARAMETER = "page";
@@ -47,11 +49,11 @@ public class RingsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("utf-8");
-        resp.setCharacterEncoding("utf-8");
+        req.setCharacterEncoding(ENCODING_TYPE);
+        resp.setCharacterEncoding(ENCODING_TYPE);
         Gson gson = new Gson();
         int page = 1;
-        int records = 6;
+        int records = 3;
         String pageValue = req.getParameter(PAGE_PARAMETER);
         if (pageValue != null) {
             page = Integer.parseInt(pageValue);
@@ -61,9 +63,7 @@ public class RingsServlet extends HttpServlet {
         criteria.setProductOnPage(records);
         List<Product> products = productService.getProductsByCriteria(criteria);
         int countProduct = productService.getNoOfPages();
-        System.out.println(countProduct);
         int noOfPages = (int) Math.ceil(countProduct * 1.0 / records);
-        System.out.println(noOfPages);
         if (products == null) {
             req.getRequestDispatcher(Constants.BED_REQUEST_PAGE).forward(req, resp);
             return;
@@ -72,12 +72,13 @@ public class RingsServlet extends HttpServlet {
         object.addProperty(PRODUCT_ON_PAGE_PARAMETER, noOfPages);
         object.addProperty(CURRENT_PAGE_ATTRIBUTE, page);
         object.add(EARRINGS_ATTRIBUTE, gson.toJsonTree(products));
+        System.out.println(gson.toJson(object));
         resp.getWriter().write(gson.toJson(object));
     }
 
     private Criteria getCriteria(HttpServletRequest request, HttpServletResponse response) {
         Criteria criteria = new Criteria();
-        criteria.setIdCategory(Constants.EARRINGS_CATEGORY);
+        criteria.setIdCategory(Constants.RINGS_CATEGORY);
         criteria.setMaxPrice(request.getParameter(MAX_PRICE_PARAMETER));
         criteria.setMinPrice(request.getParameter(MIN_PRICE_PARAMETER));
         criteria.setMinWeight(request.getParameter(MIN_WEIGHT_PARAMETER));
@@ -90,6 +91,6 @@ public class RingsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("earr.jsp").forward(req, resp);
+        req.getRequestDispatcher(Constants.RING_PAGE).forward(req, resp);
     }
 }
