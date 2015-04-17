@@ -172,7 +172,7 @@
         var id = $(this).parent().parent().parent().parent().find(".id").val();
         $.ajax({
             url: "cart",
-            method: "get",
+            method: "post",
             dataType: "text",
             data: {
                 "id": id

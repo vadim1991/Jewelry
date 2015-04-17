@@ -36,7 +36,7 @@ public class RegistrationBean {
     /**
      * Pattern for login validation
      */
-    private static final String LOGIN_PATTERN = "^[a-z0-9_-]{4,15}$";
+    private static final String LOGIN_PATTERN = "^[a-zA-Z]{4,15}$";
 
     /**
      * Pattern for password validation
@@ -46,12 +46,12 @@ public class RegistrationBean {
     /**
      * Pattern for firstName validation
      */
-    private static final String FIRST_NAME_PATTERN = "^[a-zа-я]{3,15}";
+    private static final String FIRST_NAME_PATTERN = "^[a-zA-Z]{3,15}";
 
     /**
      * Pattern for lastName validation
      */
-    private static final String LAST_NAME_PATTERN = "^[a-zа-я]{3,15}";
+    private static final String LAST_NAME_PATTERN = "^[a-zA-Z]{3,15}";
 
     /**
      * Maximum age for user

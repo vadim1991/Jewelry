@@ -14,25 +14,19 @@ public interface IProductDAO {
 
     public boolean addProduct(Product product) throws SQLException;
 
-    public Product getProductByID(int id);
+    public Product getProductByID(int id) throws SQLException;
 
     public List<Product> getProducts() throws SQLException;
 
     public List<Product> getProducts(int idCategory, int offset, int records) throws SQLException;
 
-    public List<Product> getProductsByCategory(int idCategory);
+    public List<Product> getProductsByCategory(int idCategory) throws SQLException;
 
-    public List<Product> getProductsByCriteria(Criteria criteria);
+    public List<Product> getProductsByCriteria(Criteria criteria) throws SQLException;
 
     public int getCountOfProduct(int idCategory) throws SQLException;
 
     public List<Product> getProductByName(String name);
-
-    public List<Product> getProductsByRange(int minPrice, int maxPrice);
-
-    public List<Product> getAllByMaterial(int id_material);
-
-    public List<Product> getAllByCategoryAndInsert(int id_category, int id_insert);
 
     public boolean removeProduct(int id);
 

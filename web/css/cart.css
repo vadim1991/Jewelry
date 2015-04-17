@@ -152,15 +152,29 @@ label {
     float: right;
     border: 0;
     margin-top: 20px;
+    margin-left: 10px;
     padding: 6px 25px;
-    background-color: #6b6;
+    background: #313538;
+    color: #fff;
+    font-size: 25px;
+    border-radius: 3px;
+}
+
+.checkout-left {
+    float: left;
+    border: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    padding: 6px 25px;
+    background: #313538;
     color: #fff;
     font-size: 25px;
     border-radius: 3px;
 }
 
 .checkout:hover {
-    background-color: #494;
+    background: #75828f;
 }
 
 /* Make adjustments for tablet */

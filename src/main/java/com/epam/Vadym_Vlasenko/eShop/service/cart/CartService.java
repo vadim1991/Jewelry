@@ -18,6 +18,10 @@ public class CartService {
         this.cart = cart;
     }
 
+    public boolean addProduct(Product product) {
+        return cart.addProduct(product);
+    }
+
     public boolean addProduct(Product product, int amount) {
         return cart.addProduct(product, amount);
     }
@@ -28,6 +32,10 @@ public class CartService {
 
     public Map<Product, Integer> getContent() {
         return cart.getCart();
+    }
+
+    public List<Product> getProductsFromCart() {
+        return new ArrayList<>(cart.getCart().keySet());
     }
 
     public double totalPrice() {

@@ -26,6 +26,7 @@ public class LoginServlet extends HttpServlet {
     private static final String REFERER = "referer";
     private static final String PREVIOUS_PAGE = "previous";
     private static final String USER_ID = "id";
+    private static final String USER_ATTRIBUTE = "user";
     private static final String USER_LOGIN = "login";
     private static final String ERROR_MESSAGE = "Ошибка входа!";
     private static final String ERROR_ATTRIBUTE = "error";
@@ -64,6 +65,7 @@ public class LoginServlet extends HttpServlet {
             if (checkUser(user, password)) {
                 session.setAttribute(USER_ID, user.getId());
                 session.setAttribute(USER_LOGIN, user.getLogin());
+                session.setAttribute(USER_ATTRIBUTE, user);
                 resp.sendRedirect(previousPage);
                 return;
             }

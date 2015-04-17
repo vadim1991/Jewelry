@@ -77,7 +77,7 @@
                             <span>${p.title}</span>
                             <label>Цена $ ${p.price}</label>
                             <ul>
-                                <li><a class="cart" href="#cartInfo">В корзину</a></li>
+                                <li><a class="cartDiv" href="#cartInfo">В корзину</a></li>
                                 <li><a class="more" href="details?id=${p.id}">Инфо</a></li>
                                 <div class="clearfix"></div>
                             </ul>

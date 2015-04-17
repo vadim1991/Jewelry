@@ -37,6 +37,7 @@ public class FilterRegistration implements Filter {
         if (request.getMethod().equalsIgnoreCase(POST_REQUEST)) {
             if (!registrationBean.isValid()) {
                 request.setAttribute(MAP_ATTRIBUTE, registrationBean.getErrors());
+                request.setAttribute(FORM_ATTRIBUTE, registrationBean);
                 request.getRequestDispatcher(Constants.REGISTRATION_PAGE).forward(request, servletResponse);
                 return;
             }

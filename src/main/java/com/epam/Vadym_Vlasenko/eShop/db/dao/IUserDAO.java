@@ -2,6 +2,7 @@ package com.epam.Vadym_Vlasenko.eShop.db.dao;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -9,16 +10,16 @@ import java.util.List;
  */
 public interface IUserDAO {
 
-    void addUser(User user);
+    void addUser(User user) throws SQLException;
 
     void updateUser(User user);
 
-    void deleteUser(int id);
+    void deleteUser(int id) throws SQLException;
 
-    User getUserById(int id);
+    User getUserById(int id) throws SQLException;
 
-    User getUserByLogin(String login);
+    User getUserByLogin(String login) throws SQLException;
 
-    List<User> getAllUsers();
+    List<User> getAllUsers() throws SQLException;
 
 }

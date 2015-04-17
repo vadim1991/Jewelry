@@ -11,28 +11,28 @@ import java.util.List;
  */
 public interface IProductService {
 
-    public void addProduct(Product product);
+    void addProduct(Product product);
 
-    public boolean removeProduct(int id);
+    boolean removeProduct(int id);
 
-    public Product getProductByID(int id);
+    Product getProductByID(int id);
 
-    public List<Product> getProducts();
+    List<Product> getProducts();
 
-    public int getCountOfProduct(int idCategory);
+    int getCountOfProduct(int idCategory);
 
-    public List<Product> getProducts(int idCategory, int offset, int records);
+    List<Product> getProducts(int idCategory, int offset, int records);
 
-    public List<Product> getProductsByCategory(int idCategory);
+    List<Product> getProductsByCategory(int idCategory);
 
-    public List<Product> getProductsByCriteria(Criteria criteria);
+    List<Product> getProductsByCriteria(Criteria criteria);
 
-    public List<Product> getProductByName(String name);
+    List<Product> getProductByName(String name);
 
-    public List<Product> getProductsByRange(int minPrice, int maxPrice);
+    List<Product> getProductsByRange(int minPrice, int maxPrice);
 
-    public List<Product> getAllByMaterial(int id_material);
+    List<Product> getAllByMaterial(int id_material);
 
-    public int getNoOfPages();
+    int getNoOfPages();
 
 }

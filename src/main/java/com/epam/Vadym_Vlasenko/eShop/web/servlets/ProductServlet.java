@@ -1,5 +1,6 @@
 package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 
+import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
 import com.epam.Vadym_Vlasenko.eShop.service.product.IProductService;
 import com.google.gson.Gson;
@@ -22,6 +23,7 @@ import java.util.List;
 public class ProductServlet extends HttpServlet {
 
     private static final String PRODUCT_SERVICE = "product_service";
+    private static Criteria criteria;
 
     private IProductService service;
 
@@ -29,12 +31,16 @@ public class ProductServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         ServletContext context = config.getServletContext();
         service = (IProductService) context.getAttribute(PRODUCT_SERVICE);
+        criteria = new Criteria();
+        criteria.setProductOnPage(15);
+        criteria.setPositionFrom(0);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Gson gson = new Gson();
-        List<Product> products = service.getProducts();
+        List<Product> products = service.getProductsByCriteria(criteria);
+        System.out.println(products);
         resp.getWriter().write(gson.toJson(products));
     }
 

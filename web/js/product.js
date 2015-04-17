@@ -36,7 +36,7 @@ ProductObject.prototype.build = function () {
                 $("#amount").html(data);
             }
         })
-    })
+    });
 
     return stub;
 };

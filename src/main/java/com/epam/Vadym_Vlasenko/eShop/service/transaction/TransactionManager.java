@@ -1,9 +1,10 @@
 package com.epam.Vadym_Vlasenko.eShop.service.transaction;
 
-import com.epam.Vadym_Vlasenko.eShop.db.DBConnection;
+import com.epam.Vadym_Vlasenko.eShop.db.DBConnectionHolder;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
 import static com.epam.Vadym_Vlasenko.eShop.db.util.DBUtil.*;
 
 /**
@@ -11,11 +12,11 @@ import static com.epam.Vadym_Vlasenko.eShop.db.util.DBUtil.*;
  */
 public class TransactionManager {
 
-    private DBConnection dbConnection;
+    private DBConnectionHolder dbConnection;
 
     private static final String EXCEPTION = "Exception in transaction";
 
-    public TransactionManager(DBConnection dbConnection) {
+    public TransactionManager(DBConnectionHolder dbConnection) {
         this.dbConnection = dbConnection;
     }
 
@@ -32,6 +33,7 @@ public class TransactionManager {
             throw new RuntimeException(EXCEPTION, e);
         } finally {
             closeConnection(connection);
+            dbConnection.freeConnection();
         }
         return result;
     }

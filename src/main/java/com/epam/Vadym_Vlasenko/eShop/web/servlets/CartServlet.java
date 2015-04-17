@@ -4,6 +4,8 @@ import com.epam.Vadym_Vlasenko.eShop.entity.Product;
 import com.epam.Vadym_Vlasenko.eShop.entity.cart.Cart;
 import com.epam.Vadym_Vlasenko.eShop.service.cart.CartService;
 import com.epam.Vadym_Vlasenko.eShop.service.product.IProductService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -23,7 +25,7 @@ public class CartServlet extends HttpServlet {
 
     private IProductService productService;
 
-    private static final int DEFAULT_AMOUNT = 1;
+    private static final String GET_ALL_ATTRIBUTE = "getAll";
     private static final String CART_ATTRIBUTE = "cart";
     private static final String PRICES_ATTRIBUTE = "prices";
     private static final String TOTAL_PRICE_ATTRIBUTE = "total";
@@ -31,7 +33,7 @@ public class CartServlet extends HttpServlet {
     private static final String AMOUNT_PARAMETER = "amount";
     private static final String ID_REMOVE_PARAMETER = "idRemove";
     private static final String ID_PARAMETER = "id";
-    private static final String CART_JSP = "cart.jsp";
+    private static final String CART_PAGE = "cart.jsp";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -43,6 +45,10 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CartService cartService = (CartService) req.getSession().getAttribute(Constants.CART_SERVICE);
+        if (cartService == null) {
+            cartService = new CartService(new Cart());
+            req.getSession().setAttribute(Constants.CART_SERVICE, cartService);
+        }
         String remove = req.getParameter(REMOVE_PARAMETER);
         String idRemove = req.getParameter(ID_REMOVE_PARAMETER);
         if (remove != null && cartService != null) {
@@ -62,10 +68,29 @@ public class CartServlet extends HttpServlet {
             cartService = new CartService(new Cart());
             req.getSession().setAttribute(Constants.CART_SERVICE, cartService);
         }
+        if (req.getParameter(GET_ALL_ATTRIBUTE) != null) {
+            Gson gson = new Gson();
+            JsonObject object = new JsonObject();
+            object.addProperty(TOTAL_PRICE_ATTRIBUTE, cartService.totalPrice());
+            object.add(PRICES_ATTRIBUTE, gson.toJsonTree(cartService.getSinglePrice()));
+            object.add(CART_ATTRIBUTE, gson.toJsonTree(cartService.getProductsFromCart()));
+            System.out.println(gson.toJson(object));
+            resp.getWriter().write(gson.toJson(object));
+            return;
+        }
         String id = req.getParameter(ID_PARAMETER);
+        String amount = req.getParameter(AMOUNT_PARAMETER);
+        if (id != null && amount != null) {
+            Product product = productService.getProductByID(Integer.parseInt(id));
+            cartService.addProduct(product, Integer.parseInt(amount));
+            int productAmount = cartService.productAmount();
+            req.getSession().setAttribute(AMOUNT_PARAMETER, productAmount);
+            resp.getWriter().write(String.valueOf(productAmount));
+            return;
+        }
         if (id != null) {
             Product product = productService.getProductByID(Integer.parseInt(id));
-            cartService.addProduct(product, DEFAULT_AMOUNT);
+            cartService.addProduct(product);
             int productAmount = cartService.productAmount();
             req.getSession().setAttribute(AMOUNT_PARAMETER, productAmount);
             resp.getWriter().write(String.valueOf(productAmount));
@@ -81,7 +106,14 @@ public class CartServlet extends HttpServlet {
         req.setAttribute(PRICES_ATTRIBUTE, singlePrice);
         req.setAttribute(CART_ATTRIBUTE, cartService.getContent());
         req.setAttribute(TOTAL_PRICE_ATTRIBUTE, totalPrice);
-        req.getRequestDispatcher(CART_JSP).forward(req, resp);
+        req.getRequestDispatcher(CART_PAGE).forward(req, resp);
+    }
+
+    private void checkCartService(HttpServletRequest request, CartService cartService) {
+        if (cartService == null) {
+            cartService = new CartService(new Cart());
+            request.getSession().setAttribute(Constants.CART_SERVICE, cartService);
+        }
     }
 
 }

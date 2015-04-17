@@ -1,6 +1,6 @@
 package com.epam.Vadym_Vlasenko.eShop.web.listener;
 
-import com.epam.Vadym_Vlasenko.eShop.db.DBConnection;
+import com.epam.Vadym_Vlasenko.eShop.db.DBConnectionHolder;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.DAOFactory;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IProductDAO;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IUserDAO;
@@ -34,7 +34,9 @@ public class ContextListener implements ServletContextListener {
     }
 
     public void initService(ServletContext servletContext) {
-        TransactionManager tm = new TransactionManager(DBConnection.getConnectionHolder());
+        DBConnectionHolder connectionHolder = DBConnectionHolder.getConnectionHolder();
+        connectionHolder.setConnectionPoolDataSource();
+        TransactionManager tm = new TransactionManager(connectionHolder);
         IProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
         IUserDAO userDAO = (IUserDAO) DAOFactory.getInstance().getUserDAO();
         servletContext.setAttribute(Constants.PRODUCT_SERVICE, new ProductService(tm, productDAO));

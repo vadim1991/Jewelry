@@ -21,13 +21,32 @@ public class QueryCreator {
         return queryBuilder.toString();
     }
 
+    public String selectAll(String tableName) {
+        QueryBuilder queryBuilder = new QueryBuilder();
+        queryBuilder.select()
+                .all()
+                .from(tableName)
+                .end();
+        return queryBuilder.toString();
+    }
+
+    public String between(String tableName, String columnName, String from, String to) {
+        QueryBuilder queryBuilder = new QueryBuilder();
+        queryBuilder.select()
+                .all()
+                .from(tableName)
+                .where()
+                .between(columnName, from, to)
+                .end();
+        return queryBuilder.toString();
+    }
+
     public String buildCriteria(Criteria criteria, String tableName) {
         QueryBuilder queryBuilder = new QueryBuilder();
         queryBuilder.select().all().from(tableName);
-        queryBuilder.where();
         if (criteria.getIdCategory() != 0) {
             String idCategory = String.valueOf(criteria.getIdCategory());
-            queryBuilder.whereParameter(CATEGORY_FIELD, idCategory);
+            queryBuilder.where().whereParameter(CATEGORY_FIELD, idCategory);
         }
         if (criteria.getMaxPrice() != null || criteria.getMinPrice() != null) {
             queryBuilder.and().between(PRICE_FIELD, criteria.getMinPrice(), criteria.getMaxPrice());

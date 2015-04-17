@@ -51,7 +51,19 @@ function updateQuantity(quantityInput) {
     var price = parseFloat(productRow.children('.product-price').text());
     var quantity = $(quantityInput).val();
     var linePrice = price * quantity;
-
+    var id = productRow.find("#id");
+    $.ajax({
+        url: "cart",
+        method: "get",
+        dataType: "text",
+        data: {
+            "id": id.val(),
+            "amount": quantity
+        },
+        success: function (data) {
+            $("#amount").html(data);
+        }
+    });
     /* Update line price display and recalc cart totals */
     productRow.children('.product-line-price').each(function () {
         $(this).fadeOut(fadeTime, function () {
@@ -81,7 +93,7 @@ function removeItem(removeButton) {
             success: function (data) {
                 $("#amount").html(data);
             }
-        })
+        });
         recalculateCart();
     });
 }

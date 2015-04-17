@@ -8,6 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 <head>
     <title>Baku Website Template | Home :: w3layouts</title>
+    <link href="css/cart/style.css" rel='stylesheet' type='text/css'/>
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="css/widget/jqx.base.css"/>
     <link rel="stylesheet" href="css/widget/jqx.black.css"/>
@@ -18,6 +19,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href="css/design.css" rel="stylesheet">
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/widgets/demos.js"></script>
     <script type="text/javascript" src="js/widgets/jqxcore.js"></script>
     <script type="text/javascript" src="js/widgets/jqxbuttons.js"></script>

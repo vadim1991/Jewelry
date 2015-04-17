@@ -5,7 +5,7 @@ var classForm = "form-field";
 function validName() {
     var name = document.getElementById("name");
     var label = document.getElementById("nameError");
-    var pattern = /^[a-z?-?]{3,15}/;
+    var pattern = /^[a-zA-Z]{3,15}/;
     if (!pattern.test(name.value)) {
         label.innerHTML = "Некорректное имя пользователя";
         name.className = "error";
@@ -19,7 +19,7 @@ function validName() {
 function validSurname() {
     var surname = document.getElementById("surname");
     var label = document.getElementById("surnameError");
-    var pattern = /^[a-z?-?]{3,15}/;
+    var pattern = /^[a-zA-Z]{3,15}/;
     if (!pattern.test(surname.value)) {
         label.innerHTML = "Некорректная фамилия пользователя";
         surname.className = "error";
@@ -61,7 +61,7 @@ function validEmail() {
 function validLogin() {
     var login = document.getElementById("login");
     var label = document.getElementById("loginError");
-    var pattern = /^[a-z0-9_-]{3,15}$/;
+    var pattern = /^[a-zA-Z]{3,15}$/;
     if (!pattern.test(login.value)) {
         label.innerHTML = "Некорректный логин (должен содержать буквы и цифры)";
         login.className = "error";

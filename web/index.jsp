@@ -128,26 +128,20 @@
         method: "post",
         dataType: "json",
         success: function (data) {
-            alert(data[2].id)
             for (var i = 0; i < data.length; i++) {
                 var d = data[i];
                 var product = new Product(d.id, d.title, d.image.url);
                 item.append(product.build());
-                item.show("slow");
             }
+            item.owlCarousel({
+                items: 5,
+                lazyLoad: true,
+                autoPlay: true,
+                navigation: true,
+                navigationText: false,
+                pagination: false
+            });
         }
     })
-</script>
-<script>
-    $(document).ready(function () {
-        $("#owl-demo").owlCarousel({
-            items: 5,
-            lazyLoad: true,
-            autoPlay: true,
-            navigation: true,
-            navigationText: false,
-            pagination: false
-        });
-    });
 </script>
 </html>

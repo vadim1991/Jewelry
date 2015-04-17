@@ -1,6 +1,6 @@
 package com.epam.Vadym_Vlasenko.eShop.db.dao.mysql;
 
-import com.epam.Vadym_Vlasenko.eShop.db.DBConnection;
+import com.epam.Vadym_Vlasenko.eShop.db.DBConnectionHolder;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IUserDAO;
 import com.epam.Vadym_Vlasenko.eShop.entity.Role;
 import com.epam.Vadym_Vlasenko.eShop.entity.User;
@@ -32,9 +32,9 @@ public class UserDaoMySQL implements IUserDAO {
     private static final String UPDATE_USER = "UPDATE users SET name=?,surname=?,age=?,email=?,password=?,login=?,role=? WHERE id=?";
 
     @Override
-    public void addUser(User user) {
-        try (Connection connection = DBConnection.getConnectionHolder().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER)) {
+    public void addUser(User user) throws SQLException {
+        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER)) {
             int index = 1;
             preparedStatement.setInt(index++, user.getId());
             preparedStatement.setString(index++, user.getName());
@@ -45,8 +45,6 @@ public class UserDaoMySQL implements IUserDAO {
             preparedStatement.setString(index++, user.getLogin());
             preparedStatement.setInt(index++, user.getRole().getId());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println(e);
         }
     }
 
@@ -56,62 +54,54 @@ public class UserDaoMySQL implements IUserDAO {
     }
 
     @Override
-    public void deleteUser(int id) {
-        try (Connection connection = DBConnection.getConnectionHolder().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
+    public void deleteUser(int id) throws SQLException {
+        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
             int index = 1;
             preparedStatement.setInt(index, id);
             preparedStatement.executeQuery();
-        } catch (SQLException e) {
-
         }
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(int id) throws SQLException {
         User user = new User();
-        try (Connection connection = DBConnection.getConnectionHolder().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_ID)) {
+        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_ID)) {
             int index = 1;
             preparedStatement.setInt(index++, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 user = extractUser(resultSet);
             }
-        } catch (SQLException e) {
-
         }
         return user;
     }
 
     @Override
-    public User getUserByLogin(String login) {
+    public User getUserByLogin(String login) throws SQLException {
         User user = null;
-        try (Connection connection = DBConnection.getConnectionHolder().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_LOGIN)) {
+        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_LOGIN)) {
             int index = 1;
             preparedStatement.setString(index++, login);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 user = extractUser(resultSet);
             }
-        } catch (SQLException e) {
-            System.err.println(e);
         }
         return user;
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
-        try (Connection connection = DBConnection.getConnectionHolder().getConnection();
-             Statement statement = connection.createStatement()) {
+        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(GET_ALL_USERS);
             while (resultSet.next()) {
                 users.add(extractUser(resultSet));
             }
-        } catch (SQLException e) {
-
         }
         return users;
     }

@@ -17,4 +17,6 @@ public class Constants {
     public static final String RING_PAGE = "rings.jsp";
     public static final String BED_REQUEST_PAGE = "400.jsp";
     public static final String NOT_FOUND_PAGE = "404.jsp";
+
+    public static final String CAPTCHA_ID = "captchaId";
 }

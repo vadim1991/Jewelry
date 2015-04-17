@@ -18,16 +18,27 @@ public class Cart {
         this.cart = new ConcurrentHashMap<>();
     }
 
-    public boolean addProduct(Product product, int amountProduct) {
+    public boolean addProduct(Product product) {
         boolean result = false;
         if (product != null) {
             if (cart.containsKey(product)) {
                 int amount = cart.get(product);
                 cart.put(product, ++amount);
             } else {
-                cart.put(product, amountProduct);
+                cart.put(product, DEFAULT_AMOUNT);
             }
             result = true;
+        }
+        return result;
+    }
+
+    public boolean addProduct(Product product, int amountProduct) {
+        boolean result = false;
+        if (product != null) {
+            if (cart.containsKey(product)) {
+                cart.put(product, amountProduct);
+                result = true;
+            }
         }
         return result;
     }
@@ -40,7 +51,7 @@ public class Cart {
         cart.clear();
     }
 
-    public Map<Product,Integer> getCart() {
+    public Map<Product, Integer> getCart() {
         return cart;
     }
 

@@ -265,7 +265,7 @@
         var selectSortType = $("#selectSortType");
         var source = [
             "по возрастанию цены",
-            "по убыванию цены",
+            "по убыванию цены"
         ];
         // Create a jqxComboBox
         selectSortType.jqxComboBox({

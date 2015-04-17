@@ -1,8 +1,6 @@
 package com.epam.Vadym_Vlasenko.eShop.service.product;
 
-import com.epam.Vadym_Vlasenko.eShop.db.DBConnection;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IProductDAO;
-import com.epam.Vadym_Vlasenko.eShop.entity.Category;
 import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
 import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionManager;

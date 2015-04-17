@@ -750,6 +750,7 @@ ul.social-icons li a:hover {
     display: block;
     font-size: 0.875em;
 }
+
 .categories-right ul li label {
     color: #7b8286;
     background: #f4f4f4;
@@ -757,6 +758,7 @@ ul.social-icons li a:hover {
     display: block;
     font-size: 0.875em;
 }
+
 .categories-right ul li button {
     color: #7b8286;
     background: #f4f4f4;
@@ -770,6 +772,7 @@ ul.social-icons li a:hover {
     color: #FFF;
     text-decoration: none;
 }
+
 .categories-right ul li button:hover, .categories-right ul li.active button {
     background: #7b8286;
     color: #FFF;
@@ -842,6 +845,11 @@ ul.social-icons li a:hover {
     background: #7b8286;
 }
 
+#success {
+    margin-bottom: 3em;
+    margin-top: 3em;
+}
+
 /*-- details --*/
 .details-head {
     background: url(../images/details-bg.png) no-repeat 0px 0px;
@@ -870,6 +878,10 @@ ul.social-icons li a:hover {
     margin: 1em 0;
     display: block;
     text-decoration: none;
+}
+
+#makeOrder {
+    margin-bottom: 20px;
 }
 
 .details-cate ul li a:hover {
@@ -1192,6 +1204,7 @@ a.b-home {
 a.b-home:hover {
     background: #75828f;
 }
+
 .b-home {
     background: #313538;
     color: #FFF;

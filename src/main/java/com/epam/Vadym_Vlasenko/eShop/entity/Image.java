@@ -1,9 +1,11 @@
 package com.epam.Vadym_Vlasenko.eShop.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Вадим on 22.03.2015.
  */
-public class Image {
+public class Image implements Serializable {
 
     private int id;
     private String title;

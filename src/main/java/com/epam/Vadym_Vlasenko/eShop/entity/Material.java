@@ -1,9 +1,11 @@
 package com.epam.Vadym_Vlasenko.eShop.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Вадим on 22.03.2015.
  */
-public class Material {
+public class Material implements Serializable {
 
     private int id;
     private String name;

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="info" %>
 <html>
 <head>
     <title>Вход</title>
@@ -60,13 +61,7 @@
                 <label class="error-label" id="passwordConfError">${errors.get("confirmError")}</label>
             </div>
             <div>
-                <img src="/captcha" alt="captcha">
-
-                <p>${simpleCaptcha}</p>
-            </div>
-            <div>
-                <input type="text" class="form-field" id="captcha" placeholder="введите текст с картинки">
-                <label class="error-label" id="captchaError"></label>
+                <info:captcha captchaID="" errorCaptcha=""></info:captcha>
             </div>
             <div>
                 <input id="button" type="submit" name="button" onclick="return isValid()" value="Регистрация">

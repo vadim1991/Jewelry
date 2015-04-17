@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Jewelery Shop | Rings</title>
+    <title>Детали изделия</title>
 </head>
 <!----webfonts--->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700,800,400,600' rel='stylesheet' type='text/css'>
@@ -207,7 +207,7 @@
         var id = $(this).parent().find("#id").val();
         $.ajax({
             url: "cart",
-            method: "get",
+            method: "post",
             dataType: "text",
             data: {
                 "id": id
