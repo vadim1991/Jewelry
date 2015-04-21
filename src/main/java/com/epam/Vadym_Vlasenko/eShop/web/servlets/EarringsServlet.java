@@ -3,9 +3,12 @@ package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
 import com.epam.Vadym_Vlasenko.eShop.service.product.IProductService;
+import com.epam.Vadym_Vlasenko.eShop.service.product.ProductService;
+import com.epam.Vadym_Vlasenko.eShop.web.Constants;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +23,10 @@ import java.util.List;
 @WebServlet("/earrings")
 public class EarringsServlet extends HttpServlet {
 
-    private IProductService productService;
+    private static final String PRODUCT_SERVICE = "product_service";
+
+    private static final String ENCODING_TYPE = "utf-8";
+    private static final int PRODUCT_ON_PAGE_DEFAULT = 6;
 
     private static final String EARRINGS_ATTRIBUTE = "products";
     private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
@@ -34,42 +40,43 @@ public class EarringsServlet extends HttpServlet {
     private static final String PRODUCT_ON_PAGE_PARAMETER = "noOfPages";
     private static final String SORT_TYPE_PARAMETER = "sortType";
 
+    private IProductService productService;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
-        ServletContext context = config.getServletContext();
-        productService = (IProductService) context.getAttribute(Constants.PRODUCT_SERVICE);
+        productService = (ProductService) config.getServletContext().getAttribute(PRODUCT_SERVICE);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding(ENCODING_TYPE);
+        resp.setCharacterEncoding(ENCODING_TYPE);
+        Gson gson = new Gson();
         int page = 1;
-        int records = 12;
+        int records = PRODUCT_ON_PAGE_DEFAULT;
         String pageValue = req.getParameter(PAGE_PARAMETER);
         if (pageValue != null) {
             page = Integer.parseInt(pageValue);
         }
-        int countProduct = productService.getCountOfProduct(Constants.EARRINGS_CATEGORY);
-        int noOfPages = (int) Math.ceil(countProduct * 1.0 / records);
-        Criteria criteria = getCriteria(req, resp);
+        Criteria criteria = getCriteria(req);
         criteria.setPositionFrom((page - 1) * records);
         criteria.setProductOnPage(records);
         List<Product> products = productService.getProductsByCriteria(criteria);
+        int countProduct = productService.getNoOfPages();
+        int noOfPages = (int) Math.ceil(countProduct * 1.0 / records);
         if (products == null) {
             req.getRequestDispatcher(Constants.BED_REQUEST_PAGE).forward(req, resp);
             return;
         }
-        req.setAttribute(EARRINGS_ATTRIBUTE, products);
-        req.setAttribute(PRODUCT_ON_PAGE_PARAMETER, noOfPages);
-        req.setAttribute(CURRENT_PAGE_ATTRIBUTE, page);
-        req.getRequestDispatcher(Constants.EARRINGS_PAGE).forward(req, resp);
+        JsonObject object = new JsonObject();
+        object.addProperty(PRODUCT_ON_PAGE_PARAMETER, noOfPages);
+        object.addProperty(CURRENT_PAGE_ATTRIBUTE, page);
+        object.add(EARRINGS_ATTRIBUTE, gson.toJsonTree(products));
+        System.out.println(gson.toJson(object));
+        resp.getWriter().write(gson.toJson(object));
     }
 
-    private Criteria getCriteria(HttpServletRequest request, HttpServletResponse response) {
+    private Criteria getCriteria(HttpServletRequest request) {
         Criteria criteria = new Criteria();
         criteria.setIdCategory(Constants.EARRINGS_CATEGORY);
         criteria.setMaxPrice(request.getParameter(MAX_PRICE_PARAMETER));
@@ -80,5 +87,10 @@ public class EarringsServlet extends HttpServlet {
         criteria.setMaterialId(request.getParameter(MATERIAL_PARAMETER));
         criteria.setSortType(request.getParameter(SORT_TYPE_PARAMETER));
         return criteria;
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher(Constants.EARRINGS_PAGE).forward(req, resp);
     }
 }

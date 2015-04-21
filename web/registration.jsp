@@ -61,7 +61,7 @@
                 <label class="error-label" id="passwordConfError">${errors.get("confirmError")}</label>
             </div>
             <div>
-                <info:captcha captchaID="" errorCaptcha=""></info:captcha>
+                <info:captcha captchaID="${captchaID}" errorCaptcha="${captchaError}"></info:captcha>
             </div>
             <div>
                 <input id="button" type="submit" name="button" onclick="return isValid()" value="Регистрация">

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface IOrderDAO {
 
-    void create(Order order) throws SQLException;
+    Order create(Order order) throws SQLException;
 
     List<Order> getOrders() throws SQLException;
 
@@ -21,4 +21,6 @@ public interface IOrderDAO {
     List<Order> getOrdersByUser(int userId) throws SQLException;
 
     List<Order> getOrdersFromDate(Date from, Date toDate) throws SQLException;
+
+    Order getOrderById(int orderId) throws SQLException;
 }

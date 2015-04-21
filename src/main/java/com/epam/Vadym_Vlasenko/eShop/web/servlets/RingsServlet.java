@@ -4,6 +4,7 @@ import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
 import com.epam.Vadym_Vlasenko.eShop.service.product.IProductService;
 import com.epam.Vadym_Vlasenko.eShop.service.product.ProductService;
+import com.epam.Vadym_Vlasenko.eShop.web.Constants;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +28,6 @@ public class RingsServlet extends HttpServlet {
 
     private static final String ENCODING_TYPE = "utf-8";
 
-    private static final String EARRINGS_ATTRIBUTE = "products";
     private static final String CURRENT_PAGE_ATTRIBUTE = "currentPage";
     private static final String PAGE_PARAMETER = "page";
     private static final String MIN_PRICE_PARAMETER = "minPrice";
@@ -71,7 +70,7 @@ public class RingsServlet extends HttpServlet {
         JsonObject object = new JsonObject();
         object.addProperty(PRODUCT_ON_PAGE_PARAMETER, noOfPages);
         object.addProperty(CURRENT_PAGE_ATTRIBUTE, page);
-        object.add(EARRINGS_ATTRIBUTE, gson.toJsonTree(products));
+        object.add(RINGS_ATTRIBUTE, gson.toJsonTree(products));
         System.out.println(gson.toJson(object));
         resp.getWriter().write(gson.toJson(object));
     }

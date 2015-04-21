@@ -22,20 +22,20 @@ public class OrderInfoDaoMySQL implements IOrderInfoDAO {
     private static final String AMOUNT_COLUMN = "amount";
     private static final String ORDER_ID_COLUMN = "order_id";
 
-    private static final String CREATE_ORDER_INFO_QUERY = "INSERT INTO order_info VALUES(?,?,?,?)";
+    private static final String CREATE_ORDER_INFO_QUERY = "INSERT INTO order_info VALUES(?,?,?,?,?)";
 
 
     @Override
     public void createOrderInfo(OrderInfo orderInfo, int orderId) throws SQLException {
-        try (Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ORDER_INFO_QUERY)) {
+        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ORDER_INFO_QUERY)) {
             int index = 1;
             preparedStatement.setInt(index++, orderInfo.getId());
             preparedStatement.setInt(index++, orderInfo.getProduct().getId());
             preparedStatement.setInt(index++, orderInfo.getPrice());
             preparedStatement.setInt(index++, orderInfo.getAmount());
             preparedStatement.setInt(index++, orderId);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         }
     }
 
@@ -44,8 +44,8 @@ public class OrderInfoDaoMySQL implements IOrderInfoDAO {
         List<OrderInfo> orderInfoList = new ArrayList<>();
         QueryCreator creator = new QueryCreator();
         String query = creator.selectAll(TABLE_NAME);
-        try (Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
-             Statement statement = connection.createStatement()) {
+        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 orderInfoList.add(extractOrderInfo(resultSet));
@@ -59,8 +59,8 @@ public class OrderInfoDaoMySQL implements IOrderInfoDAO {
         OrderInfo orderInfo = new OrderInfo();
         QueryCreator creator = new QueryCreator();
         String query = creator.where(TABLE_NAME, ID_COLUMN, String.valueOf(orderInfo));
-        try (Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
-             Statement statement = connection.createStatement()) {
+        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
                 orderInfo = extractOrderInfo(resultSet);

@@ -723,7 +723,15 @@ ul.social-icons li a:hover {
     text-decoration: none;
 }
 
+.categories-left ul li.active a {
+    color: #7b8286;
+
+}
+
 .categories-left ul li a:hover {
+    color: #7b8286;
+}
+.categories-left ul li a.active {
     color: #7b8286;
 }
 

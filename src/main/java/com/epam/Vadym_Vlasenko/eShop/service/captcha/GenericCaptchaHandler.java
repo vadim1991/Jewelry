@@ -48,10 +48,10 @@ public abstract class GenericCaptchaHandler implements ICaptchaHandler {
                 RenderingHints.VALUE_RENDER_QUALITY);
 
         graphics.setRenderingHints(rh);
-        GradientPaint gradientPaint = new GradientPaint(10, 5, Color.BLUE, 20, 10, Color.LIGHT_GRAY, true);
+        GradientPaint gradientPaint = new GradientPaint(10, 5, Color.BLACK, 20, 10, Color.LIGHT_GRAY, true);
         graphics.setPaint(gradientPaint);
         graphics.fillRect(0, 0, 200, 40);
-        graphics.setColor(new Color(255, 153, 0));
+        graphics.setColor(Color.DARK_GRAY);
         graphics.drawString(captchaContent, 5, 30);
         graphics.dispose();
         return image;

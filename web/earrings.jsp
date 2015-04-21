@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Серьги</title>
+    <script src="js/product.js"></script>
 </head>
 <body>
 <!-- container -->
@@ -38,21 +39,24 @@
             <div class="container">
                 <div class="categories-left">
                     <ul>
-                        <li><a href="earrings?insert=1">С бриллиантом</a></li>
-                        <li><a href="earrings?insert=2">С изумрудом</a></li>
-                        <li><a href="earrings?insert=3">С рубином</a></li>
-                        <li><a href="earrings?insert=4">С фианитом</a></li>
-                        <li><a href="earrings?insert=7">Без вставки</a></li>
+                        <li><a name="insert" class="diamonds" href="#insert">С бриллиантом</a></li>
+                        <li><a class="emerald" href="#insert">С изумрудом</a></li>
+                        <li><a class="ruby" href="#insert">С рубином</a></li>
+                        <li><a class="fianit" href="#insert">С фианитом</a></li>
+                        <li><a class="none" href="#insert">Без вставки</a></li>
                     </ul>
                 </div>
                 <div class="categories-right">
                     <ul>
-                        <c:if test="${currentPage!=1}">
-                            <li><a href="earrings?page=${currentPage-1}">Предыдущая</a></li>
-                        </c:if>
-                        <c:if test="${currentPage lt noOfPages}">
-                            <li><a href="earrings?page=${currentPage+1}">Следущая</a></li>
-                        </c:if>
+                        <li>
+                            <button class="previous">Предыдущая</button>
+                        </li>
+                        <li>
+                            <label id="pageNumber">1</label>
+                        </li>
+                        <li>
+                            <button class="next">Следущая</button>
+                        </li>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
@@ -63,72 +67,54 @@
         <!-- iteam-grids -->
         <div class="iteam-grids">
             <div class="container-left">
-                <form action="earrings">
-                    <div class="filter-form">
+                <div class="filter-form">
 
-                        <div class="filter-div">
-                            <h3>
-                                Фильтр
-                            </h3>
-                        </div>
-                        <span style="font-style: italic;">Цена изделия</span>
+                    <div class="filter-div">
+                        <h3>
+                            Фильтр
+                        </h3>
+                    </div>
+                    <span style="font-style: italic;">Цена изделия</span>
 
-                        <div id='redLevel'>
-                        </div>
-                        <div>
-                            <input class="search-field" type="text" name="minPrice" id="startPrice" value="0">
-                            <input class="search-field" type="text" name="maxPrice" id="endPrice" value="20000">
-                        </div>
-                        <span style="font-style: italic;">Вес изделия</span>
+                    <div id='redLevel'>
+                    </div>
+                    <div>
+                        <input class="search-field" type="text" name="minPrice" id="startPrice" value="0">
+                        <input class="search-field" type="text" name="maxPrice" id="endPrice" value="20000">
+                    </div>
+                    <span style="font-style: italic;">Вес изделия</span>
 
-                        <div id='greenLevel'>
-                        </div>
-                        <div>
-                            <input class="search-field" type="text" name="minWeight" id="startWeigh" value="0">
-                            <input class="search-field" type="text" name="maxWeight" id="endWeight"
-                                   value="10.0">
-                        </div>
-                        <span style="font-style: italic;">Материал</span>
+                    <div id='greenLevel'>
+                    </div>
+                    <div>
+                        <input class="search-field" type="text" name="minWeight" id="startWeigh" value="0">
+                        <input class="search-field" type="text" name="maxWeight" id="endWeight"
+                               value="10.0">
+                    </div>
+                    <span style="font-style: italic;">Материал</span>
 
-                        <div class="filter-div" id='selectMaterial'>
-                        </div>
-                        <input type="hidden" name="material" id="material" value="1">
-                        <input type="hidden" name="insert" id="insert" value="1">
-                        <input type="hidden" name="sortType" id="sortType" value="1">
-                        <span style="font-style: italic;">Вставка</span>
+                    <div class="filter-div" id='selectMaterial'>
+                    </div>
+                    <input type="hidden" name="material" id="material">
+                    <input type="hidden" name="insert" id="insert">
+                    <input type="hidden" name="sortType" id="sortType" value="1">
+                    <span style="font-style: italic;">Вставка</span>
 
-                        <div class="filter-div" id='selectInsert'>
-                        </div>
-                        <span style="font-style: italic;">Сортировать </span>
+                    <div class="filter-div" id='selectInsert'>
+                    </div>
+                    <span style="font-style: italic;">Сортировать </span>
 
-                        <div class="filter-div" id='selectSortType'>
-                        </div>
-
-                        <div>
-                            <input type="submit" class="b-home" value="Поиск">
-                        </div>
+                    <div class="filter-div" id='selectSortType'>
                     </div>
 
-
-                </form>
+                    <div>
+                        <button id="search" class="b-home">Поиск</button>
+                    </div>
+                </div>
             </div>
             <div class="container-right">
-                <c:forEach items="${products}" var="p">
-                    <div class="col-md-4">
-                        <input type="hidden" class="id" name="id" value="${p.id}"/>
+                <h1 id="incorrectFilter" class="error-page text-center stub">По данному запросу ничего не найдено</h1>
 
-                        <div class="iteam-grid text-center">
-                            <img height="150 px" src=${p.image.url} title=${p.title}>
-                            <span>${p.title}</span>
-                            <label>Цена $ ${p.price}</label>
-                            <ul>
-                                <li><a class="cart" href="#cartInfo">В корзину</a></li>
-                                <li><a class="more" href="details?id=${p.id}">Инфо</a></li>
-                                <div class="clearfix"></div>
-                            </ul>
-                        </div>
-                    </div>
-                </c:forEach>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -142,21 +128,21 @@
             <div class="container">
                 <div class="categories-left">
                     <ul>
-                        <li><a href="earrings?insert=1">С бриллиантом</a></li>
-                        <li><a href="earrings?insert=2">С изумрудом</a></li>
-                        <li><a href="earrings?insert=3">С рубином</a></li>
-                        <li><a href="earrings?insert=4">С фианитом</a></li>
-                        <li><a href="earrings?insert=7">Без вставки</a></li>
+                        <li class="active"><a class="diamonds" href="#insert">С бриллиантом</a></li>
+                        <li><a class="emerald" href="#insert">С изумрудом</a></li>
+                        <li><a class="ruby" href="#insert">С рубином</a></li>
+                        <li><a class="fianit" href="#insert">С фианитом</a></li>
+                        <li><a class="none" href="#insert">Без вставки</a></li>
                     </ul>
                 </div>
                 <div class="categories-right">
                     <ul>
-                        <c:if test="${currentPage!=1}">
-                            <li><a href="earrings?page=${currentPage-1}">Предыдущая</a></li>
-                        </c:if>
-                        <c:if test="${currentPage lt noOfPages}">
-                            <li><a href="earrings?page=${currentPage+1}">Следущая</a></li>
-                        </c:if>
+                        <li>
+                            <button class="previous">Предыдущая</button>
+                        </li>
+                        <li>
+                            <button class="next">Следущая</button>
+                        </li>
                         <div class="clearfix"></div>
                     </ul>
                 </div>
@@ -166,23 +152,21 @@
         <jsp:include page="footer.jsp"></jsp:include>
     </div>
 </div>
+<div id="product-stub" class="col-md-4 stub">
+
+    <div class="iteam-grid text-center">
+        <img height="150 px" class="image" src="" title="">
+        <span class="title"></span>
+        <label class="price"></label>
+        <ul>
+            <input type="hidden" class="id" name="id"/>
+            <li><a class="cart" href="#cartInfo">В корзину</a></li>
+            <li><a class="more" href="">Инфо</a></li>
+            <div class="clearfix"></div>
+        </ul>
+    </div>
+</div>
 </body>
-<script>
-    $(".cart").click(function () {
-        var id = $(this).parent().parent().parent().parent().find(".id").val();
-        $.ajax({
-            url: "cart",
-            method: "post",
-            dataType: "text",
-            data: {
-                "id": id
-            },
-            success: function (data) {
-                $("#amount").html(data);
-            }
-        })
-    })
-</script>
 <script type="text/javascript">
     $(document).ready(function () {
         var start = $("#startPrice");
@@ -283,7 +267,7 @@
         var selectSortType = $("#selectSortType");
         var source = [
             "по возрастанию цены",
-            "по убыванию цены",
+            "по убыванию цены"
         ];
         // Create a jqxComboBox
         selectSortType.jqxComboBox({
@@ -295,9 +279,145 @@
         });
         selectSortType.bind('select', function (event) {
             var args = event.args;
-            var item = selectInsert.jqxComboBox('getItem', args.index);
             $("#sortType").val(args.index + 1);
         });
     });
 </script>
+<script>
+    var currentPage = 1;
+    var pages;
+    var next = $(".next");
+    var previous = $(".previous");
+    var container = $(".container-right");
+    var incorrectFilterMessage = $("#incorrectFilter");
+    $.ajax({
+        url: "earrings",
+        method: "post",
+        dataType: "json",
+        success: function (data) {
+            parseData(data, container)
+        }
+    });
+    $("#search").click(function () {
+        rewriteProduct(currentPage);
+    });
+    function parseData(data, container) {
+        currentPage = data.currentPage;
+        pages = data.noOfPages;
+        $("#pageNumber").text(currentPage);
+        for (var i = 0; i < data.products.length; i++) {
+            $("#incorrectFilter").hide("slow");
+            var d = data.products[i];
+            var product = new ProductObject(d.id, d.image.url, d.title, d.price).build();
+            container.append(product);
+            container.show("slow");
+        }
+        if (currentPage == 1) {
+            previous.attr("disabled", true)
+        }
+        else {
+            previous.removeAttr("disabled")
+        }
+        if (currentPage == pages) {
+            next.attr("disabled", true)
+        } else {
+            next.removeAttr("disabled")
+        }
+    }
+    function rewriteProduct(currentPage) {
+        var container = $(".container-right");
+        container.empty();
+        container.hide();
+        var startPrice = $("#startPrice").val();
+        var endPrice = $("#endPrice").val();
+        var startWeight = $("#startWeigh").val();
+        var endWeight = $("#endWeight").val();
+        var material = $("#material").val();
+        var insert = $("#insert").val();
+        var sortType = $("#sortType").val();
+        $.ajax({
+            url: "earrings",
+            method: "post",
+            dataType: "json",
+            data: {
+                "minPrice": startPrice,
+                "maxPrice": endPrice,
+                "minWeight": startWeight,
+                "maxWeight": endWeight,
+                "insert": insert,
+                "material": material,
+                "sortType": sortType,
+                "page": currentPage
+            },
+            success: function (data) {
+                if (data.products.length < 1) {
+                    container.append(incorrectFilterMessage);
+                    container.show("slow");
+                    incorrectFilterMessage.show("slow");
+                }
+                parseData(data, container)
+            }
+        })
+    }
+    next.click(function () {
+        rewriteProduct(currentPage + 1)
+    });
+    previous.click(function () {
+        rewriteProduct(currentPage - 1)
+    });
+    function chooseInsert(insertId) {
+        var container = $(".container-right");
+        $("#insert").val(insertId);
+        container.empty();
+        container.hide();
+        var sortType = $("#sortType").val();
+        $.ajax({
+            url: "earrings",
+            method: "post",
+            dataType: "json",
+            data: {
+                "sortType": sortType,
+                "insert": insertId
+            },
+            success: function (data) {
+                if (data.noOfPages < 1) {
+                    container.append(incorrectFilterMessage);
+                    container.show("slow");
+                    incorrectFilterMessage.show("slow");
+                }
+                parseData(data, container)
+            }
+        })
+    }
+    function removeActiveClass(object) {
+        var active = "active";
+        $(".diamonds").removeClass(active);
+        $(".emerald").removeClass(active);
+        $(".fianit").removeClass(active);
+        $(".ruby").removeClass(active);
+        $(".none").removeClass(active);
+        object.addClass("active");
+    }
+    $(".diamonds").click(function () {
+        removeActiveClass($(this));
+        chooseInsert(1);
+    });
+    $(".emerald").click(function () {
+        removeActiveClass($(this));
+        chooseInsert(2);
+    });
+    $(".fianit").click(function () {
+        removeActiveClass($(this));
+        chooseInsert(4);
+    });
+    $(".ruby").click(function () {
+        removeActiveClass($(this));
+        chooseInsert(3);
+    });
+    $(".none").click(function () {
+        removeActiveClass($(this));
+        chooseInsert(7);
+    });
+</script>
+
 </html>

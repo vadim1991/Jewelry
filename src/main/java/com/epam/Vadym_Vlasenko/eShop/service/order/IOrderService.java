@@ -1,6 +1,7 @@
 package com.epam.Vadym_Vlasenko.eShop.service.order;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.Order;
+import com.epam.Vadym_Vlasenko.eShop.entity.OrderInfo;
 import com.epam.Vadym_Vlasenko.eShop.entity.StatusTypes;
 
 import java.util.Date;
@@ -13,6 +14,8 @@ public interface IOrderService {
 
     void create(Order order);
 
+    void create(Order order, List<OrderInfo> orderInfoList);
+
     List<Order> getOrders();
 
     boolean changeOrderStatus(Order order, StatusTypes statusTypes);
@@ -20,4 +23,6 @@ public interface IOrderService {
     List<Order> getOrdersByUser(int userId);
 
     List<Order> getOrdersFromDate(Date from, Date toDate);
+
+    Order getOrderById(int orderId);
 }

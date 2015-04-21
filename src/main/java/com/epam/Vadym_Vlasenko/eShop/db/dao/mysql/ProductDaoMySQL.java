@@ -9,14 +9,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.Vadym_Vlasenko.eShop.db.util.DBUtil.*;
-
 /**
  * Created by Вадим on 22.03.2015.
  */
 public class ProductDaoMySQL implements IProductDAO {
 
-    private int noOfPages;
+    private ThreadLocal<Integer> noOfPages = new ThreadLocal<>();
 
     private static final String ID_COLUMN = "id";
     private static final String TITLE_COLUMN = "title";
@@ -127,19 +125,24 @@ public class ProductDaoMySQL implements IProductDAO {
 
     @Override
     public List<Product> getProductsByCriteria(Criteria criteria) throws SQLException {
+        this.noOfPages.remove();
         List<Product> products = new ArrayList<>();
         String query = new QueryCreator().buildCriteria(criteria, PRODUCT_TABLE);
         Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (Statement statement = connection.createStatement()) {
+            Connection newConnection = DBConnectionHolder.getConnectionHolder().getConnectionNew();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                products.add(extractProduct(resultSet, connection));
+                products.add(extractProduct(resultSet, newConnection));
             }
             resultSet.close();
             resultSet = statement.executeQuery(SELECT_FOUND_ROWS);
             if (resultSet.next()) {
-                this.noOfPages = resultSet.getInt(1);
+                this.noOfPages.set(resultSet.getInt(1));
+                System.out.println(this.noOfPages.get());
             }
+            resultSet.close();
+            newConnection.close();
         }
         return products;
     }
@@ -169,9 +172,9 @@ public class ProductDaoMySQL implements IProductDAO {
         return false;
     }
 
-    public Category getCategoryByID(int id) throws SQLException {
+    public Category getCategoryByID(int id, Connection connection) throws SQLException {
         Category category = new Category();
-        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        // Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_CATEGORY_BY_ID)) {
             int index = 1;
             preparedStatement.setInt(index, id);
@@ -180,13 +183,14 @@ public class ProductDaoMySQL implements IProductDAO {
                 category.setId(resultSet.getInt(ID_COLUMN));
                 category.setName(resultSet.getString(TITLE_COLUMN));
             }
+            resultSet.close();
         }
         return category;
     }
 
-    public Image getImageByID(int id) throws SQLException {
+    public Image getImageByID(int id, Connection connection) throws SQLException {
         Image image = new Image();
-        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        //Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_IMAGE_BY_ID)) {
             int index = 1;
             preparedStatement.setInt(index, id);
@@ -196,13 +200,14 @@ public class ProductDaoMySQL implements IProductDAO {
                 image.setTitle(resultSet.getString(TITLE_COLUMN));
                 image.setUrl(resultSet.getString(URL_COLUMN));
             }
+            resultSet.close();
         }
         return image;
     }
 
-    public Material getMaterialByID(int id) throws SQLException {
+    public Material getMaterialByID(int id, Connection connection) throws SQLException {
         Material material = new Material();
-        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        // Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_MATERIAL_BY_ID)) {
             int index = 1;
             preparedStatement.setInt(index, id);
@@ -211,13 +216,14 @@ public class ProductDaoMySQL implements IProductDAO {
                 material.setId(resultSet.getInt(ID_COLUMN));
                 material.setName(resultSet.getString(NAME_COLUMN));
             }
+            resultSet.close();
         }
         return material;
     }
 
-    public Insert getInsertByID(int id) throws SQLException {
+    public Insert getInsertByID(int id, Connection connection) throws SQLException {
         Insert insert = new Insert();
-        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        // Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_INSERT_BY_ID)) {
             int index = 1;
             preparedStatement.setInt(index, id);
@@ -226,6 +232,7 @@ public class ProductDaoMySQL implements IProductDAO {
                 insert.setId(resultSet.getInt(ID_COLUMN));
                 insert.setTitle(resultSet.getString(NAME_COLUMN));
             }
+            resultSet.close();
         }
         return insert;
     }
@@ -236,16 +243,16 @@ public class ProductDaoMySQL implements IProductDAO {
         product.setTitle(rs.getString(TITLE_COLUMN));
         product.setPrice(rs.getInt(PRICE_COLUMN));
         product.setDescription(rs.getString(DESCRIPTION_COLUMN));
-        product.setImage(getImageByID(rs.getInt("image_id")));
-        product.setWeight(rs.getDouble("weight"));
-        product.setInsert(getInsertByID(rs.getInt("insert_id")));
-        product.setMaterial(getMaterialByID(rs.getInt("material")));
-        product.setCategory(getCategoryByID(rs.getInt("category")));
-        product.setSize(rs.getDouble("size"));
+        product.setImage(getImageByID(rs.getInt(IMAGE_ID_COLUMN), connection));
+        product.setWeight(rs.getDouble(WEIGHT_COLUMN));
+        product.setInsert(getInsertByID(rs.getInt(INSERT_ID_COLUMN), connection));
+        product.setMaterial(getMaterialByID(rs.getInt(MATERIAL_ID_COLUMN), connection));
+        product.setCategory(getCategoryByID(rs.getInt(CATEGORY_ID_COLUMN), connection));
+        product.setSize(rs.getDouble(SIZE_COLUMN));
         return product;
     }
 
     public int getNoOfPages() {
-        return noOfPages;
+        return noOfPages.get();
     }
 }

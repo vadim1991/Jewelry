@@ -26,8 +26,8 @@ public class OrderStatusDaoMySQL implements IOrderStatusDAO {
         List<OrderStatus> orderStatusList = new ArrayList<>();
         QueryCreator creator = new QueryCreator();
         String query = creator.selectAll(TABLE_NAME);
-        try (Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
-             Statement statement = connection.createStatement()) {
+        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 orderStatusList.add(extractOrderStatus(resultSet));
@@ -41,8 +41,8 @@ public class OrderStatusDaoMySQL implements IOrderStatusDAO {
         OrderStatus orderStatus = new OrderStatus();
         QueryCreator creator = new QueryCreator();
         String query = creator.where(TABLE_NAME, ID_STATUS_COLUMN, String.valueOf(id));
-        try (Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
-             Statement statement = connection.createStatement()) {
+        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
                 orderStatus = extractOrderStatus(resultSet);

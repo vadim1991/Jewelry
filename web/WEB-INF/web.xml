@@ -8,20 +8,9 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <servlet>
-        <servlet-name>SimpleCaptcha</servlet-name>
-        <servlet-class>nl.captcha.servlet.SimpleCaptchaServlet</servlet-class>
-        <init-param>
-            <param-name>captcha-width</param-name>
-            <param-value>250</param-value>
-        </init-param>
-        <init-param>
-            <param-name>captcha-height</param-name>
-            <param-value>75</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SimpleCaptcha</servlet-name>
-        <url-pattern>/simpleCaptcha.png</url-pattern>
-    </servlet-mapping>
+
+    <context-param>
+        <param-name>captchaHandlerType</param-name>
+        <param-value>requestHandler</param-value>
+    </context-param>
 </web-app>

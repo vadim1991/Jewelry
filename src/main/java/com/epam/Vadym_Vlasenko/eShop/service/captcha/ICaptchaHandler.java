@@ -10,17 +10,18 @@ import java.io.IOException;
  * Created by swift-seeker-89717 on 17.04.2015.
  */
 public interface ICaptchaHandler {
-    public void init(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
-    public void saveCaptchaParameters(HttpServletRequest request, HttpServletResponse response, String captchaContent);
+    void init(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
-    public String getExpectedCaptchaValue(HttpServletRequest request);
+    void saveCaptchaParameters(HttpServletRequest request, HttpServletResponse response, String captchaContent);
 
-    public void removeCurrentCaptcha(HttpServletRequest request);
+    String getExpectedCaptchaValue(HttpServletRequest request);
 
-    public void updateCurrentCaptcha(HttpServletRequest request);
+    void removeCurrentCaptcha(HttpServletRequest request);
 
-    public String generateCaptchaString();
+    void updateCurrentCaptcha(HttpServletRequest request);
 
-    public BufferedImage createCaptchaImage(String captchaChars);
+    String generateCaptchaString();
+
+    BufferedImage createCaptchaImage(String captchaChars);
 }

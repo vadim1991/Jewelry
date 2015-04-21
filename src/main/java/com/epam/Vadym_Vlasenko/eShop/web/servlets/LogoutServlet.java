@@ -1,5 +1,7 @@
 package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 
+import com.epam.Vadym_Vlasenko.eShop.web.Constants;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,11 +19,11 @@ import java.net.URISyntaxException;
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String previous = null;
+        String previous;
         try {
             previous = new URI(req.getHeader("referer")).getPath();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+        } catch (URISyntaxException | NullPointerException e) {
+            previous = Constants.MAIN_PAGE;
         }
         HttpSession session = req.getSession();
         session.invalidate();

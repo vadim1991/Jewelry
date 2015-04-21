@@ -1,7 +1,7 @@
 package com.epam.Vadym_Vlasenko.eShop.service.captcha;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.Captcha;
-import com.epam.Vadym_Vlasenko.eShop.web.servlets.Constants;
+import com.epam.Vadym_Vlasenko.eShop.web.Constants;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ import java.util.UUID;
  */
 public class CookieCaptchaHandler extends ContextCaptchaHandler {
 
-    protected CookieCaptchaHandler(Map<UUID, Captcha> captchaMap) {
+    public CookieCaptchaHandler(Map<UUID, Captcha> captchaMap) {
         super(captchaMap);
     }
 
@@ -41,7 +41,11 @@ public class CookieCaptchaHandler extends ContextCaptchaHandler {
 
     @Override
     public String getExpectedCaptchaValue(HttpServletRequest request) {
-        return captchaMap.get(getCaptchaID(request)).getContent();
+        Captcha captcha = captchaMap.get(getCaptchaID(request));
+        if (captcha != null) {
+            return captcha.getContent();
+        }
+        return new String();
     }
 
     @Override

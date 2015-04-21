@@ -20,6 +20,7 @@ public class RegistrationBean {
     private static final String EMAIL__MESSAGE_ERROR = "Некорректный email";
     private static final String AGE__MESSAGE_ERROR = "Некорректное значение возраста";
     private static final String CONFIRM__MESSAGE_ERROR = "Не подтвержден пароль";
+    private static final String CAPTCHA__MESSAGE_ERROR = "Не верное значение картинки";
 
     private static final String NAME_ERROR = "nameError";
     private static final String SURNAME_ERROR = "surnameError";
@@ -28,6 +29,7 @@ public class RegistrationBean {
     private static final String EMAIL_ERROR = "emailError";
     private static final String AGE_ERROR = "ageError";
     private static final String CONFIRM_PASSWORD_ERROR = "confirmError";
+    private static final String CAPTCHA_ERROR = "captchaError";
 
     private static final Role role = new Role(2, "client");
 
@@ -36,7 +38,7 @@ public class RegistrationBean {
     /**
      * Pattern for login validation
      */
-    private static final String LOGIN_PATTERN = "^[a-zA-Z]{4,15}$";
+    private static final String LOGIN_PATTERN = "^(\\w){4,15}$";
 
     /**
      * Pattern for password validation
@@ -71,9 +73,14 @@ public class RegistrationBean {
     private String password;
     private String email;
     private String confirmPassword;
+    private String captcha;
+    private String currentCaptcha;
     private Map<String, String> errors;
 
-    public RegistrationBean(String name, String surname, String age, String login, String password, String email, String confirmPassword) {
+    public RegistrationBean() {
+    }
+
+    public RegistrationBean(String name, String surname, String age, String login, String password, String email, String confirmPassword, String captcha, String currentCaptcha) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -81,7 +88,17 @@ public class RegistrationBean {
         this.password = password;
         this.email = email;
         this.confirmPassword = confirmPassword;
+        this.captcha = captcha;
+        this.currentCaptcha = currentCaptcha;
         errors = new HashMap<>();
+    }
+
+    public String getCurrentCaptcha() {
+        return currentCaptcha;
+    }
+
+    public void setCurrentCaptcha(String currentCaptcha) {
+        this.currentCaptcha = currentCaptcha;
     }
 
     public Map<String, String> getErrors() {
@@ -149,11 +166,15 @@ public class RegistrationBean {
     }
 
     public User getUser() {
-        User user = null;
-        if (isValid()) {
-            user = new User(name, surname, login, password, email, Integer.parseInt(age), role);
-        }
-        return user;
+        return new User(name, surname, login, password, email, Integer.parseInt(age), role);
+    }
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
     }
 
     public boolean isValid() {
@@ -174,6 +195,9 @@ public class RegistrationBean {
         }
         if (!confirmPassword()) {
             errors.put(CONFIRM_PASSWORD_ERROR, CONFIRM__MESSAGE_ERROR);
+        }
+        if (!isCaptchaValid()) {
+            errors.put(CAPTCHA_ERROR, CAPTCHA__MESSAGE_ERROR);
         }
         if (!isAgeValid()) {
             errors.put(AGE_ERROR, AGE__MESSAGE_ERROR);
@@ -217,6 +241,10 @@ public class RegistrationBean {
         return password.equals(confirmPassword);
     }
 
+    private boolean isCaptchaValid() {
+        return captcha.equals(currentCaptcha);
+    }
+
     private boolean checkParameter(String parameter, String patternParam) {
         if (parameter == null) {
             return false;
@@ -224,5 +252,21 @@ public class RegistrationBean {
         Pattern pattern = Pattern.compile(patternParam);
         Matcher matcher = pattern.matcher(parameter);
         return matcher.matches();
+    }
+
+    @Override
+    public String toString() {
+        return "RegistrationBean{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age='" + age + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", captcha='" + captcha + '\'' +
+                ", currentCaptcha='" + currentCaptcha + '\'' +
+                ", errors=" + errors +
+                '}';
     }
 }

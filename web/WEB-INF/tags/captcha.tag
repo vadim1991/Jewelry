@@ -10,16 +10,15 @@
     <c:choose>
         <c:when test="${!empty captchaID}">
             <input type="hidden" name="captchaID" value="${captchaID}">
-            <label class="error_label" id="errorCaptcha">${form.errorCaptcha}</label><br>
+            <label class="error-label" id="errorCaptcha">${errors.get("captchaError")}</label><br>
             <img src="/captcha?captchaID=${captchaID}" border="0">
         </c:when>
         <c:otherwise>
-            <label class="error_label" id="errorCaptcha">${form.errorCaptcha}</label><br>
+            <label class="error-label" id="errorCaptcha">${errors.get("captchaError")}</label><br>
             <img src="captcha" border="0">
         </c:otherwise>
     </c:choose>
 </div>
 <div style="margin-top: 20px">
-    <label>${sessionScope.captcha}</label>
-    <input type="text" class="form-field" id="captcha" placeholder="введите текст с картинки">
+    <input name="captcha" type="text" class="form-field" id="captcha" placeholder="введите текст с картинки">
 </div>

@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Серьги</title>
+    <title>Кольца</title>
     <script src="js/product.js"></script>
 </head>
 <body>
@@ -113,6 +113,8 @@
                 </div>
             </div>
             <div class="container-right">
+                <h1 id="incorrectFilter" class="error-page text-center stub">По данному запросу ничего не найдено</h1>
+
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -287,6 +289,7 @@
     var next = $(".next");
     var previous = $(".previous");
     var container = $(".container-right");
+    var incorrectFilterMessage = $("#incorrectFilter");
     $.ajax({
         url: "rings",
         method: "post",
@@ -346,6 +349,11 @@
                 "page": currentPage
             },
             success: function (data) {
+                if (data.products.length < 1) {
+                    container.append(incorrectFilterMessage);
+                    container.show("slow");
+                    incorrectFilterMessage.show("slow");
+                }
                 parseData(data, container)
             }
         })
@@ -371,23 +379,42 @@
                 "insert": insertId
             },
             success: function (data) {
+                if (data.noOfPages < 1) {
+                    container.append(incorrectFilterMessage);
+                    container.show("slow");
+                    incorrectFilterMessage.show("slow");
+                }
                 parseData(data, container)
             }
         })
     }
+    function removeActiveClass(object) {
+        var active = "active";
+        $(".diamonds").removeClass(active);
+        $(".emerald").removeClass(active);
+        $(".fianit").removeClass(active);
+        $(".ruby").removeClass(active);
+        $(".none").removeClass(active);
+        object.addClass("active");
+    }
     $(".diamonds").click(function () {
+        removeActiveClass($(this));
         chooseInsert(1);
     });
     $(".emerald").click(function () {
+        removeActiveClass($(this));
         chooseInsert(2);
     });
     $(".fianit").click(function () {
+        removeActiveClass($(this));
         chooseInsert(4);
     });
     $(".ruby").click(function () {
+        removeActiveClass($(this));
         chooseInsert(3);
     });
     $(".none").click(function () {
+        removeActiveClass($(this));
         chooseInsert(7);
     });
 </script>

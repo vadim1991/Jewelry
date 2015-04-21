@@ -40,6 +40,10 @@ public class DBConnectionHolder {
         return connectionStorage.get();
     }
 
+    public Connection getConnectionNew() throws SQLException {
+        return this.basicPooledDataSource.getConnection();
+    }
+
     public void freeConnection() {
         connectionStorage.remove();
     }

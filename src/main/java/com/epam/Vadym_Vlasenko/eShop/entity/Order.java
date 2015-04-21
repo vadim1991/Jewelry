@@ -15,12 +15,13 @@ public class Order implements Serializable {
     private Date date;
     private String telephone;
     private String paymentInfo;
+    private int totalPrice;
 
     public Order() {
         this.date = new Date();
     }
 
-    public Order(int id, OrderStatus orderStatus, String orderInfo, User user, Date date, String telephone, String paymentInfo) {
+    public Order(int id, OrderStatus orderStatus, String orderInfo, User user, String telephone, String paymentInfo, int totalPrice) {
         this.id = id;
         this.orderStatus = orderStatus;
         this.orderInfo = orderInfo;
@@ -28,6 +29,7 @@ public class Order implements Serializable {
         this.date = new Date();
         this.telephone = telephone;
         this.paymentInfo = paymentInfo;
+        this.totalPrice = totalPrice;
     }
 
     public int getId() {
@@ -86,6 +88,14 @@ public class Order implements Serializable {
         this.paymentInfo = paymentInfo;
     }
 
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -125,6 +135,7 @@ public class Order implements Serializable {
                 ", date=" + date +
                 ", telephone='" + telephone + '\'' +
                 ", paymentInfo='" + paymentInfo + '\'' +
+                ", totalPrice=" + totalPrice +
                 '}';
     }
 }

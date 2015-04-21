@@ -38,4 +38,5 @@ public abstract class ContextCaptchaHandler extends GenericCaptchaHandler {
     abstract protected UUID getCaptchaID(HttpServletRequest request);
 
     abstract protected void saveCaptchaID(HttpServletRequest request, HttpServletResponse response, UUID captchaID);
+
 }

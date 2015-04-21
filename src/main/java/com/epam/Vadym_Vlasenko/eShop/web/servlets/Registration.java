@@ -2,6 +2,8 @@ package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.User;
 import com.epam.Vadym_Vlasenko.eShop.service.User.UserService;
+import com.epam.Vadym_Vlasenko.eShop.service.captcha.ICaptchaHandler;
+import com.epam.Vadym_Vlasenko.eShop.web.Constants;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -23,15 +25,18 @@ public class Registration extends HttpServlet {
     private static final String SUCCESS_MESSAGE = "Пользователь добавлен";
 
     private UserService userService;
+    private ICaptchaHandler captchaHandler;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         ServletContext context = config.getServletContext();
         userService = (UserService) context.getAttribute(Constants.USER_SERVICE);
+        captchaHandler = (ICaptchaHandler) context.getAttribute((Constants.CAPTCHA_HANDLER));
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        captchaHandler.init(req, resp);
         req.getRequestDispatcher(Constants.REGISTRATION_PAGE).forward(req, resp);
     }
 

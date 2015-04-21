@@ -2,6 +2,7 @@ package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.User;
 import com.epam.Vadym_Vlasenko.eShop.service.User.UserService;
+import com.epam.Vadym_Vlasenko.eShop.web.Constants;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -41,11 +42,11 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String previousPage = null;
+        String previousPage;
         try {
             previousPage = new URI(req.getHeader(REFERER)).getPath();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+        } catch (URISyntaxException | NullPointerException e) {
+            previousPage = Constants.MAIN_PAGE;
         }
         req.getSession().setAttribute(PREVIOUS_PAGE, previousPage);
         req.setAttribute(PREVIOUS_PAGE, previousPage);

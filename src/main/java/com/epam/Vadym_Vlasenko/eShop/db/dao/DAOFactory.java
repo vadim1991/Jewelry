@@ -31,4 +31,10 @@ public abstract class DAOFactory {
 
     public abstract IUserDAO getUserDAO();
 
+    public abstract IOrderDAO getOrderDAO();
+
+    public abstract IOrderInfoDAO getOrderInfoDAO();
+
+    public abstract IOrderStatusDAO getOrderStatusDAO();
+
 }
