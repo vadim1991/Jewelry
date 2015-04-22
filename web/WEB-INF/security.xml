@@ -5,7 +5,7 @@
         <role>admin</role>
     </constraint>
     <constraint>
-        <url-pattern>/.*</url-pattern>
+        <url-pattern>/earrings</url-pattern>
         <role>client</role>
     </constraint>
 </security>

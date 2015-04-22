@@ -20,6 +20,16 @@ public class UserService {
         this.tm = tm;
     }
 
+    public void updateUser(final User user) {
+        tm.transaction(new TransactionOperation<Void>() {
+            @Override
+            public Void execute() throws SQLException {
+                userDAO.updateUser(user);
+                return null;
+            }
+        });
+    }
+
     public void addUser(final User user) {
         tm.transaction(new TransactionOperation<Void>() {
             @Override

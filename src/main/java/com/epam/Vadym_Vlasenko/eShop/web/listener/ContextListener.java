@@ -9,6 +9,7 @@ import com.epam.Vadym_Vlasenko.eShop.service.captcha.*;
 import com.epam.Vadym_Vlasenko.eShop.service.cart.CartService;
 import com.epam.Vadym_Vlasenko.eShop.service.order.OrderService;
 import com.epam.Vadym_Vlasenko.eShop.service.product.ProductService;
+import com.epam.Vadym_Vlasenko.eShop.service.security_service.SecurityService;
 import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionManager;
 import com.epam.Vadym_Vlasenko.eShop.web.Constants;
 
@@ -16,6 +17,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -59,6 +61,8 @@ public class ContextListener implements ServletContextListener {
     }
 
     public void initService(ServletContext servletContext) {
+        String configParamXml = servletContext.getInitParameter(Constants.XML_SECURITY);
+        String securityFileName = servletContext.getRealPath(configParamXml);
         DBConnectionHolder connectionHolder = DBConnectionHolder.getConnectionHolder();
         connectionHolder.setConnectionPoolDataSource();
         TransactionManager tm = new TransactionManager(connectionHolder);
@@ -70,6 +74,7 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(Constants.CART_SERVICE, new CartService(new Cart()));
         servletContext.setAttribute(Constants.USER_SERVICE, new UserService(userDAO, tm));
         servletContext.setAttribute(Constants.ORDER_SERVICE, new OrderService(tm, orderDAO, orderInfoDAO));
+        servletContext.setAttribute(Constants.SECURITY_SERVICE, new SecurityService(securityFileName));
     }
 
 }

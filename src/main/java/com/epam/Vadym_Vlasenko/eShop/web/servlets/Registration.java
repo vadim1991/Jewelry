@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by swift-seeker-89717 on 09.04.2015.
@@ -43,6 +44,8 @@ public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getAttribute(USER_ATTRIBUTE);
+        user.setLastLoginDate(new Date());
+        user.setUnblockedDate(new Date());
         userService.addUser(user);
         req.setAttribute(SUCCESS_ATTRIBUTE, SUCCESS_MESSAGE);
         req.getRequestDispatcher(Constants.LOGIN_PAGE).forward(req, resp);

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 
 /**
  * Created by swift-seeker-89717 on 10.04.2015.
@@ -31,6 +32,10 @@ public class LoginServlet extends HttpServlet {
     private static final String USER_LOGIN = "login";
     private static final String ERROR_MESSAGE = "Ошибка входа!";
     private static final String ERROR_ATTRIBUTE = "error";
+    private static final String BANNED_ATTRIBUTE = "ban";
+    private static final String BANNED_MESSAGE = "You have a ban to ";
+    private static final long BANNED_TIME = 500000;
+
 
     private UserService userService;
 
@@ -57,30 +62,47 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter(LOGIN_PARAM);
         String password = req.getParameter(PASSWORD_PARAM);
-        // String previousPage = req.getParameter(PREVIOUS_PAGE);
         String previousPage = (String) req.getSession().getAttribute(PREVIOUS_PAGE);
         HttpSession session = req.getSession();
         if (login != null && password != null && previousPage != null) {
             User user = userService.getUserByLogin(login);
             System.out.println(user);
-            if (checkUser(user, password)) {
-                session.setAttribute(USER_ID, user.getId());
-                session.setAttribute(USER_LOGIN, user.getLogin());
-                session.setAttribute(USER_ATTRIBUTE, user);
-                resp.sendRedirect(previousPage);
-                return;
+            if (user != null) {
+                if (user.isBlocked()) {
+                    req.setAttribute(BANNED_ATTRIBUTE, BANNED_MESSAGE + user.getUnblockedDate());
+                    req.getRequestDispatcher(Constants.FORBIDDEN_PAGE).forward(req, resp);
+                    return;
+                }
+                if (user.getPassword().equals(password)) {
+                    user.setLastLoginDate(new Date());
+                    user.setLoginFailAmount(0);
+                    user.setUnblockedDate(new Date());
+                    userService.updateUser(user);
+                    session.setAttribute(USER_ID, user.getId());
+                    session.setAttribute(USER_LOGIN, user.getLogin());
+                    session.setAttribute(USER_ATTRIBUTE, user);
+                    resp.sendRedirect(previousPage);
+                    return;
+                }
+                int loginFailAmount = user.getLoginFailAmount();
+                user.setLoginFailAmount(++loginFailAmount);
+                System.out.println(loginFailAmount);
+                setupBlock(user, loginFailAmount);
+                userService.updateUser(user);
             }
         }
         req.setAttribute(ERROR_ATTRIBUTE, ERROR_MESSAGE);
         req.getRequestDispatcher(Constants.LOGIN_PAGE).forward(req, resp);
     }
 
-    private boolean checkUser(User user, String password) {
-        if (user != null) {
-            if (user.getPassword().equals(password)) {
-                return true;
-            }
+    private void setupBlock(User user, int loginFailAmount) {
+        if (loginFailAmount > 5) {
+            long blockTime = new Date().getTime() + BANNED_TIME;
+            Date unblockDate = new Date();
+            unblockDate.setTime(blockTime);
+            user.setUnblockedDate(unblockDate);
+            userService.updateUser(user);
         }
-        return false;
     }
+
 }

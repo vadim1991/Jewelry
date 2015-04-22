@@ -10,6 +10,8 @@ public class Constants {
     public static final String CART_SERVICE = "cart_service";
     public static final String USER_SERVICE = "user_service";
     public static final String ORDER_SERVICE = "order_service";
+    public static final String SECURITY_SERVICE = "order_service";
+    public static final String XML_SECURITY = "xmlSecurity";
 
     //category of products
     public static final int EARRINGS_CATEGORY = 2;
@@ -21,11 +23,12 @@ public class Constants {
     public static final String EARRINGS_PAGE = "earrings.jsp";
     public static final String RING_PAGE = "rings.jsp";
     public static final String BED_REQUEST_PAGE = "400.jsp";
+    public static final String FORBIDDEN_PAGE = "403.jsp";
     public static final String NOT_FOUND_PAGE = "404.jsp";
     public static final String MAIN_PAGE = "index.jsp";
 
     // captcha
-    public static final long CAPTCHA_TIMEOUT = 3000;
+    public static final long CAPTCHA_TIMEOUT = 30000;
     public static final String CAPTCHA_ID = "captchaID";
     public static final String CAPTCHA_CONTENT = "captchaContent";
     public static final String CAPTCHA_HANDLER_TYPE = "captchaHandlerType";

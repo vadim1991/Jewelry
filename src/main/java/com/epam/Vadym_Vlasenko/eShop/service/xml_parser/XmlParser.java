@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -24,14 +25,12 @@ public class XmlParser {
     private static final String URL_PATTERN = "url-pattern";
     private static final String ROLE = "role";
 
-    private String fileName;
+    public XmlParser() {
 
-    public XmlParser(String fileName) {
-        this.fileName = fileName;
     }
 
-    public Map<String, Role> parseXml() throws ParserConfigurationException, IOException, SAXException {
-        Map<String, Role> roleMap = new HashMap<String, Role>();
+    public Map<String, Role> parseXml(String fileName) throws ParserConfigurationException, IOException, SAXException {
+        Map<String, Role> roleMap = new LinkedHashMap<>();
         File file = new File(fileName);
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -44,8 +43,8 @@ public class XmlParser {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) node;
                 Role role = new Role();
-                role.setRole(element.getAttribute(ROLE));
-                roleMap.put(element.getAttribute(URL_PATTERN), role);
+                role.setRole(String.valueOf(element.getElementsByTagName(ROLE).item(0).getTextContent()));
+                roleMap.put(String.valueOf(element.getElementsByTagName(URL_PATTERN).item(0).getTextContent()), role);
             }
         }
         return roleMap;

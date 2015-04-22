@@ -1,5 +1,7 @@
 package com.epam.Vadym_Vlasenko.eShop.entity;
 
+import java.util.Date;
+
 /**
  * Created by swift-seeker-89717 on 07.04.2015.
  */
@@ -12,22 +14,27 @@ public class User {
     private String email;
     private int age;
     private Role role;
+    private Date lastLoginDate;
+    private Date unblockedDate;
+    private int loginFailAmount;
 
     public User() {
     }
 
-    public User(String name, String surname, String login, String password, String email, int age, Role role) {
-        this.name = name;
-        this.surname = surname;
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.age = age;
+    public User(int loginFailAmount, Date unblockedDate, Date lastLoginDate, Role role, int age, String email, String password, String login, String surname, String name) {
+        this.loginFailAmount = loginFailAmount;
+        this.unblockedDate = unblockedDate;
+        this.lastLoginDate = lastLoginDate;
         this.role = role;
+        this.age = age;
+        this.email = email;
+        this.password = password;
+        this.login = login;
+        this.surname = surname;
+        this.name = name;
     }
 
-    public User(int id, String name, String surname, String login, String password, String email, int age, Role role) {
-        this.id = id;
+    public User(String name, String surname, String login, String password, String email, int age, Role role) {
         this.name = name;
         this.surname = surname;
         this.login = login;
@@ -99,6 +106,35 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Date getLastLoginDate() {
+        return lastLoginDate;
+    }
+
+    public void setLastLoginDate(Date lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
+    }
+
+    public Date getUnblockedDate() {
+        return unblockedDate;
+    }
+
+    public void setUnblockedDate(Date unblockedDate) {
+        this.unblockedDate = unblockedDate;
+    }
+
+    public int getLoginFailAmount() {
+        return loginFailAmount;
+    }
+
+    public void setLoginFailAmount(int loginFailAmount) {
+        this.loginFailAmount = loginFailAmount;
+    }
+
+    public boolean isBlocked() {
+        System.out.println(unblockedDate.getTime() + " " + System.currentTimeMillis());
+        return unblockedDate.getTime() > System.currentTimeMillis();
     }
 
     @Override
