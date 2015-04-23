@@ -7,5 +7,6 @@
     <constraint>
         <url-pattern>/.*</url-pattern>
         <role>client</role>
+        <role>client</role>
     </constraint>
 </security>

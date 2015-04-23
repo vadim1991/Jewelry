@@ -22,6 +22,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/widgets/demos.js"></script>
     <script type="text/javascript" src="js/widgets/jqxcore.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxdata.js"></script>
     <script type="text/javascript" src="js/widgets/jqxbuttons.js"></script>
     <script type="text/javascript" src="js/widgets/jqxcheckbox.js"></script>
     <script type="text/javascript" src="js/widgets/jqxslider.js"></script>

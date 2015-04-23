@@ -1,6 +1,7 @@
 package com.epam.Vadym_Vlasenko.eShop.service.transaction;
 
 import com.epam.Vadym_Vlasenko.eShop.db.DBConnectionHolder;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,6 +14,8 @@ import static com.epam.Vadym_Vlasenko.eShop.db.util.DBUtil.*;
 public class TransactionManager {
 
     private DBConnectionHolder dbConnection;
+
+    private static final Logger LOG = Logger.getLogger(TransactionManager.class);
 
     private static final String EXCEPTION = "Exception in transaction";
 
@@ -30,6 +33,7 @@ public class TransactionManager {
             connection.commit();
         } catch (SQLException e) {
             rollback(connection);
+            LOG.error(EXCEPTION,e);
             throw new RuntimeException(EXCEPTION, e);
         } finally {
             closeConnection(connection);

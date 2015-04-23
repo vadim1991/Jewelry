@@ -13,11 +13,9 @@ import java.util.UUID;
 public class CaptchaTimeout extends Thread {
 
     private Map<UUID, Captcha> captchaMap;
-    private ICaptchaHandler captchaHandler;
 
-    public CaptchaTimeout(Map<UUID, Captcha> captchaMap, ICaptchaHandler captchaHandler) {
+    public CaptchaTimeout(Map<UUID, Captcha> captchaMap) {
         this.captchaMap = captchaMap;
-        this.captchaHandler = captchaHandler;
         this.setDaemon(true);
     }
 
@@ -26,7 +24,6 @@ public class CaptchaTimeout extends Thread {
         while (true) {
             for (Map.Entry entry : captchaMap.entrySet()) {
                 if (isCaptchaExpired(Constants.CAPTCHA_TIMEOUT, (Captcha) entry.getValue())) {
-                    // captchaMap.get(entry.getKey()).setContent(captchaHandler.generateCaptchaString());
                     captchaMap.remove(entry.getKey());
                 }
             }

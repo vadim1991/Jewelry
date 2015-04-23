@@ -1,5 +1,6 @@
 package com.epam.Vadym_Vlasenko.eShop.web.listener;
 
+import com.epam.Vadym_Vlasenko.eShop.MessageLog;
 import com.epam.Vadym_Vlasenko.eShop.db.DBConnectionHolder;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.*;
 import com.epam.Vadym_Vlasenko.eShop.entity.Captcha;
@@ -12,6 +13,7 @@ import com.epam.Vadym_Vlasenko.eShop.service.product.ProductService;
 import com.epam.Vadym_Vlasenko.eShop.service.security_service.SecurityService;
 import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionManager;
 import com.epam.Vadym_Vlasenko.eShop.web.Constants;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -29,11 +31,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @WebListener
 public class ContextListener implements ServletContextListener {
 
+    private static final Logger LOG = Logger.getLogger(ContextListener.class);
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext context = servletContextEvent.getServletContext();
         initService(context);
         captchaHandlerInit(context);
+        LOG.info(MessageLog.INIT_CONTEXT);
     }
 
     @Override
@@ -53,7 +58,7 @@ public class ContextListener implements ServletContextListener {
             captchaHandler = new SessionCaptchaHandler();
         }
         if (captchaHandler instanceof RequestCaptchaHandler) {
-            new CaptchaTimeout(captchaMap, captchaHandler).start();
+            new CaptchaTimeout(captchaMap).start();
         }
         context.setAttribute(Constants.CAPTCHA_MAP, captchaMap);
         context.setAttribute(Constants.CAPTCHA_HANDLER, captchaHandler);

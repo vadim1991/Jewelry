@@ -10,7 +10,7 @@ public class Constants {
     public static final String CART_SERVICE = "cart_service";
     public static final String USER_SERVICE = "user_service";
     public static final String ORDER_SERVICE = "order_service";
-    public static final String SECURITY_SERVICE = "order_service";
+    public static final String SECURITY_SERVICE = "security_service";
     public static final String XML_SECURITY = "xmlSecurity";
 
     //category of products

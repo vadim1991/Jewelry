@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,7 +24,7 @@ public class SecurityFilter implements Filter {
     private static final String LOGIN_SERVLET_PATH = "login";
 
     private SecurityService securityService;
-    private Map<String, Role> roleMap;
+    private Map<String, List<Role>> roleMap;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -34,7 +35,6 @@ public class SecurityFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER_ATTRIBUTE);
         String url = request.getRequestURI().toString();

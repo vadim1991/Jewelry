@@ -237,7 +237,7 @@
 <script>
     $(document).ready(function () {
         var selectInsert = $("#selectInsert");
-        var source = [
+        var source1 = [
             "Бриллиант",
             "Изумруд",
             "Рубин",
@@ -247,10 +247,24 @@
             "Без вставки"
 
         ];
+        var url = "json/combo.json";
+        // prepare the data
+        var source =
+        {
+            datatype: "json",
+            datafields: [
+                {name: 'insert'},
+            ],
+            url: url,
+            async: false
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source);
         // Create a jqxComboBox
         selectInsert.jqxComboBox({
-            source: source,
             selectedIndex: 0,
+            source: dataAdapter,
+            displayMember: "insert",
+            valueMember: "insert",
             width: '50%',
             height: '25px',
             theme: 'black'
@@ -349,7 +363,7 @@
                 "page": currentPage
             },
             success: function (data) {
-                if (data.products.length < 1) {
+                if (data.products.length == 0) {
                     container.append(incorrectFilterMessage);
                     container.show("slow");
                     incorrectFilterMessage.show("slow");

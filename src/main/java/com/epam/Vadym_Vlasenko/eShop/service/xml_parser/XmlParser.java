@@ -12,9 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by swift-seeker-89717 on 21.04.2015.
@@ -29,8 +27,8 @@ public class XmlParser {
 
     }
 
-    public Map<String, Role> parseXml(String fileName) throws ParserConfigurationException, IOException, SAXException {
-        Map<String, Role> roleMap = new LinkedHashMap<>();
+    public Map<String, List<Role>> parseXml(String fileName) throws ParserConfigurationException, IOException, SAXException {
+        Map<String, List<Role>> roleMap = new LinkedHashMap<>();
         File file = new File(fileName);
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -42,9 +40,14 @@ public class XmlParser {
 
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) node;
-                Role role = new Role();
-                role.setRole(String.valueOf(element.getElementsByTagName(ROLE).item(0).getTextContent()));
-                roleMap.put(String.valueOf(element.getElementsByTagName(URL_PATTERN).item(0).getTextContent()), role);
+                List<Role> roleList = new ArrayList<>();
+                NodeList nodeRoles = element.getElementsByTagName(ROLE);
+                for (int j = 0; j < nodeRoles.getLength(); j++) {
+                    Role role = new Role();
+                    role.setRole(nodeRoles.item(j).getTextContent());
+                    roleList.add(role);
+                }
+                roleMap.put(String.valueOf(element.getElementsByTagName(URL_PATTERN).item(0).getTextContent()), roleList);
             }
         }
         return roleMap;
