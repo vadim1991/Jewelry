@@ -51,6 +51,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <!-- cart-info -->
         <div class="cart-info">
             <ul>
+                <li><img width="80px" id="avatar" src=${sessionScope.user.image.url}></li>
                 <li><a id="login">${sessionScope.login}</a></li>
                 <li><a id="loginLink" href="login">Войти</a></li>
                 <li><a href="#">Язык</a></li>
@@ -106,9 +107,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 </body>
 <script>
+    var avatar = $("#avatar");
+    avatar.hide();
     var login = $("#login");
     var loginLink = $("#loginLink");
     if (login.text().length > 2) {
+        avatar.show();
         loginLink.attr("href", "logout");
         loginLink.text("Выйти");
     }

@@ -7,6 +7,7 @@ import java.util.Date;
  */
 public class User {
     private int id;
+    private Image image;
     private String name;
     private String surname;
     private String login;
@@ -34,7 +35,7 @@ public class User {
         this.name = name;
     }
 
-    public User(String name, String surname, String login, String password, String email, int age, Role role) {
+    public User(String name, String surname, String login, String password, String email, int age, Role role, Image image) {
         this.name = name;
         this.surname = surname;
         this.login = login;
@@ -42,6 +43,7 @@ public class User {
         this.email = email;
         this.age = age;
         this.role = role;
+        this.image = image;
     }
 
     public int getId() {
@@ -130,6 +132,14 @@ public class User {
 
     public void setLoginFailAmount(int loginFailAmount) {
         this.loginFailAmount = loginFailAmount;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public boolean isBlocked() {

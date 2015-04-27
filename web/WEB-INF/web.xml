@@ -11,12 +11,11 @@
 
     <context-param>
         <param-name>captchaHandlerType</param-name>
-        <param-value>requestHandler</param-value>
+        <param-value>sessionHandler</param-value>
     </context-param>
 
     <context-param>
         <param-name>xmlSecurity</param-name>
         <param-value>/WEB-INF/security.xml</param-value>
     </context-param>
-
 </web-app>

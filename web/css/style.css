@@ -59,7 +59,7 @@ span.menu {
 
 .cart-info ul li {
     display: inline-block;
-    float: left;
+
 }
 
 .cart-info ul li:nth-child(1), .cart-info ul li:nth-child(2), .cart-info ul li:nth-child(3) {

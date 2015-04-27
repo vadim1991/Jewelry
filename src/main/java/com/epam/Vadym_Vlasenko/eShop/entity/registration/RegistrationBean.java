@@ -1,5 +1,6 @@
 package com.epam.Vadym_Vlasenko.eShop.entity.registration;
 
+import com.epam.Vadym_Vlasenko.eShop.entity.Image;
 import com.epam.Vadym_Vlasenko.eShop.entity.Role;
 import com.epam.Vadym_Vlasenko.eShop.entity.User;
 
@@ -30,6 +31,8 @@ public class RegistrationBean {
     private static final String AGE_ERROR = "ageError";
     private static final String CONFIRM_PASSWORD_ERROR = "confirmError";
     private static final String CAPTCHA_ERROR = "captchaError";
+
+    private static final String AVATAR_TITLE = "avatar";
 
     private static final Role role = new Role(2, "client");
 
@@ -76,6 +79,7 @@ public class RegistrationBean {
     private String captcha;
     private String currentCaptcha;
     private Map<String, String> errors;
+    private String avatarPath;
 
     public RegistrationBean() {
     }
@@ -91,6 +95,21 @@ public class RegistrationBean {
         this.captcha = captcha;
         this.currentCaptcha = currentCaptcha;
         errors = new HashMap<>();
+    }
+
+    public Image getAvatarImage() {
+        Image image = new Image();
+        image.setUrl(avatarPath);
+        image.setTitle(AVATAR_TITLE);
+        return image;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
     public String getCurrentCaptcha() {
@@ -166,7 +185,7 @@ public class RegistrationBean {
     }
 
     public User getUser() {
-        return new User(name, surname, login, password, email, Integer.parseInt(age), role);
+        return new User(name, surname, login, password, email, Integer.parseInt(age), role, getAvatarImage());
     }
 
     public String getCaptcha() {

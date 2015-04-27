@@ -9,7 +9,9 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * Created by swift-seeker-89717 on 09.04.2015.
@@ -24,6 +26,7 @@ public class FilterRegistration implements Filter {
     private static final String FORM_ATTRIBUTE = "form";
     private static final String POST_REQUEST = "post";
 
+    private static final String FILE_UPLOAD_ATTRIBUTE = "files";
     private static final String EMAIL_ATTRIBUTE = "email";
     private static final String LOGIN_ATTRIBUTE = "login";
     private static final String NAME_ATTRIBUTE = "name";
@@ -32,6 +35,11 @@ public class FilterRegistration implements Filter {
     private static final String CAPTCHA_ATTRIBUTE = "captcha";
     private static final String AGE_ATTRIBUTE = "age";
     private static final String CONFIRM_PASSWORD_ATTRIBUTE = "confirm";
+
+    private static final String JPG_TYPE = ".jpg";
+    private static final String IMAGE_PATH_IN_WEB = "\\images\\avatar\\";
+    private static final String IMAGE_PATH = "/images/avatar/";
+    private static final String DEFAULT_IMAGE_PATH = "\\images\\avatar\\unknown-person.png";
 
     private UserService userService;
     private ICaptchaHandler captchaHandler;
@@ -46,6 +54,7 @@ public class FilterRegistration implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         if (request.getMethod().equalsIgnoreCase(POST_REQUEST)) {
             RegistrationBean registrationBean = getRegistrationBean(request);
             if (!registrationBean.isValid()) {
@@ -65,6 +74,7 @@ public class FilterRegistration implements Filter {
                 request.getRequestDispatcher(Constants.REGISTRATION_PAGE).forward(request, servletResponse);
                 return;
             }
+            registrationBean.setAvatarPath(readJPGFile(request, response));
             captchaHandler.removeCurrentCaptcha(request);
             request.setAttribute(USER_ATTRIBUTE, registrationBean.getUser());
         }
@@ -74,6 +84,20 @@ public class FilterRegistration implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private String readJPGFile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Part filePart = request.getPart(FILE_UPLOAD_ATTRIBUTE);
+        String fileName = DEFAULT_IMAGE_PATH;
+        if (filePart != null) {
+            if (filePart.getSize() > 0) {
+                fileName = UUID.randomUUID().toString() + JPG_TYPE;
+                String fullFilePath = request.getServletContext().getRealPath(IMAGE_PATH + fileName);
+                filePart.write(fullFilePath);
+                fileName = IMAGE_PATH_IN_WEB + fileName;
+            }
+        }
+        return fileName;
     }
 
     private RegistrationBean getRegistrationBean(HttpServletRequest request) {

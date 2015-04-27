@@ -1,7 +1,9 @@
 package com.epam.Vadym_Vlasenko.eShop.service.User;
 
 import com.epam.Vadym_Vlasenko.eShop.MessageLog;
+import com.epam.Vadym_Vlasenko.eShop.db.dao.IImageDao;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IUserDAO;
+import com.epam.Vadym_Vlasenko.eShop.entity.Image;
 import com.epam.Vadym_Vlasenko.eShop.entity.User;
 import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionManager;
 import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionOperation;
@@ -15,13 +17,15 @@ import java.sql.SQLException;
 public class UserService {
 
     private IUserDAO userDAO;
+    private IImageDao imageDao;
     private TransactionManager tm;
 
     private static final Logger LOG = Logger.getLogger(UserService.class);
 
-    public UserService(IUserDAO userDAO, TransactionManager tm) {
+    public UserService(IUserDAO userDAO, TransactionManager tm, IImageDao imageDao) {
         this.userDAO = userDAO;
         this.tm = tm;
+        this.imageDao = imageDao;
     }
 
     public void updateUser(final User user) {
@@ -38,6 +42,8 @@ public class UserService {
         tm.transaction(new TransactionOperation<Void>() {
             @Override
             public Void execute() throws SQLException {
+                Image image = imageDao.addImage(user.getImage());
+                user.getImage().setId(image.getId());
                 userDAO.addUser(user);
                 LOG.info(MessageLog.ADD_NEW_USER + user.getLogin());
                 return null;

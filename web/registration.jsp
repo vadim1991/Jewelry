@@ -19,53 +19,66 @@
     <div class="text-left">
         <h1>Регистрация</h1>
 
-        <form action="registration" method="post">
-            <div>
-                <label class="error-label">${loginError}</label>
+        <form action="registration" method="post" enctype="multipart/form-data">
+            <div class="container-left">
+                <div>
+                    <img alt="Фото" class="img-rounded" width="180"
+                         src="images/avatar/unknown-person.png" name="image" id="image">
+                </div>
+                <div>
+                    <input type="file" id="files" name="files"/>
+                </div>
             </div>
-            <div>
-                <input type="text" class="form-field" id="name" name="name" value="${form.name}" placeholder="Имя"
-                       onblur="validName()">
-                <label class="error-label" id="nameError">${errors.get("nameError")}</label>
-            </div>
-            <div>
-                <input type="text" class="form-field" id="surname" name="surname" value="${form.surname}"
-                       placeholder="Фамилия"
-                       onblur="validSurname()">
-                <label class="error-label" id="surnameError">${errors.get("surnameError")}</label>
-            </div>
-            <div>
-                <input type="text" class="form-field" id="age" name="age" value="${form.age}" placeholder="Возраст"
-                       onblur="validAge()">
-                <label class="error-label" id="ageError">${errors.get("ageError")}</label>
-            </div>
-            <div>
-                <input type="text" class="form-field" id="email" name="email" value="${form.email}" placeholder="Email"
-                       onblur="validEmail()">
-                <label class="error-label" id="emailError">${errors.get("emailError")}</label>
-            </div>
-            <div>
-                <input type="text" class="form-field" id="login" name="login" value="${form.login}" placeholder="Логин"
-                       onblur="validLogin()">
-                <label class="error-label" id="loginError">${errors.get("loginError")}</label>
-            </div>
-            <div>
-                <input type="password" class="form-field" id="password" name="password" placeholder="пароль"
-                       onblur="validPassword()">
-                <label class="error-label" id="passwordError">${errors.get("passwordError")}</label>
-            </div>
-            <div>
-                <input type="password" class="form-field" name="confirm" id="passwordConfirm"
-                       placeholder="подтвердите пароль"
-                       onblur="confirmPassword()">
-                <label class="error-label" id="passwordConfError">${errors.get("confirmError")}</label>
-            </div>
-            <div>
-                <info:captcha captchaID="${captchaID}" errorCaptcha="${captchaError}"></info:captcha>
-            </div>
-            <div>
-                <input id="button" type="submit" name="button" onclick="return isValid()" value="Регистрация">
-                <a class="b-home" href="index.jsp">На главную</a>
+            <div class="container-right">
+                <div>
+                    <label class="error-label">${loginError}</label>
+                </div>
+                <div>
+                    <input type="text" class="form-field" id="name" name="name" value="${form.name}" placeholder="Имя"
+                           onblur="validName()">
+                    <label class="error-label" id="nameError">${errors.get("nameError")}</label>
+                </div>
+                <div>
+                    <input type="text" class="form-field" id="surname" name="surname" value="${form.surname}"
+                           placeholder="Фамилия"
+                           onblur="validSurname()">
+                    <label class="error-label" id="surnameError">${errors.get("surnameError")}</label>
+                </div>
+                <div>
+                    <input type="text" class="form-field" id="age" name="age" value="${form.age}" placeholder="Возраст"
+                           onblur="validAge()">
+                    <label class="error-label" id="ageError">${errors.get("ageError")}</label>
+                </div>
+                <div>
+                    <input type="text" class="form-field" id="email" name="email" value="${form.email}"
+                           placeholder="Email"
+                           onblur="validEmail()">
+                    <label class="error-label" id="emailError">${errors.get("emailError")}</label>
+                </div>
+                <div>
+                    <input type="text" class="form-field" id="login" name="login" value="${form.login}"
+                           placeholder="Логин"
+                           onblur="validLogin()">
+                    <label class="error-label" id="loginError">${errors.get("loginError")}</label>
+                </div>
+                <div>
+                    <input type="password" class="form-field" id="password" name="password" placeholder="пароль"
+                           onblur="validPassword()">
+                    <label class="error-label" id="passwordError">${errors.get("passwordError")}</label>
+                </div>
+                <div>
+                    <input type="password" class="form-field" name="confirm" id="passwordConfirm"
+                           placeholder="подтвердите пароль"
+                           onblur="confirmPassword()">
+                    <label class="error-label" id="passwordConfError">${errors.get("confirmError")}</label>
+                </div>
+                <div>
+                    <info:captcha captchaID="${captchaID}" errorCaptcha="${captchaError}"></info:captcha>
+                </div>
+                <div>
+                    <input id="button" type="submit" name="button" onclick="return isValid()" value="Регистрация">
+                    <a class="b-home" href="index.jsp">На главную</a>
+                </div>
             </div>
         </form>
     </div>
@@ -122,5 +135,29 @@
 <!-- container -->
 </body>
 <script src="js/validate.js">
+</script>
+<script>
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+            // Only process image files.
+            if (!f.type.match('image.*')) {
+                continue;
+            }
+            var reader = new FileReader();
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    // Render thumbnail.
+                    document.getElementById('image').src = e.target.result;
+                };
+            })(f);
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);
+        }
+    }
+    document.getElementById('files').addEventListener('change',
+            handleFileSelect, false);
 </script>
 </html>

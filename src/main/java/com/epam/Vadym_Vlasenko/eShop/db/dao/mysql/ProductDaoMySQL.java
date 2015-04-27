@@ -18,7 +18,6 @@ public class ProductDaoMySQL implements IProductDAO {
 
     private static final String ID_COLUMN = "id";
     private static final String TITLE_COLUMN = "title";
-    private static final String URL_COLUMN = "url";
     private static final String PRICE_COLUMN = "price";
     private static final String INSERT_ID_COLUMN = "insert_id";
     private static final String MATERIAL_ID_COLUMN = "material";
@@ -39,8 +38,9 @@ public class ProductDaoMySQL implements IProductDAO {
     private static final String GET_CATEGORY_BY_ID = "SELECT * FROM category WHERE id=?";
     private static final String GET_MATERIAL_BY_ID = "SELECT * FROM materials WHERE id=?";
     private static final String GET_INSERT_BY_ID = "SELECT * FROM inserts WHERE id=?";
-    private static final String GET_IMAGE_BY_ID = "SELECT * FROM image WHERE id=?";
     private static final String GET_PRODUCTS_BY_CATEGORY = "SELECT * FROM products WHERE category=?";
+
+    private static final ImageDaoMySQL imageDao = new ImageDaoMySQL();
 
     @Override
     public boolean addProduct(Product product) throws SQLException {
@@ -188,23 +188,6 @@ public class ProductDaoMySQL implements IProductDAO {
         return category;
     }
 
-    public Image getImageByID(int id, Connection connection) throws SQLException {
-        Image image = new Image();
-        //Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_IMAGE_BY_ID)) {
-            int index = 1;
-            preparedStatement.setInt(index, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                image.setId(resultSet.getInt(ID_COLUMN));
-                image.setTitle(resultSet.getString(TITLE_COLUMN));
-                image.setUrl(resultSet.getString(URL_COLUMN));
-            }
-            resultSet.close();
-        }
-        return image;
-    }
-
     public Material getMaterialByID(int id, Connection connection) throws SQLException {
         Material material = new Material();
         // Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
@@ -243,7 +226,7 @@ public class ProductDaoMySQL implements IProductDAO {
         product.setTitle(rs.getString(TITLE_COLUMN));
         product.setPrice(rs.getInt(PRICE_COLUMN));
         product.setDescription(rs.getString(DESCRIPTION_COLUMN));
-        product.setImage(getImageByID(rs.getInt(IMAGE_ID_COLUMN), connection));
+        product.setImage(imageDao.getImageById(rs.getInt(IMAGE_ID_COLUMN), connection));
         product.setWeight(rs.getDouble(WEIGHT_COLUMN));
         product.setInsert(getInsertByID(rs.getInt(INSERT_ID_COLUMN), connection));
         product.setMaterial(getMaterialByID(rs.getInt(MATERIAL_ID_COLUMN), connection));

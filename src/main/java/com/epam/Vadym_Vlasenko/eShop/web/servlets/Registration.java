@@ -8,17 +8,21 @@ import com.epam.Vadym_Vlasenko.eShop.web.Constants;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by swift-seeker-89717 on 09.04.2015.
  */
 @WebServlet("/registration")
+@MultipartConfig(location = "c:\\Users\\swift-seeker-89717\\IdeaProjects\\Jewelry\\web\\images\\avatar\\", fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 10)
 public class Registration extends HttpServlet {
 
     private static final String USER_ATTRIBUTE = "user";

@@ -75,9 +75,10 @@ public class ContextListener implements ServletContextListener {
         IUserDAO userDAO = DAOFactory.getInstance().getUserDAO();
         IOrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
         IOrderInfoDAO orderInfoDAO = DAOFactory.getInstance().getOrderInfoDAO();
+        IImageDao imageDao = DAOFactory.getInstance().getImageDAO();
         servletContext.setAttribute(Constants.PRODUCT_SERVICE, new ProductService(tm, productDAO));
         servletContext.setAttribute(Constants.CART_SERVICE, new CartService(new Cart()));
-        servletContext.setAttribute(Constants.USER_SERVICE, new UserService(userDAO, tm));
+        servletContext.setAttribute(Constants.USER_SERVICE, new UserService(userDAO, tm, imageDao));
         servletContext.setAttribute(Constants.ORDER_SERVICE, new OrderService(tm, orderDAO, orderInfoDAO));
         servletContext.setAttribute(Constants.SECURITY_SERVICE, new SecurityService(securityFileName));
     }

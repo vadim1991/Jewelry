@@ -3,6 +3,7 @@ package com.epam.Vadym_Vlasenko.eShop.db.dao.mysql;
 import com.epam.Vadym_Vlasenko.eShop.db.DBConnectionHolder;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IUserDAO;
 import com.epam.Vadym_Vlasenko.eShop.db.query_builder.QueryCreator;
+import com.epam.Vadym_Vlasenko.eShop.entity.Image;
 import com.epam.Vadym_Vlasenko.eShop.entity.Role;
 import com.epam.Vadym_Vlasenko.eShop.entity.User;
 
@@ -28,13 +29,16 @@ public class UserDaoMySQL implements IUserDAO {
     private static final String LAST_LOGIN_DATE = "lastLoginDate";
     private static final String UNBLOCK_DATE = "unblockTime";
     private static final String EMAIL = "email";
+    private static final String IMAGE_ID = "image_id";
 
-    private static final String ADD_USER = "INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String ADD_USER = "INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String GET_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
     private static final String GET_USER_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
     private static final String GET_ALL_USERS = "SELECT * FROM users";
     private static final String DELETE_USER = "DELETE FROM users WHERE (id=?)";
-    private static final String UPDATE_USER = "UPDATE users SET name=?,surname=?,age=?,email=?,password=?,login=?,role=?, loginFailAmount=?,lastLoginDate=?,unblockTime=? WHERE id=?";
+    private static final String UPDATE_USER = "UPDATE users SET name=?,surname=?,age=?,email=?,password=?,login=?,image_id=?,role=?, loginFailAmount=?,lastLoginDate=?,unblockTime=? WHERE id=?";
+
+    private static final ImageDaoMySQL imageDao = new ImageDaoMySQL();
 
     @Override
     public void addUser(User user) throws SQLException {
@@ -48,6 +52,7 @@ public class UserDaoMySQL implements IUserDAO {
             preparedStatement.setString(index++, user.getEmail());
             preparedStatement.setString(index++, user.getPassword());
             preparedStatement.setString(index++, user.getLogin());
+            preparedStatement.setInt(index++, user.getImage().getId());
             preparedStatement.setInt(index++, user.getRole().getId());
             preparedStatement.setInt(index++, user.getLoginFailAmount());
             preparedStatement.setTimestamp(index++, convertToTimestamp(user.getLastLoginDate()));
@@ -67,6 +72,7 @@ public class UserDaoMySQL implements IUserDAO {
             preparedStatement.setString(index++, user.getEmail());
             preparedStatement.setString(index++, user.getPassword());
             preparedStatement.setString(index++, user.getLogin());
+            preparedStatement.setInt(index++, user.getImage().getId());
             preparedStatement.setInt(index++, user.getRole().getId());
             preparedStatement.setInt(index++, user.getLoginFailAmount());
             preparedStatement.setTimestamp(index++, convertToTimestamp(user.getLastLoginDate()));
@@ -153,6 +159,8 @@ public class UserDaoMySQL implements IUserDAO {
         user.setEmail(resultSet.getString(EMAIL));
         user.setLogin(resultSet.getString(LOGIN));
         user.setPassword(resultSet.getString(PASSWORD));
+        Image image = imageDao.getImageById(resultSet.getInt(IMAGE_ID), DBConnectionHolder.getConnectionHolder().getConnection());
+        user.setImage(image);
         user.setRole(getRoleById(resultSet.getInt(ROLE_NAME)));
         user.setLoginFailAmount(resultSet.getInt(LOGIN_FAIL_AMOUNT));
         Date date = new Date();

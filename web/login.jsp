@@ -24,11 +24,11 @@
                 <input type="hidden" name="previous" value="${previous}">
             </div>
             <div>
-                <input type="text" class="form-field" id="login" name="login" placeholder="логин" onblur="validLogin()">
+                <input type="text" class="form-field-login" id="login" name="login" placeholder="логин" onblur="validLogin()">
                 <label class="error-label" id="loginError"></label>
             </div>
             <div>
-                <input type="password" class="form-field" id="password" name="password" placeholder="пароль"
+                <input type="password" class="form-field-login" id="password" name="password" placeholder="пароль"
                        onblur="validPassword()">
                 <label class="error-label" id="passwordError"></label>
             </div>
@@ -99,7 +99,7 @@
             label.innerHTML = "Пожалуйста, введите корректный логин"
             return false;
         } else {
-            label.innerHTML = ""
+            label.innerHTML = "";
             return true;
         }
     }
@@ -110,7 +110,7 @@
             label.innerHTML = "Пожалуйста, введите корректный пароль"
             return false;
         } else {
-            label.innerHTML = ""
+            label.innerHTML = "";
             return true;
         }
     }
