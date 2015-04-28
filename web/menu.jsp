@@ -18,10 +18,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href='http://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link href="css/design.css" rel="stylesheet">
     <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/widgets/demos.js"></script>
     <script type="text/javascript" src="js/widgets/jqxcore.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxlistmenu.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="js/widgets/jqxdropdownlist.js"></script>
     <script type="text/javascript" src="js/widgets/jqxdata.js"></script>
     <script type="text/javascript" src="js/widgets/jqxbuttons.js"></script>
     <script type="text/javascript" src="js/widgets/jqxcheckbox.js"></script>
@@ -49,20 +53,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
         <!-- logo -->
         <!-- cart-info -->
-        <div class="cart-info">
+        <div class="cart-info dropdown">
             <ul>
-                <li><img width="80px" id="avatar" src=${sessionScope.user.image.url}></li>
+                <li><img width="80px" id="avatar" class="img-circle stub" src=${sessionScope.user.image.url}></li>
                 <li><a id="login">${sessionScope.login}</a></li>
                 <li><a id="loginLink" href="login">Войти</a></li>
-                <li><a href="#">Язык</a></li>
                 <li class="cartinfo"><a name="cartInfo" href="cart"><span> </span>Корзина <b
                         id="amount">${sessionScope.amount}</b></a></li>
+                <li>
+                    <button class="b-home-lang dropdown-toggle" type="button" id="dLabel" data-toggle="dropdown">Язык<span
+                            class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li><a><img width="30px" src="images/flags/russia-flag.png"></a></li>
+                        <li><a><img width="30px" src="images/flags/united-kingdom-flag.png"></a></li>
+                        <li><a><img width="30px" src="images/flags/ukraine-flag.png"></a></li>
+                    </ul>
+                </li>
                 <div class="clearfix"></div>
             </ul>
         </div>
-        <!-- /cart-info -->
+
     </div>
-    <!-- header -->
+    <!-- /cart-info -->
+</div>
+<!-- header -->
 </div>
 <!-- sub-header -->
 <div class="sub-header">

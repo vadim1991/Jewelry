@@ -51,6 +51,10 @@ span.menu {
     float: right;
     margin-top: 0.5em;
 }
+.language {
+    float: right;
+    margin-top: 0.2em;
+}
 
 .cart-info ul {
     margin: 0;
@@ -1230,6 +1234,18 @@ a.b-home:hover {
 
 .b-home:hover {
     background: #75828f;
+}
+.b-home-lang {
+    border: 0;
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 6px 25px;
+    background: #272b32;
+    color: #6f7983;
+    border-radius: 3px;
+}
+.b-home-lang:hover {
+    color: #fff;
 }
 
 /*-- responsive-design --*/
