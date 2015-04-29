@@ -13,6 +13,9 @@ import com.epam.Vadym_Vlasenko.eShop.service.product.ProductService;
 import com.epam.Vadym_Vlasenko.eShop.service.security_service.SecurityService;
 import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionManager;
 import com.epam.Vadym_Vlasenko.eShop.web.Constants;
+import com.epam.Vadym_Vlasenko.eShop.web.localization.CookieLocaleHolder;
+import com.epam.Vadym_Vlasenko.eShop.web.localization.LocaleHolder;
+import com.epam.Vadym_Vlasenko.eShop.web.localization.SessionLocaleHolder;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
@@ -31,6 +34,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @WebListener
 public class ContextListener implements ServletContextListener {
 
+    public static final String SESSION_LOCALE_HOLDER = "session";
+    public static final String COOKIE_LOCALE_HOLDER = "cookie";
+
     private static final Logger LOG = Logger.getLogger(ContextListener.class);
 
     @Override
@@ -38,6 +44,7 @@ public class ContextListener implements ServletContextListener {
         ServletContext context = servletContextEvent.getServletContext();
         initService(context);
         captchaHandlerInit(context);
+        initLocaleHolder(context);
         LOG.info(MessageLog.INIT_CONTEXT);
     }
 
@@ -81,6 +88,22 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(Constants.USER_SERVICE, new UserService(userDAO, tm, imageDao));
         servletContext.setAttribute(Constants.ORDER_SERVICE, new OrderService(tm, orderDAO, orderInfoDAO));
         servletContext.setAttribute(Constants.SECURITY_SERVICE, new SecurityService(securityFileName));
+    }
+
+    public void initLocaleHolder(ServletContext servletContext) {
+        LocaleHolder localeHolder;
+        String localeHolderType = servletContext.getInitParameter("localeSaveType");
+        switch (localeHolderType) {
+            case SESSION_LOCALE_HOLDER:
+                localeHolder = new SessionLocaleHolder();
+                break;
+            case COOKIE_LOCALE_HOLDER:
+                localeHolder = new CookieLocaleHolder();
+                break;
+            default:
+                localeHolder = new SessionLocaleHolder();
+        }
+        servletContext.setAttribute("localeHolder", localeHolder);
     }
 
 }

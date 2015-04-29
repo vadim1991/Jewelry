@@ -5,6 +5,8 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="info" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Baku Website Template | Home :: w3layouts</title>
@@ -61,12 +63,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <li class="cartinfo"><a name="cartInfo" href="cart"><span> </span>Корзина <b
                         id="amount">${sessionScope.amount}</b></a></li>
                 <li>
-                    <button class="b-home-lang dropdown-toggle" type="button" id="dLabel" data-toggle="dropdown">Язык<span
+                    <button class="b-home-lang dropdown-toggle" type="button" id="dLabel" data-toggle="dropdown">
+                        Язык<span
                             class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <li><a><img width="30px" src="images/flags/russia-flag.png"></a></li>
-                        <li><a><img width="30px" src="images/flags/united-kingdom-flag.png"></a></li>
-                        <li><a><img width="30px" src="images/flags/ukraine-flag.png"></a></li>
+                        <li><a href="?lang=ru"><img width="30px" src="images/flags/russia-flag.png"></a></li>
+                        <li><a href="?lang=en"><img width="30px" src="images/flags/united-kingdom-flag.png"></a></li>
+                        <li><a href="?lang=ua"><img width="30px" src="images/flags/ukraine-flag.png"></a></li>
                     </ul>
                 </li>
                 <div class="clearfix"></div>
@@ -85,7 +88,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="top-nav">
             <span class="menu"> </span>
             <ul>
-                <li><a id="main" href="index.jsp">Главная</a></li>
+                <li><a id="main" href="index.jsp"><fmt:message key="main"/></a></li>
                 <li><a id="earrings" href="earrings">Серьги</a></li>
                 <li><a id="bracelets" href="404.jsp">Браслеты</a></li>
                 <li><a id="rings" href="rings">Кольца</a></li>
