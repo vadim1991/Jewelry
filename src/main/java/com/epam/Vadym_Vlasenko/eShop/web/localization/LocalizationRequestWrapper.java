@@ -22,7 +22,6 @@ public class LocalizationRequestWrapper extends HttpServletRequestWrapper {
     private Locale defaultLocale;
     private List<Locale> locales;
     private LocaleHolder localeHolder;
-    private HttpServletResponse response;
 
     public LocalizationRequestWrapper(HttpServletRequest request) {
         super(request);
