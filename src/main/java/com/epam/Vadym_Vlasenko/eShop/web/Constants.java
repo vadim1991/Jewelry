@@ -26,6 +26,7 @@ public class Constants {
     public static final String FORBIDDEN_PAGE = "403.jsp";
     public static final String NOT_FOUND_PAGE = "404.jsp";
     public static final String MAIN_PAGE = "index.jsp";
+    public static final String IE = "IE.jsp";
 
     // captcha
     public static final long CAPTCHA_TIMEOUT = 30000;

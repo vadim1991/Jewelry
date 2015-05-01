@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Jewelry:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="JewelryShop-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Jewelry:war exploded" />
+    </root>
+  </artifact>
+</component>
