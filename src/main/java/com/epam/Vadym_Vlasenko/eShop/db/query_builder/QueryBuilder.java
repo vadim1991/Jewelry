@@ -21,8 +21,6 @@ public class QueryBuilder {
     private static final String ORDER = "ORDER BY";
     private static final String BETWEEN = "BETWEEN";
     private static final String SEMICOLON = ";";
-    private static final String LEFT_BRACKET = ")";
-    private static final String RIGHT_BRACKET = "(";
     private static final String EQUALS = "=";
 
     public QueryBuilder() {

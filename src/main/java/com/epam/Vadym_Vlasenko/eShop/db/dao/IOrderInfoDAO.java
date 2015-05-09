@@ -14,6 +14,6 @@ public interface IOrderInfoDAO {
 
     List<OrderInfo> getAll() throws SQLException;
 
-    OrderInfo getOrderInfoById(int orderInfoId) throws SQLException;
+    List<OrderInfo> getOrderInfoById(int orderInfoId) throws SQLException;
 
 }
