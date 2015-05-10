@@ -25,6 +25,9 @@ import java.util.Map;
 @WebServlet("/ordersHistory")
 public class OrdersHistory extends HttpServlet {
 
+    private static final String USER_ATTRIBUTE = "user";
+    private static final String HISTORY_PAGE = "history.jsp";
+
     private IOrderService orderService;
     private IJsonService jsonService;
 
@@ -37,19 +40,19 @@ public class OrdersHistory extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute(USER_ATTRIBUTE);
         if (user != null) {
             Map<Order, List<OrderInfo>> orderListMap = orderService.getOrdersWithInfo(user.getId());
             if (orderListMap != null) {
-                String jsomMap = jsonService.orderMapToJSON(orderListMap);
-                System.out.println(jsomMap);
-                resp.getWriter().write(jsomMap);
+                String jsonMap = jsonService.orderMapToJSON(orderListMap);
+                System.out.println(jsonMap);
+                resp.getWriter().write(jsonMap);
             }
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("history.jsp").forward(req, resp);
+        req.getRequestDispatcher(HISTORY_PAGE).forward(req, resp);
     }
 }

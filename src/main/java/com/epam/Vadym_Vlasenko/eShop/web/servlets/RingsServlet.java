@@ -71,7 +71,6 @@ public class RingsServlet extends HttpServlet {
         object.addProperty(PRODUCT_ON_PAGE_PARAMETER, noOfPages);
         object.addProperty(CURRENT_PAGE_ATTRIBUTE, page);
         object.add(RINGS_ATTRIBUTE, gson.toJsonTree(products));
-        System.out.println(gson.toJson(object));
         resp.getWriter().write(gson.toJson(object));
     }
 

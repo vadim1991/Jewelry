@@ -6,7 +6,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="info" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Baku Website Template | Home :: w3layouts</title>
@@ -99,9 +100,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <li><a id="bracelets" href="404.jsp"><fmt:message key="bracelets"/> </a></li>
                 <li><a id="rings" href="rings"><fmt:message key="rings"/> </a></li>
                 <li><a id="chain" href="404.jsp"><fmt:message key="chain"/> </a></li>
-                <li><a id="suspension" href="404.jsp"><fmt:message key="suspension"/> </a></li>
-                <li><a id="contacts" href=""><fmt:message key="contacts"/> </a></li>
-                <li><a id="history" href="ordersHistory"><fmt:message key="contacts"/> </a></li>
+                <c:if test="${not empty sessionScope.login}">
+                    <li><a id="history" href="ordersHistory"><fmt:message key="history"/> </a></li>
+                </c:if>
+                <li><a id="contacts" href="404.jsp"><fmt:message key="contacts"/> </a></li>
                 <div class="clearfix"></div>
             </ul>
         </div>

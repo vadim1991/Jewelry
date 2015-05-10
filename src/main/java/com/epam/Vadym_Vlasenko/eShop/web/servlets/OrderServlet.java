@@ -41,14 +41,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String checkout = req.getParameter(CHECKOUT_PARAMETER);
-        if (checkout != null) {
-            if (checkUser(req)) {
 
-            } else {
-                resp.sendRedirect("/login");
-            }
-        }
     }
 
     @Override

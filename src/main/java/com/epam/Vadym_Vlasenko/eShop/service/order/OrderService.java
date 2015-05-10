@@ -68,7 +68,6 @@ public class OrderService implements IOrderService {
                 List<Order> orders = orderDAO.getOrdersByUser(userId);
                 for (int i = 0; i < orders.size(); i++) {
                     List<OrderInfo> orderInfoList = orderInfoDAO.getOrderInfoById(orders.get(i).getId());
-                    System.out.println(orderInfoList);
                     orderInfoMap.put(orders.get(i), orderInfoList);
                 }
                 return orderInfoMap;
