@@ -4,6 +4,7 @@ import com.epam.Vadym_Vlasenko.eShop.db.DBConnectionHolder;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IOrderInfoDAO;
 import com.epam.Vadym_Vlasenko.eShop.db.query_builder.QueryCreator;
 import com.epam.Vadym_Vlasenko.eShop.entity.OrderInfo;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import java.util.List;
  * Created by swift-seeker-89717 on 16.04.2015.
  */
 public class OrderInfoDaoMySQL implements IOrderInfoDAO {
+
+    private static final Logger LOG = Logger.getLogger(OrderInfoDaoMySQL.class);
 
     private static final String TABLE_NAME = "order_info";
 
@@ -55,18 +58,18 @@ public class OrderInfoDaoMySQL implements IOrderInfoDAO {
     }
 
     @Override
-    public OrderInfo getOrderInfoById(int orderInfoId) throws SQLException {
-        OrderInfo orderInfo = new OrderInfo();
+    public List<OrderInfo> getOrderInfoById(int orderId) throws SQLException {
+        List<OrderInfo> orderInfoList = new ArrayList<>();
         QueryCreator creator = new QueryCreator();
-        String query = creator.where(TABLE_NAME, ID_COLUMN, String.valueOf(orderInfo));
+        String query = creator.where(TABLE_NAME, ORDER_ID_COLUMN, String.valueOf(orderId));
         Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(query);
-            if (resultSet.next()) {
-                orderInfo = extractOrderInfo(resultSet);
+            while (resultSet.next()) {
+                orderInfoList.add(extractOrderInfo(resultSet));
             }
         }
-        return orderInfo;
+        return orderInfoList;
     }
 
     private OrderInfo extractOrderInfo(ResultSet resultSet) throws SQLException {

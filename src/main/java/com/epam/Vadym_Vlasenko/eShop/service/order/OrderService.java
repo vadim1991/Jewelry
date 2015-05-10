@@ -10,7 +10,9 @@ import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionOperation;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by swift-seeker-89717 on 19.04.2015.
@@ -55,6 +57,23 @@ public class OrderService implements IOrderService {
     @Override
     public List<Order> getOrders() {
         return null;
+    }
+
+    @Override
+    public Map<Order, List<OrderInfo>> getOrdersWithInfo(final int userId) {
+        return tm.transaction(new TransactionOperation<Map<Order, List<OrderInfo>>>() {
+            @Override
+            public Map<Order, List<OrderInfo>> execute() throws SQLException {
+                Map<Order, List<OrderInfo>> orderInfoMap = new LinkedHashMap<>();
+                List<Order> orders = orderDAO.getOrdersByUser(userId);
+                for (int i = 0; i < orders.size(); i++) {
+                    List<OrderInfo> orderInfoList = orderInfoDAO.getOrderInfoById(orders.get(i).getId());
+                    System.out.println(orderInfoList);
+                    orderInfoMap.put(orders.get(i), orderInfoList);
+                }
+                return orderInfoMap;
+            }
+        });
     }
 
     @Override

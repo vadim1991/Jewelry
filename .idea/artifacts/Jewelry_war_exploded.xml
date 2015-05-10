@@ -19,6 +19,8 @@
           <element id="library" level="project" name="Maven: org.mockito:mockito-all:1.9.5-rc1" />
           <element id="library" level="project" name="Maven: org.w3c:dom:2.3.0-jaxb-1.0.6" />
           <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
+          <element id="library" level="project" name="mysql:mysql-connector-java:5.1.31" />
+          <element id="library" level="project" name="commons-dbcp:commons-dbcp:1.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">

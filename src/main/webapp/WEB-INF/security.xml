@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<security>
+    <constraint>
+        <url-pattern>/rings</url-pattern>
+        <role>admin</role>
+    </constraint>
+    <constraint>
+        <url-pattern>/earrings</url-pattern>
+        <role>client</role>
+    </constraint>
+</security>

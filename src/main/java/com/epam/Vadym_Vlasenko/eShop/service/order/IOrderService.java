@@ -6,6 +6,7 @@ import com.epam.Vadym_Vlasenko.eShop.entity.StatusTypes;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by swift-seeker-89717 on 16.04.2015.
@@ -17,6 +18,8 @@ public interface IOrderService {
     void create(Order order, List<OrderInfo> orderInfoList);
 
     List<Order> getOrders();
+
+    Map<Order, List<OrderInfo>> getOrdersWithInfo(int userId);
 
     boolean changeOrderStatus(Order order, StatusTypes statusTypes);
 
