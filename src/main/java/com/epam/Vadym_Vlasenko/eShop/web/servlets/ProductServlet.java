@@ -1,7 +1,7 @@
 package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
-import com.epam.Vadym_Vlasenko.eShop.entity.Product;
+import com.epam.Vadym_Vlasenko.eShop.entity.criteria.CriteriaResultBean;
 import com.epam.Vadym_Vlasenko.eShop.service.product.IProductService;
 import com.google.gson.Gson;
 
@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by swift-seeker-89717 on 05.04.2015.
@@ -40,8 +38,8 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Gson gson = new Gson();
-        List<Product> products = service.getProductsByCriteria(criteria);
-        resp.getWriter().write(gson.toJson(products));
+        CriteriaResultBean resultBean = service.getProductsByCriteria(criteria);
+        resp.getWriter().write(gson.toJson(resultBean.getProducts()));
     }
 
     @Override

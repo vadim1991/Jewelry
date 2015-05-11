@@ -4,6 +4,7 @@ import com.epam.Vadym_Vlasenko.eShop.db.DBConnectionHolder;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IProductDAO;
 import com.epam.Vadym_Vlasenko.eShop.db.query_builder.QueryCreator;
 import com.epam.Vadym_Vlasenko.eShop.entity.*;
+import com.epam.Vadym_Vlasenko.eShop.entity.criteria.CriteriaResultBean;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,8 +14,6 @@ import java.util.List;
  * Created by Вадим on 22.03.2015.
  */
 public class ProductDaoMySQL implements IProductDAO {
-
-    private ThreadLocal<Integer> noOfPages = new ThreadLocal<>();
 
     private static final String ID_COLUMN = "id";
     private static final String TITLE_COLUMN = "title";
@@ -63,7 +62,7 @@ public class ProductDaoMySQL implements IProductDAO {
 
     @Override
     public Product getProductByID(int id) throws SQLException {
-        Product product = new Product();
+        Product product = null;
         Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCT_BY_ID)) {
             int index = 1;
@@ -124,9 +123,9 @@ public class ProductDaoMySQL implements IProductDAO {
     }
 
     @Override
-    public List<Product> getProductsByCriteria(Criteria criteria) throws SQLException {
-        this.noOfPages.remove();
+    public CriteriaResultBean getProductsByCriteria(Criteria criteria) throws SQLException {
         List<Product> products = new ArrayList<>();
+        int noOfPages = 0;
         String query = new QueryCreator().buildCriteria(criteria, PRODUCT_TABLE);
         Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (Statement statement = connection.createStatement()) {
@@ -138,13 +137,12 @@ public class ProductDaoMySQL implements IProductDAO {
             resultSet.close();
             resultSet = statement.executeQuery(SELECT_FOUND_ROWS);
             if (resultSet.next()) {
-                this.noOfPages.set(resultSet.getInt(1));
-                System.out.println(this.noOfPages.get());
+                noOfPages = resultSet.getInt(1);
             }
             resultSet.close();
             newConnection.close();
         }
-        return products;
+        return new CriteriaResultBean(noOfPages, products);
     }
 
     @Override
@@ -163,18 +161,12 @@ public class ProductDaoMySQL implements IProductDAO {
     }
 
     @Override
-    public List<Product> getProductByName(String name) {
-        return null;
-    }
-
-    @Override
     public boolean removeProduct(int id) {
         return false;
     }
 
     public Category getCategoryByID(int id, Connection connection) throws SQLException {
         Category category = new Category();
-        // Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_CATEGORY_BY_ID)) {
             int index = 1;
             preparedStatement.setInt(index, id);
@@ -190,7 +182,6 @@ public class ProductDaoMySQL implements IProductDAO {
 
     public Material getMaterialByID(int id, Connection connection) throws SQLException {
         Material material = new Material();
-        // Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_MATERIAL_BY_ID)) {
             int index = 1;
             preparedStatement.setInt(index, id);
@@ -206,7 +197,6 @@ public class ProductDaoMySQL implements IProductDAO {
 
     public Insert getInsertByID(int id, Connection connection) throws SQLException {
         Insert insert = new Insert();
-        // Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_INSERT_BY_ID)) {
             int index = 1;
             preparedStatement.setInt(index, id);
@@ -235,7 +225,4 @@ public class ProductDaoMySQL implements IProductDAO {
         return product;
     }
 
-    public int getNoOfPages() {
-        return noOfPages.get();
-    }
 }

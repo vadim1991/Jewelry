@@ -102,7 +102,7 @@
                     </div>
                     <div class="price-details-right">
                         <input type="hidden" id="id" value="${product.id}">
-                        <a class="b-home" href="#cartInfo">Добавить в корзину</a>
+                        <a id="toCart" class="b-home" href="#cartInfo">Добавить в корзину</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -203,11 +203,11 @@
 <!-- container -->
 </body>
 <script>
-    $(".b-home").click(function () {
+    $("#toCart").click(function () {
         var id = $(this).parent().find("#id").val();
         $.ajax({
             url: "cart",
-            method: "post",
+            method: "get",
             dataType: "text",
             data: {
                 "id": id

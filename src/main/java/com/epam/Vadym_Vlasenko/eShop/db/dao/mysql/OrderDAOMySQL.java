@@ -15,9 +15,9 @@ import java.util.List;
 /**
  * Created by swift-seeker-89717 on 16.04.2015.
  */
-public class OrderDaoMySQL implements IOrderDAO {
+public class OrderDAOMySQL implements IOrderDAO {
 
-    private static final Logger LOG = Logger.getLogger(OrderDaoMySQL.class);
+    private static final Logger LOG = Logger.getLogger(OrderDAOMySQL.class);
 
     private static final String ORDERS_TABLE_NAME = "orders";
     private static final String ORDER_ID_COLUMN = "id";
@@ -25,6 +25,7 @@ public class OrderDaoMySQL implements IOrderDAO {
     private static final String ORDER_INFO_COLUMN = "order_info";
     private static final String USER_ID_COLUMN = "user_id";
     private static final String DATE_COLUMN = "date";
+    private static final String TOTAL_PRICE = "total_price";
 
     private static final String CREATE_ORDER_QUERY = "INSERT INTO orders VALUES(?,?,?,?,?,?)";
     private static final String UPDATE_STATUS_QUERY = "UPDATE orders SET status_id=? WHERE (id=?)";
@@ -109,12 +110,13 @@ public class OrderDaoMySQL implements IOrderDAO {
     public Order extractOrder(ResultSet resultSet) throws SQLException {
         Order order = new Order();
         order.setId(resultSet.getInt(ORDER_ID_COLUMN));
-        int orderStatusId = resultSet.getInt(ORDER_ID_COLUMN);
+        int orderStatusId = resultSet.getInt(STATUS_ID_COLUMN);
         order.setOrderStatus(new OrderStatusDaoMySQL().getOrderStatusById(orderStatusId));
         order.setOrderInfo(resultSet.getString(ORDER_INFO_COLUMN));
         int userId = resultSet.getInt(USER_ID_COLUMN);
         order.setUser(new UserDaoMySQL().getUserById(userId));
         order.setDate(resultSet.getDate(DATE_COLUMN));
+        order.setTotalPrice(resultSet.getInt(TOTAL_PRICE));
         return order;
     }
 

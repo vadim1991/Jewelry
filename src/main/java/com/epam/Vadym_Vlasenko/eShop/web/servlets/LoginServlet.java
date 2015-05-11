@@ -86,7 +86,6 @@ public class LoginServlet extends HttpServlet {
                 }
                 int loginFailAmount = user.getLoginFailAmount();
                 user.setLoginFailAmount(++loginFailAmount);
-                System.out.println(loginFailAmount);
                 setupBlock(user, loginFailAmount);
                 userService.updateUser(user);
             }

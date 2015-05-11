@@ -32,7 +32,6 @@ public class FilterRegistration implements Filter {
     private static final String NAME_ATTRIBUTE = "name";
     private static final String SURNAME_ATTRIBUTE = "surname";
     private static final String PASSWORD_ATTRIBUTE = "password";
-    private static final String CAPTCHA_ATTRIBUTE = "captcha";
     private static final String AGE_ATTRIBUTE = "age";
     private static final String CONFIRM_PASSWORD_ATTRIBUTE = "confirm";
 

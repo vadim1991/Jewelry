@@ -110,11 +110,4 @@ public class CartServlet extends HttpServlet {
         req.getRequestDispatcher(CART_PAGE).forward(req, resp);
     }
 
-    private void checkCartService(HttpServletRequest request, CartService cartService) {
-        if (cartService == null) {
-            cartService = new CartService(new Cart());
-            request.getSession().setAttribute(Constants.CART_SERVICE, cartService);
-        }
-    }
-
 }

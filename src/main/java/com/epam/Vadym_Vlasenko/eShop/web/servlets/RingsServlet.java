@@ -2,6 +2,7 @@ package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
+import com.epam.Vadym_Vlasenko.eShop.entity.criteria.CriteriaResultBean;
 import com.epam.Vadym_Vlasenko.eShop.service.product.IProductService;
 import com.epam.Vadym_Vlasenko.eShop.service.product.ProductService;
 import com.epam.Vadym_Vlasenko.eShop.web.Constants;
@@ -60,8 +61,9 @@ public class RingsServlet extends HttpServlet {
         Criteria criteria = getCriteria(req, resp);
         criteria.setPositionFrom((page - 1) * records);
         criteria.setProductOnPage(records);
-        List<Product> products = productService.getProductsByCriteria(criteria);
-        int countProduct = productService.getNoOfPages();
+        CriteriaResultBean criteriaResultBean = productService.getProductsByCriteria(criteria);
+        List<Product> products = criteriaResultBean.getProducts();
+        int countProduct = criteriaResultBean.getAmount();
         int noOfPages = (int) Math.ceil(countProduct * 1.0 / records);
         if (products == null) {
             req.getRequestDispatcher(Constants.BED_REQUEST_PAGE).forward(req, resp);

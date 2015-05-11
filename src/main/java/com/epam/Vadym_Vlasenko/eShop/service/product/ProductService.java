@@ -3,6 +3,7 @@ package com.epam.Vadym_Vlasenko.eShop.service.product;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IProductDAO;
 import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
+import com.epam.Vadym_Vlasenko.eShop.entity.criteria.CriteriaResultBean;
 import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionManager;
 import com.epam.Vadym_Vlasenko.eShop.service.transaction.TransactionOperation;
 
@@ -59,16 +60,6 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public int getCountOfProduct(final int idCategory) {
-        return tm.transaction(new TransactionOperation<Integer>() {
-            @Override
-            public Integer execute() throws SQLException {
-                return productDAO.getCountOfProduct(idCategory);
-            }
-        });
-    }
-
-    @Override
     public List<Product> getProducts(final int idCategory, final int offset, final int records) {
         return tm.transaction(new TransactionOperation<List<Product>>() {
             @Override
@@ -89,32 +80,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> getProductsByCriteria(final Criteria criteria) {
-        return tm.transaction(new TransactionOperation<List<Product>>() {
+    public CriteriaResultBean getProductsByCriteria(final Criteria criteria) {
+        return tm.transaction(new TransactionOperation<CriteriaResultBean>() {
             @Override
-            public List<Product> execute() throws SQLException {
+            public CriteriaResultBean execute() throws SQLException {
                 return productDAO.getProductsByCriteria(criteria);
             }
         });
     }
 
-    @Override
-    public List<Product> getProductByName(String name) {
-        return null;
-    }
-
-    @Override
-    public List<Product> getProductsByRange(int minPrice, int maxPrice) {
-        return null;
-    }
-
-    @Override
-    public List<Product> getAllByMaterial(int id_material) {
-        return null;
-    }
-
-    @Override
-    public int getNoOfPages() {
-        return productDAO.getNoOfPages();
-    }
 }

@@ -119,9 +119,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <!-- script-for-nav -->
         <!-- search-form -->
         <div class="search-form">
-            <form>
-                <input type="text" class="text" value="Введите код изделия" onfocus="this.value = '';"
-                       onblur="if (this.value == '') {this.value = 'Keyword or product code';}">
+            <form action="details">
+                <input type="text" class="text" name="id" value="Введите код изделия" onfocus="this.value = '';"
+                       onblur="if (this.value == '') {this.value = 'Введите код изделия';}">
                 <input type="submit" value=""/>
             </form>
         </div>

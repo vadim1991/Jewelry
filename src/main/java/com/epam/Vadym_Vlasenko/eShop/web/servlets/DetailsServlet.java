@@ -2,6 +2,7 @@ package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
 import com.epam.Vadym_Vlasenko.eShop.service.product.IProductService;
+import com.epam.Vadym_Vlasenko.eShop.web.Constants;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -19,6 +20,9 @@ import java.io.IOException;
 public class DetailsServlet extends HttpServlet {
 
     private static final String PRODUCT_SERVICE = "product_service";
+    private static final String PRODUCT_ATTRIBUTE = "product";
+    private static final String DETAIL_PAGE = "details.jsp";
+    private static final String ID_PARAMETER = "id";
 
     private IProductService service;
 
@@ -30,9 +34,19 @@ public class DetailsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        Product product = service.getProductByID(Integer.parseInt(id));
-        req.setAttribute("product", product);
-        req.getRequestDispatcher("details.jsp").forward(req, resp);
+        String id = req.getParameter(ID_PARAMETER);
+        try {
+            Product product = service.getProductByID(Integer.parseInt(id));
+            if (product != null) {
+                req.setAttribute(PRODUCT_ATTRIBUTE, product);
+                req.getRequestDispatcher(DETAIL_PAGE).forward(req, resp);
+            } else {
+                req.getRequestDispatcher(Constants.NOT_FOUND_PAGE).forward(req, resp);
+            }
+        } catch (NumberFormatException e) {
+            req.getRequestDispatcher(Constants.BED_REQUEST_PAGE).forward(req, resp);
+            return;
+        }
     }
+
 }

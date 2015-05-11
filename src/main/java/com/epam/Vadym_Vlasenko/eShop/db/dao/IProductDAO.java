@@ -3,6 +3,7 @@ package com.epam.Vadym_Vlasenko.eShop.db.dao;
 import com.epam.Vadym_Vlasenko.eShop.entity.Category;
 import com.epam.Vadym_Vlasenko.eShop.entity.Criteria;
 import com.epam.Vadym_Vlasenko.eShop.entity.Product;
+import com.epam.Vadym_Vlasenko.eShop.entity.criteria.CriteriaResultBean;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,14 +23,10 @@ public interface IProductDAO {
 
     public List<Product> getProductsByCategory(int idCategory) throws SQLException;
 
-    public List<Product> getProductsByCriteria(Criteria criteria) throws SQLException;
+    public CriteriaResultBean getProductsByCriteria(Criteria criteria) throws SQLException;
 
     public int getCountOfProduct(int idCategory) throws SQLException;
 
-    public List<Product> getProductByName(String name);
-
     public boolean removeProduct(int id);
-
-    public int getNoOfPages();
 
 }

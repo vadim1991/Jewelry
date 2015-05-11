@@ -18,7 +18,7 @@ public class DAOFactoryMySQL extends DAOFactory {
 
     @Override
     public IOrderDAO getOrderDAO() {
-        return new OrderDaoMySQL();
+        return new OrderDAOMySQL();
     }
 
     @Override
