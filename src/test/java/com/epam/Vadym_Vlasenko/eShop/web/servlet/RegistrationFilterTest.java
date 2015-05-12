@@ -5,7 +5,7 @@ import com.epam.Vadym_Vlasenko.eShop.entity.registration.RegistrationBean;
 import com.epam.Vadym_Vlasenko.eShop.service.User.UserService;
 import com.epam.Vadym_Vlasenko.eShop.service.captcha.ICaptchaHandler;
 import com.epam.Vadym_Vlasenko.eShop.web.Constants;
-import com.epam.Vadym_Vlasenko.eShop.web.filters.FilterRegistration;
+import com.epam.Vadym_Vlasenko.eShop.web.filters.RegistrationFilter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -147,7 +147,7 @@ public class RegistrationFilterTest {
     }
 
     private void runFilter() {
-        FilterRegistration filterRegistration = new FilterRegistration();
+        RegistrationFilter filterRegistration = new RegistrationFilter();
         try {
             filterRegistration.init(filterConfigMock);
             filterRegistration.doFilter(requestMock, responseMock, filterChainMock);

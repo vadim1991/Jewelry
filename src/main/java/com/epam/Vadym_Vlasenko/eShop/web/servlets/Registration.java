@@ -22,7 +22,7 @@ import java.util.UUID;
  * Created by swift-seeker-89717 on 09.04.2015.
  */
 @WebServlet("/registration")
-@MultipartConfig(location = "c:\\Users\\swift-seeker-89717\\IdeaProjects\\Jewelry\\web\\images\\avatar\\", fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 10)
+@MultipartConfig(location = "c:\\Users\\swift-seeker-89717\\IdeaProjects\\Jewelry\\src\\main\\webapp\\images\\avatar\\", fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 10)
 public class Registration extends HttpServlet {
 
     private static final String USER_ATTRIBUTE = "user";

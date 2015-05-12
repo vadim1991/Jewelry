@@ -1,6 +1,7 @@
 package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 
 import com.epam.Vadym_Vlasenko.eShop.web.Constants;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,11 @@ import java.net.URISyntaxException;
  */
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
+
+    private static final Logger LOG = Logger.getLogger(LogoutServlet.class);
+    private static final String LOGOUT_MESSAGE = "User logout with login - ";
+    private static final String USER_ATTRIBUTE = "user";
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String previous;
@@ -26,6 +32,7 @@ public class LogoutServlet extends HttpServlet {
             previous = Constants.MAIN_PAGE;
         }
         HttpSession session = req.getSession();
+        LOG.info(LOGOUT_MESSAGE + session.getAttribute(USER_ATTRIBUTE));
         session.invalidate();
         resp.sendRedirect(previous);
     }

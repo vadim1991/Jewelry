@@ -58,11 +58,13 @@ public class SecurityService {
     }
 
     public boolean isSecureUrl(String url, Map<String, List<Role>> roleMap) {
-        for (Map.Entry entry : roleMap.entrySet()) {
-            Pattern pattern = Pattern.compile(String.valueOf(entry.getKey()));
-            Matcher matcher = pattern.matcher(url);
-            if (matcher.matches()) {
-                return true;
+        if (roleMap != null) {
+            for (Map.Entry entry : roleMap.entrySet()) {
+                Pattern pattern = Pattern.compile(String.valueOf(entry.getKey()));
+                Matcher matcher = pattern.matcher(url);
+                if (matcher.matches()) {
+                    return true;
+                }
             }
         }
         return false;

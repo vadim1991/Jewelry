@@ -4,20 +4,26 @@ import com.epam.Vadym_Vlasenko.eShop.entity.registration.RegistrationBean;
 import com.epam.Vadym_Vlasenko.eShop.service.User.UserService;
 import com.epam.Vadym_Vlasenko.eShop.service.captcha.ICaptchaHandler;
 import com.epam.Vadym_Vlasenko.eShop.web.Constants;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.UUID;
 
 /**
  * Created by swift-seeker-89717 on 09.04.2015.
  */
 @WebFilter(urlPatterns = "/registration")
-public class FilterRegistration implements Filter {
+@MultipartConfig
+public class RegistrationFilter implements Filter {
+
+    private static final Logger LOG = Logger.getLogger(RegistrationFilter.class);
 
     private static final String MAP_ATTRIBUTE = "errors";
     private static final String LOGIN_EXISTS_ATTRIBUTE = "loginError";
@@ -53,13 +59,14 @@ public class FilterRegistration implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
         if (request.getMethod().equalsIgnoreCase(POST_REQUEST)) {
             RegistrationBean registrationBean = getRegistrationBean(request);
             if (!registrationBean.isValid()) {
                 captchaHandler.updateCurrentCaptcha(request);
                 captchaHandler.init(request, (HttpServletResponse) servletResponse);
                 request.setAttribute(MAP_ATTRIBUTE, registrationBean.getErrors());
+                LOG.info(registrationBean);
+                LOG.info(registrationBean.getErrors());
                 request.setAttribute(FORM_ATTRIBUTE, registrationBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constants.REGISTRATION_PAGE);
                 requestDispatcher.forward(request, servletResponse);
@@ -73,7 +80,6 @@ public class FilterRegistration implements Filter {
                 request.getRequestDispatcher(Constants.REGISTRATION_PAGE).forward(request, servletResponse);
                 return;
             }
-            registrationBean.setAvatarPath(readJPGFile(request, response));
             captchaHandler.removeCurrentCaptcha(request);
             request.setAttribute(USER_ATTRIBUTE, registrationBean.getUser());
         }
@@ -85,7 +91,7 @@ public class FilterRegistration implements Filter {
 
     }
 
-    private String readJPGFile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private String readJPGFile(HttpServletRequest request) throws ServletException, IOException {
         Part filePart = request.getPart(FILE_UPLOAD_ATTRIBUTE);
         String fileName = DEFAULT_IMAGE_PATH;
         if (filePart != null) {
@@ -99,18 +105,18 @@ public class FilterRegistration implements Filter {
         return fileName;
     }
 
-    private RegistrationBean getRegistrationBean(HttpServletRequest request) {
-        String name = request.getParameter(NAME_ATTRIBUTE);
-        String login = request.getParameter(LOGIN_ATTRIBUTE);
-        String password = request.getParameter(PASSWORD_ATTRIBUTE);
-        String age = request.getParameter(AGE_ATTRIBUTE);
-        String surname = request.getParameter(SURNAME_ATTRIBUTE);
-        String email = request.getParameter(EMAIL_ATTRIBUTE);
-        String confirm = request.getParameter(CONFIRM_PASSWORD_ATTRIBUTE);
-        String captchaValue = request.getParameter(Constants.CURRENT_CAPTCHA_VALUE);
-        String actualCaptchaValue = captchaHandler.getExpectedCaptchaValue(request);
-        System.out.println(captchaValue);
-        System.out.println(actualCaptchaValue);
-        return new RegistrationBean(name, surname, age, login, password, email, confirm, actualCaptchaValue, captchaValue);
+    private RegistrationBean getRegistrationBean(HttpServletRequest request) throws ServletException, IOException {
+        RegistrationBean registrationBean = new RegistrationBean();
+        registrationBean.setAvatarPath(readJPGFile(request));
+        registrationBean.setName(request.getParameter(NAME_ATTRIBUTE));
+        registrationBean.setLogin(request.getParameter(LOGIN_ATTRIBUTE));
+        registrationBean.setPassword(request.getParameter(PASSWORD_ATTRIBUTE));
+        registrationBean.setAge(request.getParameter(AGE_ATTRIBUTE));
+        registrationBean.setSurname(request.getParameter(SURNAME_ATTRIBUTE));
+        registrationBean.setEmail(request.getParameter(EMAIL_ATTRIBUTE));
+        registrationBean.setConfirmPassword(request.getParameter(CONFIRM_PASSWORD_ATTRIBUTE));
+        registrationBean.setCaptcha(request.getParameter(Constants.CURRENT_CAPTCHA_VALUE));
+        registrationBean.setCurrentCaptcha(captchaHandler.getExpectedCaptchaValue(request));
+        return registrationBean;
     }
 }

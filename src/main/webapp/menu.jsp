@@ -38,6 +38,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script type="text/javascript" src="js/widgets/jqxcombobox.js"></script>
     <script type="text/javascript" src="js/widgets/jqxlistbox.js"></script>
     <script type="text/javascript" src="js/widgets/jqxscrollbar.js"></script>
+    <script src="js/widgets/jqxtabs.js"></script>
+    <script src="js/widgets/jqxdatatable.js"></script>
     <link href="css/style.css" rel='stylesheet' type='text/css'/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="application/x-javascript"> addEventListener("load", function () {

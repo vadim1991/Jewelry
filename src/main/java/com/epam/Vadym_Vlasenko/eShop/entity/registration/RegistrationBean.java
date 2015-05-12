@@ -82,6 +82,7 @@ public class RegistrationBean {
     private String avatarPath;
 
     public RegistrationBean() {
+        errors = new HashMap<>();
     }
 
     public RegistrationBean(String name, String surname, String age, String login, String password, String email, String confirmPassword, String captcha, String currentCaptcha) {

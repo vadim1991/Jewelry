@@ -45,7 +45,6 @@ public class OrdersHistory extends HttpServlet {
             Map<Order, List<OrderInfo>> orderListMap = orderService.getOrdersWithInfo(user.getId());
             if (orderListMap != null) {
                 String jsonMap = jsonService.orderMapToJSON(orderListMap);
-                System.out.println(jsonMap);
                 resp.getWriter().write(jsonMap);
             }
         }

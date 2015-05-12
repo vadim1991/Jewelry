@@ -3,6 +3,7 @@ package com.epam.Vadym_Vlasenko.eShop.web.servlets;
 import com.epam.Vadym_Vlasenko.eShop.entity.User;
 import com.epam.Vadym_Vlasenko.eShop.service.User.UserService;
 import com.epam.Vadym_Vlasenko.eShop.web.Constants;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -23,6 +24,8 @@ import java.util.Date;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
+    private static final Logger LOG = Logger.getLogger(LoginServlet.class);
+
     private static final String LOGIN_PARAM = "login";
     private static final String PASSWORD_PARAM = "password";
     private static final String REFERER = "referer";
@@ -35,6 +38,8 @@ public class LoginServlet extends HttpServlet {
     private static final String BANNED_ATTRIBUTE = "ban";
     private static final String BANNED_MESSAGE = "You have a ban to ";
     private static final long BANNED_TIME = 500000;
+
+    private static final String USER_IS_ENTER_MESSAGE = "User sing up with login - ";
 
 
     private UserService userService;
@@ -66,7 +71,6 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
         if (login != null && password != null && previousPage != null) {
             User user = userService.getUserByLogin(login);
-            System.out.println(user);
             if (user != null) {
                 if (user.isBlocked()) {
                     req.setAttribute(BANNED_ATTRIBUTE, BANNED_MESSAGE + user.getUnblockedDate());
@@ -81,6 +85,7 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute(USER_ID, user.getId());
                     session.setAttribute(USER_LOGIN, user.getLogin());
                     session.setAttribute(USER_ATTRIBUTE, user);
+                    LOG.info(USER_IS_ENTER_MESSAGE + user.getLogin());
                     resp.sendRedirect(previousPage);
                     return;
                 }

@@ -26,6 +26,7 @@ public class RingsServlet extends HttpServlet {
 
     private static final String PRODUCT_SERVICE = "product_service";
     private static final String RINGS_ATTRIBUTE = "products";
+    private static final int PRODUCT_ON_PAGE_DEFAULT = 6;
 
     private static final String ENCODING_TYPE = "utf-8";
 
@@ -53,7 +54,7 @@ public class RingsServlet extends HttpServlet {
         resp.setCharacterEncoding(ENCODING_TYPE);
         Gson gson = new Gson();
         int page = 1;
-        int records = 3;
+        int records = PRODUCT_ON_PAGE_DEFAULT;
         String pageValue = req.getParameter(PAGE_PARAMETER);
         if (pageValue != null) {
             page = Integer.parseInt(pageValue);
