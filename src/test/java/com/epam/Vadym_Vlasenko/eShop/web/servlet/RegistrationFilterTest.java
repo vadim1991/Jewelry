@@ -134,16 +134,16 @@ public class RegistrationFilterTest {
     }
 
     private RegistrationBean getRegistrationBean(HttpServletRequest request) {
-        String name = request.getParameter(NAME_ATTRIBUTE);
-        String login = request.getParameter(LOGIN_ATTRIBUTE);
-        String password = request.getParameter(PASSWORD_ATTRIBUTE);
-        String age = request.getParameter(AGE_ATTRIBUTE);
-        String surname = request.getParameter(SURNAME_ATTRIBUTE);
-        String email = request.getParameter(EMAIL_ATTRIBUTE);
-        String confirm = request.getParameter(CONFIRM_PASSWORD_ATTRIBUTE);
-        String captchaValue = request.getParameter(CAPTCHA_ATTRIBUTE);
-        String actualCaptchaValue = captchaHandlerMock.getExpectedCaptchaValue(request);
-        return new RegistrationBean(name, surname, age, login, password, email, confirm, actualCaptchaValue, captchaValue);
+        RegistrationBean registrationBean = new RegistrationBean();
+        registrationBean.setName(request.getParameter(NAME_ATTRIBUTE));
+        registrationBean.setLogin(request.getParameter(LOGIN_ATTRIBUTE));
+        registrationBean.setPassword(request.getParameter(PASSWORD_ATTRIBUTE));
+        registrationBean.setAge(request.getParameter(AGE_ATTRIBUTE));
+        registrationBean.setSurname(request.getParameter(SURNAME_ATTRIBUTE));
+        registrationBean.setEmail(request.getParameter(EMAIL_ATTRIBUTE));
+        registrationBean.setConfirmPassword(request.getParameter(CONFIRM_PASSWORD_ATTRIBUTE));
+        registrationBean.setCaptcha(request.getParameter(Constants.CURRENT_CAPTCHA_VALUE));
+        return registrationBean;
     }
 
     private void runFilter() {

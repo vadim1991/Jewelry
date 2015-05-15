@@ -22,19 +22,6 @@ public class User {
     public User() {
     }
 
-    public User(int loginFailAmount, Date unblockedDate, Date lastLoginDate, Role role, int age, String email, String password, String login, String surname, String name) {
-        this.loginFailAmount = loginFailAmount;
-        this.unblockedDate = unblockedDate;
-        this.lastLoginDate = lastLoginDate;
-        this.role = role;
-        this.age = age;
-        this.email = email;
-        this.password = password;
-        this.login = login;
-        this.surname = surname;
-        this.name = name;
-    }
-
     public User(String name, String surname, String login, String password, String email, int age, Role role, Image image) {
         this.name = name;
         this.surname = surname;
