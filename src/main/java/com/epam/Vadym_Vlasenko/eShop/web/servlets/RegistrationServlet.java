@@ -23,7 +23,7 @@ import java.util.UUID;
  */
 @WebServlet("/registration")
 @MultipartConfig(location = "c:\\Users\\swift-seeker-89717\\IdeaProjects\\Jewelry\\src\\main\\webapp\\images\\avatar\\", fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 10)
-public class Registration extends HttpServlet {
+public class RegistrationServlet extends HttpServlet {
 
     private static final String USER_ATTRIBUTE = "user";
     private static final String SUCCESS_ATTRIBUTE = "success";

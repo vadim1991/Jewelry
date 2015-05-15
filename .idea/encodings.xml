@@ -6,7 +6,7 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/epam/Vadym_Vlasenko/eShop/web/filters/EncodingFilter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/epam/Vadym_Vlasenko/eShop/web/filters/RegistrationFilter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/epam/Vadym_Vlasenko/eShop/web/servlets/LoginServlet.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/epam/Vadym_Vlasenko/eShop/web/servlets/Registration.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/epam/Vadym_Vlasenko/eShop/web/servlets/RegistrationServlet.java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

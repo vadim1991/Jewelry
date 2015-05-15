@@ -20,19 +20,20 @@ import java.util.Locale;
 @WebFilter(urlPatterns = "/*",initParams = {@WebInitParam(name = "locales", value = "en ru"),@WebInitParam(name = "defaultLocale",value = "ru")})
 public class LocalizationFilter implements Filter {
 
-    private static final Logger logger = Logger.getLogger(LocalizationFilter.class);
+    private static final Logger LOG = Logger.getLogger(LocalizationFilter.class);
     private static final String LOCALE_HOLDER = "localeHolder";
     private static final String LOCALES = "locales";
     private static final String DEFAULT_LOCALE = "defaultLocale";
+
     private Locale defaultLocale;
     private List<Locale> locales;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        logger.info("Localization filter starts");
+        LOG.info("Localization filter starts");
         String localeValues = filterConfig.getInitParameter(LOCALES);
         if (localeValues == null || localeValues.isEmpty()) {
-            logger.warn("default locale parameters will be used");
+            LOG.warn("default locale parameters will be used");
         } else {
             String defaultLocaleValue = filterConfig.getInitParameter(DEFAULT_LOCALE);
             if (defaultLocaleValue != null) {
@@ -45,7 +46,7 @@ public class LocalizationFilter implements Filter {
         }
         filterConfig.getServletContext().setAttribute(LOCALES, locales);
         filterConfig.getServletContext().setAttribute(DEFAULT_LOCALE, defaultLocale);
-        logger.info("Localization filter finished");
+        LOG.info("Localization filter finished");
     }
 
     @Override

@@ -59,14 +59,12 @@ public class RegistrationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        if (request.getMethod().equalsIgnoreCase(POST_REQUEST)) {
+        if (POST_REQUEST.equalsIgnoreCase(request.getMethod())) {
             RegistrationBean registrationBean = getRegistrationBean(request);
             if (!registrationBean.isValid()) {
                 captchaHandler.updateCurrentCaptcha(request);
                 captchaHandler.init(request, (HttpServletResponse) servletResponse);
                 request.setAttribute(MAP_ATTRIBUTE, registrationBean.getErrors());
-                LOG.info(registrationBean);
-                LOG.info(registrationBean.getErrors());
                 request.setAttribute(FORM_ATTRIBUTE, registrationBean);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constants.REGISTRATION_PAGE);
                 requestDispatcher.forward(request, servletResponse);

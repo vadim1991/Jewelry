@@ -85,19 +85,6 @@ public class RegistrationBean {
         errors = new HashMap<>();
     }
 
-    public RegistrationBean(String name, String surname, String age, String login, String password, String email, String confirmPassword, String captcha, String currentCaptcha) {
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.confirmPassword = confirmPassword;
-        this.captcha = captcha;
-        this.currentCaptcha = currentCaptcha;
-        errors = new HashMap<>();
-    }
-
     public Image getAvatarImage() {
         Image image = new Image();
         image.setUrl(avatarPath);
