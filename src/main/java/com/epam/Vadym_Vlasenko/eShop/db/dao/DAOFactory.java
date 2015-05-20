@@ -1,5 +1,7 @@
 package com.epam.Vadym_Vlasenko.eShop.db.dao;
 
+import com.epam.Vadym_Vlasenko.eShop.service.exception.ShopException;
+
 /**
  * Created by Вадим on 22.03.2015.
  */
@@ -11,16 +13,12 @@ public abstract class DAOFactory {
 
     public static synchronized DAOFactory getInstance() {
         if (instance == null) {
-            Class<?> clazz = null;
+            Class<?> clazz;
             try {
                 clazz = Class.forName(DAOFactory.DAO_MYSQL);
                 instance = (DAOFactory) clazz.newInstance();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                throw new ShopException(e);
             }
 
         }

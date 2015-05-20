@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by swift-seeker-89717 on 16.04.2015.
  */
 public class OrderStatus implements Serializable {
+
     private int id;
     private String status;
 

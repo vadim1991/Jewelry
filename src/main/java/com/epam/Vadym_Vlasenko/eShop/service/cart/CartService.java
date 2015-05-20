@@ -38,7 +38,7 @@ public class CartService {
         return new ArrayList<>(cart.getCart().keySet());
     }
 
-    public double totalPrice() {
+    public int totalPrice() {
         int total = 0;
         for (Map.Entry entry : cart.getCart().entrySet()) {
             total += ((Product) entry.getKey()).getPrice() * (Integer) entry.getValue();

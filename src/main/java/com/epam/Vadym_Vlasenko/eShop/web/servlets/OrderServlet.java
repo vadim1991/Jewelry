@@ -33,10 +33,8 @@ public class OrderServlet extends HttpServlet {
     private IOrderService orderService;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        ServletContext context = config.getServletContext();
-        orderService = (IOrderService) context.getAttribute(Constants.ORDER_SERVICE);
+    public void init() throws ServletException {
+        orderService = (IOrderService) getServletContext().getAttribute(Constants.ORDER_SERVICE);
     }
 
     @Override

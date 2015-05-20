@@ -21,17 +21,6 @@ public class Order implements Serializable {
         this.date = new Date();
     }
 
-    public Order(int id, OrderStatus orderStatus, String orderInfo, User user, String telephone, String paymentInfo, int totalPrice) {
-        this.id = id;
-        this.orderStatus = orderStatus;
-        this.orderInfo = orderInfo;
-        this.user = user;
-        this.date = new Date();
-        this.telephone = telephone;
-        this.paymentInfo = paymentInfo;
-        this.totalPrice = totalPrice;
-    }
-
     public int getId() {
         return id;
     }

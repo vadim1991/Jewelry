@@ -33,9 +33,9 @@ public class RegistrationServlet extends HttpServlet {
     private ICaptchaHandler captchaHandler;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        ServletContext context = config.getServletContext();
-        userService = (UserService) context.getAttribute(Constants.USER_SERVICE);
+    public void init() throws ServletException {
+        ServletContext context = getServletContext();
+        userService = (UserService) getServletContext().getAttribute(Constants.USER_SERVICE);
         captchaHandler = (ICaptchaHandler) context.getAttribute((Constants.CAPTCHA_HANDLER));
     }
 

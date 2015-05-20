@@ -146,21 +146,6 @@ public class ProductDaoMySQL implements IProductDAO {
     }
 
     @Override
-    public int getCountOfProduct(int idCategory) throws SQLException {
-        int count = 0;
-        Connection connection = DBConnectionHolder.getConnectionHolder().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_COUNT_OF_PRODUCT)) {
-            int index = 1;
-            preparedStatement.setInt(index, idCategory);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                count = resultSet.getInt(1);
-            }
-        }
-        return count;
-    }
-
-    @Override
     public boolean removeProduct(int id) {
         return false;
     }

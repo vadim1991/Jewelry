@@ -3,7 +3,6 @@ package com.epam.Vadym_Vlasenko.eShop.db.dao.mysql;
 import com.epam.Vadym_Vlasenko.eShop.db.DBConnectionHolder;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IImageDao;
 import com.epam.Vadym_Vlasenko.eShop.entity.Image;
-import com.epam.Vadym_Vlasenko.eShop.entity.Order;
 
 import java.sql.*;
 

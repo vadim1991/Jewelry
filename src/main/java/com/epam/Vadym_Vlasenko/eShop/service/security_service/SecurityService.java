@@ -2,6 +2,7 @@ package com.epam.Vadym_Vlasenko.eShop.service.security_service;
 
 import com.epam.Vadym_Vlasenko.eShop.entity.Role;
 import com.epam.Vadym_Vlasenko.eShop.entity.User;
+import com.epam.Vadym_Vlasenko.eShop.service.exception.ShopException;
 import com.epam.Vadym_Vlasenko.eShop.service.xml_parser.XmlParser;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
@@ -18,8 +19,6 @@ import java.util.regex.Pattern;
  */
 public class SecurityService {
 
-    private static final Logger LOG = Logger.getLogger(SecurityService.class);
-
     private String fileName;
     private XmlParser xmlParser;
 
@@ -32,12 +31,8 @@ public class SecurityService {
         Map<String, List<Role>> roleMap = null;
         try {
             roleMap = xmlParser.parseXml(fileName);
-        } catch (ParserConfigurationException e) {
-            LOG.error(e);
-        } catch (IOException e) {
-            LOG.error(e);
-        } catch (SAXException e) {
-            LOG.error(e);
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            throw new ShopException(e);
         }
         return roleMap;
     }
@@ -46,12 +41,8 @@ public class SecurityService {
         Map<String, List<Role>> roleMap = null;
         try {
             roleMap = xmlParser.parseXml(fileName);
-        } catch (ParserConfigurationException e) {
-            LOG.error(e);
-        } catch (IOException e) {
-            LOG.error(e);
-        } catch (SAXException e) {
-            LOG.error(e);
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            throw new ShopException(e);
         }
         Role role = user.getRole();
         return checkUrlWithRole(url, roleMap, role);

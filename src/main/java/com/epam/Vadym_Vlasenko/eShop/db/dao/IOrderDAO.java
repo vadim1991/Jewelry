@@ -16,11 +16,7 @@ public interface IOrderDAO {
 
     List<Order> getOrders() throws SQLException;
 
-    boolean changeOrderStatus(Order order, StatusTypes statusTypes) throws SQLException;
-
     List<Order> getOrdersByUser(int userId) throws SQLException;
-
-    List<Order> getOrdersFromDate(Date from, Date toDate) throws SQLException;
 
     Order getOrderById(int orderId) throws SQLException;
 }

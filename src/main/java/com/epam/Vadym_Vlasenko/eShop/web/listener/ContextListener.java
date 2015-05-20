@@ -36,6 +36,8 @@ public class ContextListener implements ServletContextListener {
 
     public static final String SESSION_LOCALE_HOLDER = "session";
     public static final String COOKIE_LOCALE_HOLDER = "cookie";
+    public static final String LOCALE_HOLDER = "localeHolder";
+    public static final String LOCALE_SAVE_TYPE = "localeSaveType";
 
     private static final Logger LOG = Logger.getLogger(ContextListener.class);
 
@@ -84,7 +86,6 @@ public class ContextListener implements ServletContextListener {
         IOrderInfoDAO orderInfoDAO = DAOFactory.getInstance().getOrderInfoDAO();
         IImageDao imageDao = DAOFactory.getInstance().getImageDAO();
         servletContext.setAttribute(Constants.PRODUCT_SERVICE, new ProductService(tm, productDAO));
-        servletContext.setAttribute(Constants.CART_SERVICE, new CartService(new Cart()));
         servletContext.setAttribute(Constants.USER_SERVICE, new UserService(userDAO, tm, imageDao));
         servletContext.setAttribute(Constants.ORDER_SERVICE, new OrderService(tm, orderDAO, orderInfoDAO));
         servletContext.setAttribute(Constants.SECURITY_SERVICE, new SecurityService(securityFileName));
@@ -92,7 +93,7 @@ public class ContextListener implements ServletContextListener {
 
     public void initLocaleHolder(ServletContext servletContext) {
         LocaleHolder localeHolder;
-        String localeHolderType = servletContext.getInitParameter("localeSaveType");
+        String localeHolderType = servletContext.getInitParameter(LOCALE_SAVE_TYPE);
         switch (localeHolderType) {
             case SESSION_LOCALE_HOLDER:
                 localeHolder = new SessionLocaleHolder();
@@ -103,7 +104,7 @@ public class ContextListener implements ServletContextListener {
             default:
                 localeHolder = new SessionLocaleHolder();
         }
-        servletContext.setAttribute("localeHolder", localeHolder);
+        servletContext.setAttribute(LOCALE_HOLDER, localeHolder);
     }
 
 }

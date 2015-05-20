@@ -37,9 +37,8 @@ public class CartServlet extends HttpServlet {
     private static final String CART_PAGE = "cart.jsp";
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        ServletContext context = config.getServletContext();
-        productService = (IProductService) context.getAttribute(Constants.PRODUCT_SERVICE);
+    public void init() throws ServletException {
+        productService = (IProductService) getServletContext().getAttribute(Constants.PRODUCT_SERVICE);
     }
 
 

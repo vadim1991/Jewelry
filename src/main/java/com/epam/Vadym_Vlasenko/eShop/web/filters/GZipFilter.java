@@ -32,7 +32,7 @@ public class GZipFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        if (acceptsGZipEncoding(httpRequest) && isContentTypeText(httpRequest)) {
+        if (acceptsGZipEncoding(httpRequest)) {
             httpResponse.setHeader(CONTENT_ENCODING, GZIP);
             GZipServletResponseWrapper gzipResponse =
                     new GZipServletResponseWrapper(httpResponse);

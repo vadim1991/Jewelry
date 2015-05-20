@@ -27,9 +27,8 @@ public class ProductServlet extends HttpServlet {
     private IProductService service;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        ServletContext context = config.getServletContext();
-        service = (IProductService) context.getAttribute(PRODUCT_SERVICE);
+    public void init() throws ServletException {
+        service = (IProductService) getServletContext().getAttribute(PRODUCT_SERVICE);
         criteria = new Criteria();
         criteria.setProductOnPage(PRODUCT_ON_PAGE);
         criteria.setPositionFrom(0);

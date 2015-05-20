@@ -25,8 +25,6 @@ public interface IProductDAO {
 
     public CriteriaResultBean getProductsByCriteria(Criteria criteria) throws SQLException;
 
-    public int getCountOfProduct(int idCategory) throws SQLException;
-
     public boolean removeProduct(int id);
 
 }

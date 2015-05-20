@@ -4,12 +4,10 @@ import com.epam.Vadym_Vlasenko.eShop.db.DBConnectionHolder;
 import com.epam.Vadym_Vlasenko.eShop.db.dao.IOrderDAO;
 import com.epam.Vadym_Vlasenko.eShop.db.query_builder.QueryCreator;
 import com.epam.Vadym_Vlasenko.eShop.entity.Order;
-import com.epam.Vadym_Vlasenko.eShop.entity.StatusTypes;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,11 +66,6 @@ public class OrderDAOMySQL implements IOrderDAO {
     }
 
     @Override
-    public boolean changeOrderStatus(Order order, StatusTypes statusTypes) throws SQLException {
-        return false;
-    }
-
-    @Override
     public List<Order> getOrdersByUser(int userId) throws SQLException {
         List<Order> orders = new ArrayList<>();
         QueryCreator creator = new QueryCreator();
@@ -85,11 +78,6 @@ public class OrderDAOMySQL implements IOrderDAO {
             }
         }
         return orders;
-    }
-
-    @Override
-    public List<Order> getOrdersFromDate(Date from, Date toDate) throws SQLException {
-        return null;
     }
 
     @Override

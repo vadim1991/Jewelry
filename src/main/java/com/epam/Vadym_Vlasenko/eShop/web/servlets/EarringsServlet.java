@@ -44,8 +44,8 @@ public class EarringsServlet extends HttpServlet {
     private IProductService productService;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        productService = (ProductService) config.getServletContext().getAttribute(PRODUCT_SERVICE);
+    public void init() throws ServletException {
+        productService = (ProductService) getServletContext().getAttribute(PRODUCT_SERVICE);
     }
 
     @Override

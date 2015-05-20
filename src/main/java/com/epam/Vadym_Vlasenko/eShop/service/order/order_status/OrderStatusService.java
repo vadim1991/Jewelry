@@ -8,6 +8,7 @@ import java.util.List;
  * Created by swift-seeker-89717 on 19.04.2015.
  */
 public class OrderStatusService implements IOrderStatusService {
+
     @Override
     public List<OrderStatus> getAll() {
         return null;
@@ -17,4 +18,5 @@ public class OrderStatusService implements IOrderStatusService {
     public OrderStatus getOrderStatusById(int id) {
         return null;
     }
+
 }

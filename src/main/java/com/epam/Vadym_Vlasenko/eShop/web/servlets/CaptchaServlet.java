@@ -26,9 +26,8 @@ public class CaptchaServlet extends HttpServlet {
     private static final String IMAGE_TYPE = "jpeg";
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        ServletContext context = config.getServletContext();
-        captchaHandler = (ICaptchaHandler) context.getAttribute(Constants.CAPTCHA_HANDLER);
+    public void init() throws ServletException {
+        captchaHandler = (ICaptchaHandler) getServletContext().getAttribute(Constants.CAPTCHA_HANDLER);
     }
 
     @Override

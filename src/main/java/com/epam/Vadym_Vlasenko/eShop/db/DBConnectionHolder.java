@@ -1,5 +1,6 @@
 package com.epam.Vadym_Vlasenko.eShop.db;
 
+import com.epam.Vadym_Vlasenko.eShop.service.exception.ShopException;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 
@@ -22,8 +23,8 @@ public class DBConnectionHolder {
     private static final String DRIVER_CLASS = "driverClass";
     private static final String USER_NAME = "username";
     private static final String PASSWORD = "password";
-    private static final String MAX_IDLE= "maxIdle";
-    private static final String MAX_ACTIVE= "maxActive";
+    private static final String MAX_IDLE = "maxIdle";
+    private static final String MAX_ACTIVE = "maxActive";
 
     private static final Logger LOG = Logger.getLogger(DBConnectionHolder.class);
 
@@ -78,10 +79,8 @@ public class DBConnectionHolder {
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
             InputStream inputStream = loader.getResourceAsStream(PROPERTY_FILE_NAME);
             properties.load(inputStream);
-        } catch (FileNotFoundException e) {
-            LOG.error(e);
         } catch (IOException e) {
-            LOG.info(e);
+            throw new ShopException(e);
         }
         return properties;
     }

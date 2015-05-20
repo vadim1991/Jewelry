@@ -47,7 +47,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     }, false);
     function hideURLbar() {
         window.scrollTo(0, 1);
-    } </script>
+    }
+
+    </script>
 </head>
 <body>
 <!-- container -->
@@ -64,9 +66,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <ul>
                 <li><img width="80px" id="avatar" class="img-circle stub" src=${sessionScope.user.image.url}></li>
                 <li><a id="login">${sessionScope.login}</a></li>
-                <li><a id="loginLink" href="login"><fmt:message key="login"/> </a></li>
-                <li class="cartinfo"><a name="cartInfo" href="cart"><span> </span><fmt:message key="cart"/> <b
-                        id="amount">${sessionScope.amount}</b></a></li>
+                <li><a id="loginLink" href="login">
+                    <fmt:message key="login"/>
+                </a></li>
+                <li class="cartinfo"><a name="cartInfo" href="cart"><span> </span>
+                    <fmt:message key="cart"/>
+                    <b
+                            id="amount">${sessionScope.amount}</b></a></li>
                 <li>
                     <button class="b-home-lang dropdown-toggle" type="button" id="dLabel" data-toggle="dropdown">
                         <fmt:message key="lang"/> <span
@@ -97,15 +103,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="top-nav">
             <span class="menu"> </span>
             <ul>
-                <li><a id="main" href="index.jsp"><fmt:message key="main"/></a></li>
-                <li><a id="earrings" href="earrings"><fmt:message key="earrings"/></a></li>
-                <li><a id="bracelets" href="404.jsp"><fmt:message key="bracelets"/> </a></li>
-                <li><a id="rings" href="rings"><fmt:message key="rings"/> </a></li>
-                <li><a id="chain" href="404.jsp"><fmt:message key="chain"/> </a></li>
+                <li><a id="main" href="index.jsp">
+                    <fmt:message key="main"/>
+                </a></li>
+                <li><a id="earrings" href="earrings">
+                    <fmt:message key="earrings"/>
+                </a></li>
+                <li><a id="bracelets" href="404.jsp">
+                    <fmt:message key="bracelets"/>
+                </a></li>
+                <li><a id="rings" href="rings">
+                    <fmt:message key="rings"/>
+                </a></li>
+                <li><a id="chain" href="404.jsp">
+                    <fmt:message key="chain"/>
+                </a></li>
                 <c:if test="${not empty sessionScope.login}">
-                    <li><a id="history" href="ordersHistory"><fmt:message key="history"/> </a></li>
+                    <li><a id="history" href="ordersHistory">
+                        <fmt:message key="history"/>
+                    </a></li>
                 </c:if>
-                <li><a id="contacts" href="404.jsp"><fmt:message key="contacts"/> </a></li>
+                <li><a id="contacts" href="404.jsp">
+                    <fmt:message key="contacts"/>
+                </a></li>
                 <div class="clearfix"></div>
             </ul>
         </div>
@@ -117,6 +137,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     $(".top-nav ul").slideToggle(300);
                 });
             });
+
+
         </script>
         <!-- script-for-nav -->
         <!-- search-form -->
@@ -143,6 +165,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         loginLink.attr("href", "logout");
         loginLink.text("<fmt:message key="logout"/>");
     }
+
+
 </script>
 <script>
     var flag = $("#currentLang");
@@ -151,8 +175,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         var link = img.attr("src");
         $.cookie('flag', link);
     });
-    flag.attr("src", $.cookie('flag'));
-    flag.show("slow");
+    var cookieValue = $.cookie('flag');
+    if(cookieValue !=undefined){
+        flag.attr("src", $.cookie('flag'));
+        flag.show("slow");
+    }
+
 </script>
 </html>
 

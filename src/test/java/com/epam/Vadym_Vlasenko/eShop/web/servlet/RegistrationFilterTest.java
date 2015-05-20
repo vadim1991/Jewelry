@@ -151,9 +151,7 @@ public class RegistrationFilterTest {
         try {
             filterRegistration.init(filterConfigMock);
             filterRegistration.doFilter(requestMock, responseMock, filterChainMock);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ServletException|IOException e) {
             e.printStackTrace();
         }
     }

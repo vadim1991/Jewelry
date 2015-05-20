@@ -45,9 +45,8 @@ public class LoginServlet extends HttpServlet {
     private UserService userService;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        ServletContext context = config.getServletContext();
-        userService = (UserService) context.getAttribute(Constants.USER_SERVICE);
+    public void init() throws ServletException {
+        userService = (UserService) getServletContext().getAttribute(Constants.USER_SERVICE);
     }
 
     @Override
